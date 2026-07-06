@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>행운의 로또 번호 — 별별운세</title>
+<meta name="description" content="오늘의 기운을 담아 뽑는 행운의 로또 번호">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="logo" href="index.html">🔮 별별운세</a>
+    <p class="tagline">우주의 기운을 모아 굴리는 행운의 공</p>
+  </header>
+
+  <nav class="menu">
+    <a href="index.html">홈</a>
+    <a href="today.html">오늘의 운세</a>
+    <a href="tarot.html">타로</a>
+    <a href="saju.html">사주</a>
+    <a href="tti.html">띠별 운세</a>
+    <a href="gunghap.html">궁합</a>
+    <a href="lotto.html" class="on">로또</a>
+  </nav>
+
+  <div class="card">
+    <h2>🎱 행운의 로또 번호</h2>
+    <p class="desc">몇 게임을 뽑을까요?</p>
+    <div class="mode-row" id="modes">
+      <button onclick="setGames(1)" class="sel">1게임</button>
+      <button onclick="setGames(3)">3게임</button>
+      <button onclick="setGames(5)">5게임</button>
+    </div>
+    <button class="primary" onclick="roll()">번호 뽑기 🍀</button>
+  </div>
+
+  <div class="card result" id="res">
+    <h2>🍀 오늘의 행운 번호</h2>
+    <div id="games"></div>
+    <p class="fortune-msg" id="omen" style="margin-top:16px; text-align:center; color:var(--purple-soft);"></p>
+    <button class="ghost" onclick="roll()">다시 뽑기</button>
+  </div>
+
+  <footer class="site">
+    <p>✨ 완전한 무작위 추첨이며 당첨을 보장하지 않아요. 재미로만, 구매는 적당히! ✨</p>
+  </footer>
+
+</div>
+
+<script>
+let gameCount = 1;
+
+const OMENS = [
+  "이 번호를 뽑는 순간, 어디선가 네 잎 클로버가 피어났습니다 🍀",
+  "오늘 밤 꿈에 돼지가 나오면 진짜입니다 🐷",
+  "우주의 기운 78%가 이 번호에 응축되었습니다 ✨",
+  "번호보다 중요한 건 오늘 하루의 행운! 이미 좋은 일이 오고 있어요 🌈",
+  "당첨되면 저를 기억해 주세요... 농담입니다, 행운을 빌어요! 😄",
+  "행운은 준비된 사람에게 옵니다. 준비 완료! 🎯",
+  "이 조합, 왠지 느낌이 좋은데요? 🔮",
+  "숫자들이 유난히 반짝이며 굴러 나왔습니다 ⭐"
+];
+
+function setGames(n) {
+  gameCount = n;
+  document.querySelectorAll("#modes button").forEach(b =>
+    b.classList.toggle("sel", b.textContent === n + "게임"));
+}
+
+function ballClass(n) {
+  return n <= 10 ? "b1" : n <= 20 ? "b2" : n <= 30 ? "b3" : n <= 40 ? "b4" : "b5";
+}
+
+function drawSix() {
+  const pool = Array.from({ length: 45 }, (_, i) => i + 1);
+  const nums = [];
+  for (let i = 0; i < 6; i++) {
+    nums.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+  }
+  return nums.sort((a, b) => a - b);
+}
+
+function roll() {
+  let html = "";
+  for (let g = 0; g < gameCount; g++) {
+    const nums = drawSix();
+    html += '<div class="game-row"><span class="gname">' + String.fromCharCode(65 + g) + " 게임</span>";
+    nums.forEach((n, i) => {
+      html += '<span class="ball ' + ballClass(n) + '" style="animation-delay:' +
+              ((g * 6 + i) * 0.1).toFixed(1) + 's">' + n + "</span>";
+    });
+    html += "</div>";
+  }
+  document.getElementById("games").innerHTML = html;
+  document.getElementById("omen").textContent = OMENS[Math.floor(Math.random() * OMENS.length)];
+
+  const res = document.getElementById("res");
+  res.classList.add("show");
+  res.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>타로 카드 뽑기 — 별별운세</title>
+<meta name="description" content="22장의 메이저 아르카나 중에서 카드를 뽑아보세요. 오늘의 조언, 과거·현재·미래">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🃏</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="logo" href="index.html">🔮 별별운세</a>
+    <p class="tagline">마음속으로 질문을 떠올린 뒤, 끌리는 카드를 골라보세요</p>
+  </header>
+
+  <nav class="menu">
+    <a href="index.html">홈</a>
+    <a href="today.html">오늘의 운세</a>
+    <a href="tarot.html" class="on">타로</a>
+    <a href="saju.html">사주</a>
+    <a href="tti.html">띠별 운세</a>
+    <a href="gunghap.html">궁합</a>
+    <a href="lotto.html">로또</a>
+  </nav>
+
+  <div class="card">
+    <h2>🃏 타로 카드 뽑기</h2>
+    <p class="desc">어떤 방식으로 볼까요?</p>
+    <div class="mode-row">
+      <button id="mode1" class="sel" onclick="setMode(1)">🌟 오늘의 카드 (1장)</button>
+      <button id="mode3" onclick="setMode(3)">⏳ 과거 · 현재 · 미래 (3장)</button>
+    </div>
+    <p class="desc" id="guide" style="margin-top:16px;"></p>
+    <div class="deck" id="deck"></div>
+  </div>
+
+  <div class="card result" id="res">
+    <h2>🔮 카드가 전하는 이야기</h2>
+    <div class="reading" id="reading"></div>
+    <button class="ghost" onclick="reset()">카드 다시 섞기</button>
+  </div>
+
+  <footer class="site">
+    <p>✨ 모든 결과는 오락용입니다. 가볍게 재미로만 즐겨주세요 ✨</p>
+  </footer>
+
+</div>
+
+<script>
+// 메이저 아르카나 22장: [이름, 이모지, 정방향 의미, 역방향 의미]
+const ARCANA = [
+  ["0. 바보", "🃏", "새로운 시작과 자유로운 모험의 카드예요. 계산 없이 내딛는 첫걸음이 뜻밖의 행운을 부릅니다. 지금 망설이는 그 일, 가볍게 시작해 보세요.", "의욕만 앞서 준비가 부족할 수 있어요. 출발 전에 신발끈을 한 번 더 묶는 신중함이 필요합니다."],
+  ["1. 마법사", "🎩", "당신 안에 이미 필요한 능력이 다 갖춰져 있다는 신호예요. 재능을 꺼내 보여줄 절호의 타이밍입니다.", "가진 재능을 썩히고 있거나 잔재주에 의존하고 있지는 않은지 돌아보세요. 진짜 실력으로 승부할 때입니다."],
+  ["2. 여사제", "🌙", "직감이 그 어느 때보다 예리한 시기예요. 서두르지 말고 조용히 내면의 목소리에 귀 기울이면 답이 보입니다.", "감이 흐려져 있어요. 소문이나 겉모습에 흔들리지 말고 사실을 확인한 뒤 움직이세요."],
+  ["3. 여황제", "👑", "풍요와 결실의 카드입니다. 공들여온 일이 무르익어 열매를 맺는 시기예요. 자신과 주변을 넉넉하게 돌보세요.", "남에게 기대는 마음이 커졌거나 게으름이 스며들었을 수 있어요. 스스로 일어서는 힘을 기를 때입니다."],
+  ["4. 황제", "🏛️", "안정과 주도권의 카드예요. 계획을 세우고 책임감 있게 밀고 나가면 단단한 성과가 따라옵니다.", "고집이 세지고 있다는 경고예요. 내 방식만 옳다는 생각을 내려놓으면 길이 넓어집니다."],
+  ["5. 교황", "📿", "믿을 만한 조언자가 곁에 있어요. 경험자의 지혜를 구하면 돌아가지 않고 바른길로 갈 수 있습니다.", "관습이나 남의 말에 지나치게 얽매여 있지는 않나요? 이번엔 자신의 기준으로 판단해 보세요."],
+  ["6. 연인", "💞", "사랑과 조화, 그리고 마음이 이끄는 선택의 카드예요. 관계에 훈풍이 불고, 중요한 결정에는 진심이 답이 됩니다.", "마음이 두 갈래로 흔들리고 있어요. 미루면 미룰수록 어려워지니 솔직한 마음을 마주해 보세요."],
+  ["7. 전차", "🏇", "거침없는 전진과 승리의 카드! 목표를 향해 달리기 시작하면 장애물이 오히려 길을 비켜줍니다.", "방향을 잃은 채 속도만 내고 있지는 않은지 점검하세요. 잠시 멈춰 지도를 보는 것도 전략입니다."],
+  ["8. 힘", "🦁", "부드러움이 강함을 이기는 카드예요. 조급함을 다스리는 인내심이 결국 상황을 당신 편으로 만듭니다.", "자신감이 흔들리거나 반대로 힘으로 밀어붙이려 하고 있어요. 스스로를 믿되 겸손하게 나아가세요."],
+  ["9. 은둔자", "🏮", "혼자만의 시간이 필요한 시기예요. 잠시 소음에서 벗어나 스스로에게 질문하면 등불처럼 답이 켜집니다.", "고립이 길어지고 있어요. 이제 동굴에서 나와 사람들 속으로 한 걸음 내디딜 때입니다."],
+  ["10. 운명의 수레바퀴", "🎡", "운명의 흐름이 당신 쪽으로 도는 중이에요! 예상 밖의 기회가 찾아오니 변화의 물결에 몸을 맡겨보세요.", "일이 뜻대로 풀리지 않아도 자책하지 마세요. 바퀴는 다시 돕니다. 지금은 힘을 아끼며 때를 기다릴 시기예요."],
+  ["11. 정의", "⚖️", "공정함과 균형의 카드예요. 뿌린 대로 거두는 시기이니 정직하게 임하면 저울이 당신 쪽으로 기웁니다.", "한쪽으로 치우친 판단을 하고 있지는 않나요? 결정을 내리기 전에 반대편 이야기도 들어보세요."],
+  ["12. 매달린 사람", "🙃", "관점을 뒤집으면 답이 보이는 카드예요. 지금의 멈춤은 손해가 아니라 더 큰 그림을 보기 위한 투자입니다.", "의미 없는 희생을 반복하고 있지는 않은지 돌아보세요. 버틸 일과 내려놓을 일을 구분할 때입니다."],
+  ["13. 죽음", "🦋", "끝은 곧 새로운 시작이라는 카드예요. 낡은 것을 정리하면 그 자리에 훨씬 좋은 것이 들어옵니다. 변화를 두려워 마세요.", "끝난 것을 붙잡고 있느라 새 문이 열리지 않고 있어요. 미련을 정리하는 순간 운이 움직입니다."],
+  ["14. 절제", "🕊️", "조화와 균형의 카드예요. 무리하지 않는 꾸준함, 적당한 섞임이 최고의 결과를 만들어냅니다.", "생활의 리듬이 한쪽으로 기울었어요. 일과 휴식, 지출과 저축의 균형을 다시 맞춰보세요."],
+  ["15. 악마", "😈", "달콤한 유혹을 조심하라는 카드예요. 나쁜 습관이나 집착이 발목을 잡기 전에 스스로 묶인 줄을 확인해 보세요.", "얽매였던 것에서 벗어날 힘이 생기고 있어요! 끊고 싶었던 습관이 있다면 지금이 기회입니다."],
+  ["16. 탑", "🗼", "갑작스러운 변화의 카드예요. 흔들림이 있더라도 무너지는 것은 낡은 껍데기일 뿐, 더 단단한 토대를 쌓을 기회가 됩니다.", "큰 위기를 아슬아슬하게 비껴가는 중이에요. 경고 신호를 무시하지 말고 미리 점검하면 탈이 없습니다."],
+  ["17. 별", "⭐", "희망과 영감의 카드! 바라던 일에 밝은 빛이 비칩니다. 꿈을 구체적으로 그릴수록 현실이 그 그림을 따라와요.", "기대만큼 풀리지 않아 지쳤을 수 있어요. 하지만 별은 구름 뒤에도 떠 있습니다. 희망의 끈을 놓지 마세요."],
+  ["18. 달", "🌕", "불확실함 속을 걷는 카드예요. 눈에 보이는 게 전부가 아니니 성급한 판단은 미루고 안개가 걷히길 기다리세요.", "감춰졌던 진실이 서서히 드러나고 있어요. 오해가 풀리고 불안이 가시는 시기입니다."],
+  ["19. 태양", "☀️", "성공, 활력, 순수한 기쁨의 카드! 하는 일마다 밝은 기운이 함께합니다. 자신 있게 웃으며 나아가세요.", "구름이 잠시 해를 가렸을 뿐이에요. 성과가 조금 늦어져도 결국 밝게 빛날 결과가 기다립니다."],
+  ["20. 심판", "📯", "부활과 재도전의 카드예요. 포기했던 일을 다시 살릴 기회가 옵니다. 과거의 경험이 이번엔 무기가 돼요.", "지난 일에 대한 후회에 붙들려 있어요. 스스로를 용서하고 교훈만 챙겨서 앞으로 나아가세요."],
+  ["21. 세계", "🌍", "완성과 성취의 카드! 긴 여정이 결실을 맺고 축하할 일이 생깁니다. 다음 무대는 더 넓은 세계예요.", "마무리 직전에 멈춰 있어요. 마지막 한 조각만 채우면 완성입니다. 끝까지 해내는 힘을 발휘하세요."]
+];
+
+const POS3 = ["🕰️ 과거", "🌟 현재", "🔭 미래"];
+let mode = 1, deck = [], picked = 0;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById("mode1").classList.toggle("sel", m === 1);
+  document.getElementById("mode3").classList.toggle("sel", m === 3);
+  reset();
+}
+
+function reset() {
+  picked = 0;
+  deck = shuffle(ARCANA.map((c, i) => ({ card: c, rev: Math.random() < 0.3 })));
+  document.getElementById("guide").textContent =
+    mode === 1
+      ? "질문을 떠올리며 가장 끌리는 카드 한 장을 골라주세요."
+      : "세 장을 차례로 골라주세요. 과거 → 현재 → 미래 순서로 읽어드립니다.";
+  document.getElementById("reading").innerHTML = "";
+  document.getElementById("res").classList.remove("show");
+
+  const el = document.getElementById("deck");
+  el.innerHTML = "";
+  deck.forEach((d, i) => {
+    const div = document.createElement("div");
+    div.className = "tcard";
+    div.innerHTML =
+      '<div class="inner">' +
+        '<div class="face back">✦</div>' +
+        '<div class="face front' + (d.rev ? " rev" : "") + '">' +
+          '<span class="em">' + d.card[1] + "</span>" +
+          '<span class="nm">' + d.card[0].replace(/^\d+\.\s*/, "") + "</span>" +
+        "</div>" +
+      "</div>";
+    div.onclick = () => pick(div, i);
+    el.appendChild(div);
+  });
+}
+
+function pick(div, i) {
+  if (picked >= mode || div.classList.contains("flipped")) return;
+  div.classList.add("flipped");
+  picked++;
+
+  const d = deck[i];
+  const posLabel = mode === 3 ? POS3[picked - 1] : "🌟 오늘의 카드";
+  const dirLabel = d.rev ? "역방향" : "정방향";
+  const meaning = d.rev ? d.card[3] : d.card[2];
+
+  document.getElementById("reading").innerHTML +=
+    '<div class="one">' +
+      '<div class="pos">' + posLabel + "</div>" +
+      '<div class="title">' + d.card[1] + " " + d.card[0] +
+        '<span class="dir">(' + dirLabel + ")</span></div>" +
+      "<p>" + meaning + "</p>" +
+    "</div>";
+
+  if (picked === mode) {
+    document.querySelectorAll(".tcard:not(.flipped)").forEach(c => c.classList.add("dimmed"));
+    setTimeout(() => {
+      const res = document.getElementById("res");
+      res.classList.add("show");
+      res.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 700);
+  }
+}
+
+reset();
+</script>
+</body>
+</html>

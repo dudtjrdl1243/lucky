@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>띠별 오늘의 운세 — 별별운세</title>
+<meta name="description" content="12간지 띠별로 보는 오늘의 운세와 오늘의 띠 순위">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="logo" href="index.html">🔮 별별운세</a>
+    <p class="tagline">오늘 나의 띠에는 어떤 기운이 흐를까요?</p>
+  </header>
+
+  <nav class="menu">
+    <a href="index.html">홈</a>
+    <a href="today.html">오늘의 운세</a>
+    <a href="tarot.html">타로</a>
+    <a href="saju.html">사주</a>
+    <a href="tti.html" class="on">띠별 운세</a>
+    <a href="gunghap.html">궁합</a>
+    <a href="lotto.html">로또</a>
+  </nav>
+
+  <div class="card">
+    <h2>🐾 띠별 오늘의 운세</h2>
+    <p class="desc">내 띠를 골라주세요. 오늘의 12간지 순위도 알려드려요!</p>
+    <div class="animal-grid" id="grid"></div>
+  </div>
+
+  <div class="card result" id="res">
+    <h2 id="resTitle"></h2>
+    <p class="desc" id="yearsLine" style="text-align:center;"></p>
+    <div class="big-number" id="score"></div>
+    <p class="rank-line" id="rankLine"></p>
+    <div class="score-row"><span class="cat">오늘의 별점</span><span class="stars" id="stars"></span></div>
+    <p class="fortune-msg" id="msg" style="margin-top:12px; font-size:1.02rem;"></p>
+
+    <p class="section-label">🍀 오늘의 포인트</p>
+    <div class="lucky-grid">
+      <div class="item"><div class="k">오늘의 키워드</div><div class="v" id="lkKey"></div></div>
+      <div class="item"><div class="k">행운의 시간</div><div class="v" id="lkTime"></div></div>
+      <div class="item"><div class="k">행운의 방향</div><div class="v" id="lkDir"></div></div>
+    </div>
+  </div>
+
+  <footer class="site">
+    <p>✨ 모든 결과는 오락용입니다. 가볍게 재미로만 즐겨주세요 ✨</p>
+  </footer>
+
+</div>
+
+<script>
+function hashSeed(str) {
+  let h = 1779033703 ^ str.length;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return h >>> 0;
+}
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// 12간지 (지지 순서)
+const ANIMALS = [
+  ["쥐", "🐭"], ["소", "🐮"], ["호랑이", "🐯"], ["토끼", "🐰"],
+  ["용", "🐲"], ["뱀", "🐍"], ["말", "🐴"], ["양", "🐑"],
+  ["원숭이", "🐵"], ["닭", "🐔"], ["개", "🐶"], ["돼지", "🐷"]
+];
+
+const MSGS = [
+  "막혔던 일이 스르르 풀리는 하루예요. 미뤄둔 연락 한 통이 좋은 물꼬가 됩니다.",
+  "귀인이 가까이에 있는 날입니다. 오늘 만나는 사람에게 밝게 인사해 보세요.",
+  "서두르지 않는 것이 오늘의 승부수예요. 천천히 가도 충분히 빠릅니다.",
+  "재물의 기운이 감도는 날. 다만 새어 나가는 작은 지출부터 단속하세요.",
+  "생각지 못한 칭찬이나 인정을 받을 수 있어요. 겸손하게 웃으며 받으세요.",
+  "말이 씨가 되는 날이니 긍정적인 말로 하루를 채워보세요.",
+  "몸을 움직일수록 운이 붙는 날이에요. 산책이나 가벼운 운동이 행운을 부릅니다.",
+  "오래 고민하던 문제의 답이 대화 속에서 툭 튀어나옵니다. 사람들과 이야기를 나눠보세요.",
+  "정리정돈이 운을 부르는 날. 가방 속, 책상 위부터 가볍게 비워보세요.",
+  "새로운 제안이나 소식이 들어올 수 있어요. 열린 마음으로 들어보면 기회가 보입니다.",
+  "오늘은 베푸는 만큼 돌아오는 날이에요. 작은 친절이 큰 복으로 자랍니다.",
+  "감이 좋은 날입니다. 사소한 선택은 첫 느낌을 믿어보세요.",
+  "욕심을 한 스푼 덜어내면 오히려 더 큰 것이 들어오는 하루예요.",
+  "익숙한 것에서 벗어나 보세요. 새로운 길, 새로운 메뉴가 활력이 됩니다.",
+  "주변의 응원이 힘이 되는 날이에요. 도움을 청하는 것도 능력입니다.",
+  "느긋한 마음이 최고의 부적이 되는 하루입니다. 여유를 챙기세요."
+];
+const KEYS  = ["기회", "여유", "소통", "정리", "직감", "도전", "배려", "휴식", "집중", "인연", "행동", "감사"];
+const TIMES = ["아침 7~9시", "오전 9~11시", "낮 11~1시", "오후 1~3시", "오후 3~5시", "저녁 5~7시", "저녁 7~9시", "밤 9~11시"];
+const DIRS  = ["동쪽", "서쪽", "남쪽", "북쪽", "남동쪽", "북동쪽", "남서쪽", "북서쪽"];
+
+const today = new Date();
+const dateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+
+// 오늘의 12간지 점수 (모두에게 동일하게 매일 바뀜)
+const SCORES = ANIMALS.map((a, i) => {
+  const r = mulberry32(hashSeed(dateStr + "|tti|" + i));
+  return 55 + Math.floor(r() * 46); // 55~100
+});
+
+function yearsOf(i) {
+  const list = [];
+  for (let y = 1948; y <= today.getFullYear(); y++) {
+    if ((y - 4) % 12 === i) list.push(y);
+  }
+  return list.slice(-6).join(", ") + "년생";
+}
+
+function show(i) {
+  document.querySelectorAll(".animal-grid button").forEach((b, j) =>
+    b.classList.toggle("sel", j === i));
+
+  const [nm, em] = ANIMALS[i];
+  const score = SCORES[i];
+  const rank = 1 + SCORES.filter((s, j) => s > score || (s === score && j < i)).length;
+  const rng = mulberry32(hashSeed(dateStr + "|tti-detail|" + i));
+
+  document.getElementById("resTitle").textContent = em + " " + nm + "띠 오늘의 운세";
+  document.getElementById("yearsLine").textContent = yearsOf(i);
+  document.getElementById("score").textContent = score + "점";
+  document.getElementById("rankLine").innerHTML =
+    "오늘 12간지 중 <b>" + rank + "위</b>" +
+    (rank === 1 ? " 👑 오늘의 주인공!" : rank <= 3 ? " ✨ 상위권이에요!" : rank >= 11 ? " — 이런 날일수록 여유가 무기!" : "");
+
+  const stars = score >= 92 ? 5 : score >= 80 ? 4 : score >= 66 ? 3 : 2;
+  document.getElementById("stars").textContent = "★".repeat(stars) + "☆".repeat(5 - stars);
+  document.getElementById("msg").textContent = MSGS[Math.floor(rng() * MSGS.length)];
+  document.getElementById("lkKey").textContent = KEYS[Math.floor(rng() * KEYS.length)];
+  document.getElementById("lkTime").textContent = TIMES[Math.floor(rng() * TIMES.length)];
+  document.getElementById("lkDir").textContent = DIRS[Math.floor(rng() * DIRS.length)];
+
+  const res = document.getElementById("res");
+  res.classList.add("show");
+  res.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+const grid = document.getElementById("grid");
+ANIMALS.forEach((a, i) => {
+  const b = document.createElement("button");
+  b.innerHTML = '<span class="em">' + a[1] + '</span><span class="nm">' + a[0] + "띠</span>";
+  b.onclick = () => show(i);
+  grid.appendChild(b);
+});
+</script>
+</body>
+</html>

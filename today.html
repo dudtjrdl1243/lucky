@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 운세 — 별별운세</title>
+<meta name="description" content="이름과 생년월일로 보는 오늘 하루의 총운, 애정운, 금전운, 건강운">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌞</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="logo" href="index.html">🔮 별별운세</a>
+    <p class="tagline">같은 날, 같은 사람에게는 언제나 같은 운세가 나와요</p>
+  </header>
+
+  <nav class="menu">
+    <a href="index.html">홈</a>
+    <a href="today.html" class="on">오늘의 운세</a>
+    <a href="tarot.html">타로</a>
+    <a href="saju.html">사주</a>
+    <a href="tti.html">띠별 운세</a>
+    <a href="gunghap.html">궁합</a>
+    <a href="lotto.html">로또</a>
+  </nav>
+
+  <div class="card">
+    <h2>🌞 오늘의 운세</h2>
+    <p class="desc">이름과 생년월일을 입력하면 오늘 하루의 운세를 알려드려요.</p>
+    <label class="field" for="nm">이름 (또는 닉네임)</label>
+    <input type="text" id="nm" placeholder="예) 홍길동" maxlength="20">
+    <label class="field" for="bd">생년월일</label>
+    <input type="date" id="bd" min="1930-01-01">
+    <button class="primary" onclick="tell()">오늘의 운세 보기 ✨</button>
+  </div>
+
+  <div class="card result" id="res">
+    <h2 id="resTitle"></h2>
+    <div class="big-number" id="score"></div>
+    <p style="text-align:center; color:var(--text-dim); font-size:.85rem; margin-bottom:10px;">오늘의 운세 지수</p>
+
+    <div id="rows"></div>
+
+    <p class="section-label">🍀 오늘의 행운</p>
+    <div class="lucky-grid">
+      <div class="item"><div class="k">행운의 색</div><div class="v" id="lkColor"></div></div>
+      <div class="item"><div class="k">행운의 숫자</div><div class="v" id="lkNum"></div></div>
+      <div class="item"><div class="k">행운의 아이템</div><div class="v" id="lkItem"></div></div>
+    </div>
+
+    <button class="ghost" onclick="location.reload()">다시 보기</button>
+  </div>
+
+  <footer class="site">
+    <p>✨ 모든 결과는 오락용입니다. 가볍게 재미로만 즐겨주세요 ✨</p>
+  </footer>
+
+</div>
+
+<script>
+// 문자열 → 시드 (같은 입력이면 항상 같은 결과)
+function hashSeed(str) {
+  let h = 1779033703 ^ str.length;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return h >>> 0;
+}
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const POOLS = {
+  "총운 🌟": [
+    "머릿속에 담아두던 일을 실행에 옮기기 좋은 날이에요. 첫걸음이 생각보다 가볍습니다.",
+    "우연한 만남이나 연락이 좋은 소식을 물고 올 수 있어요. 휴대폰을 너무 멀리 두지 마세요.",
+    "서두르면 오히려 꼬이는 날. 평소보다 반 박자 느리게 움직이면 만사가 순조롭습니다.",
+    "주변 사람의 사소한 부탁을 들어주면 나중에 몇 배로 돌아옵니다.",
+    "오늘은 직감이 유난히 잘 맞는 날이에요. 고민되면 처음 떠오른 쪽을 선택해 보세요.",
+    "작은 실수에 마음 쓰지 마세요. 오히려 그 실수가 새로운 기회의 문을 열어줍니다.",
+    "미뤄두었던 정리나 청소를 하면 운의 흐름이 확 트입니다. 책상 위부터 시작해 보세요.",
+    "낯선 것에 도전하기 좋은 날. 안 가본 길, 안 먹어본 메뉴가 뜻밖의 즐거움을 줍니다.",
+    "오늘의 키워드는 '여유'. 한 템포 쉬어가는 것이 오히려 지름길이 됩니다.",
+    "말 한마디가 큰 힘을 갖는 날이에요. 긍정적인 말을 골라 쓰면 하루가 달라집니다."
+  ],
+  "애정운 💗": [
+    "솔직한 한마디가 관계를 한 뼘 더 가깝게 만들어요. 마음을 표현해 보세요.",
+    "상대의 이야기를 끝까지 들어주는 것만으로 점수가 쑥 올라가는 날입니다.",
+    "설레는 신호가 감지되는 날. 평소보다 거울을 한 번 더 보고 나가세요.",
+    "오래된 인연에게서 반가운 연락이 올 수 있어요. 먼저 안부를 물어도 좋습니다.",
+    "질투나 조급함은 금물. 느긋한 마음이 오히려 매력으로 다가갑니다.",
+    "함께 맛있는 것을 먹으면 관계가 부드러워지는 날이에요.",
+    "혼자만의 시간이 오히려 매력을 충전해 줍니다. 스스로를 아껴주세요.",
+    "가벼운 농담이 분위기를 살립니다. 웃음 코드가 잘 맞는 하루예요.",
+    "무심코 한 배려가 상대의 마음에 오래 남습니다. 작은 친절을 아끼지 마세요.",
+    "오늘은 밀당보다 직진이 통하는 날입니다."
+  ],
+  "금전운 💰": [
+    "충동구매 주의보! 장바구니에 하루만 묵혀두면 후회가 없습니다.",
+    "뜻밖의 곳에서 잊고 있던 돈이 나올 수 있어요. 주머니와 서랍을 확인해 보세요.",
+    "오늘 아낀 커피 한 잔 값이 나중에 큰 종잣돈의 씨앗이 됩니다.",
+    "금전 관련 정보에 귀가 밝아지는 날. 다만 결정은 내일로 미루는 게 좋아요.",
+    "작은 지출이 모여 큰 구멍이 되는 날이니 가계부를 한번 들여다보세요.",
+    "나를 위한 적당한 소비가 오히려 활력이 됩니다. 죄책감 없이 즐기세요.",
+    "돈 거래나 계약은 꼼꼼히 두 번 확인하면 탈이 없습니다.",
+    "재테크 공부를 시작하기 좋은 날이에요. 책 한 권, 영상 하나면 충분합니다.",
+    "베푼 만큼 돌아오는 날. 밥 한 끼 사는 것을 아까워하지 마세요.",
+    "가격 비교 한 번이 쏠쏠한 이득으로 이어집니다."
+  ],
+  "직장·학업운 📚": [
+    "집중력이 최고조에 달하는 날. 가장 어려운 일을 오전에 해치우세요.",
+    "동료나 친구의 도움이 빛을 발합니다. 혼자 끙끙대지 말고 물어보세요.",
+    "꼼꼼함이 무기가 되는 날이에요. 제출 전에 한 번만 더 확인하세요.",
+    "새로운 아이디어가 샘솟는 날. 떠오르는 생각을 꼭 메모해 두세요.",
+    "칭찬받을 일이 생길 수 있어요. 겸손하게 받으면 운이 더 오래갑니다.",
+    "오늘의 작은 성실함이 곧 큰 평판이 됩니다. 기본에 충실하세요.",
+    "미뤄둔 일이 발목을 잡기 전에 오늘 하나만 처리해 두세요.",
+    "배움에 좋은 날입니다. 짧은 강의 하나가 오래 남는 지식이 돼요.",
+    "실수해도 빠르게 인정하면 오히려 신뢰가 쌓이는 날입니다.",
+    "경쟁보다는 협력이 좋은 결과를 부르는 하루예요."
+  ],
+  "건강운 🌿": [
+    "물을 평소보다 자주 마시면 몸이 한결 가벼워집니다.",
+    "가벼운 스트레칭이 뭉친 하루를 풀어줍니다. 어깨부터 돌려보세요.",
+    "일찍 자는 것이 최고의 보약인 날이에요. 오늘은 야식 대신 꿀잠!",
+    "산책 20분이 머리를 맑게 하고 좋은 생각을 불러옵니다.",
+    "과식 주의! 배부르기 직전에 수저를 내려놓으면 컨디션이 좋아져요.",
+    "눈의 피로가 쌓이기 쉬운 날. 한 시간에 한 번은 먼 곳을 바라보세요.",
+    "따뜻한 차 한 잔이 마음의 긴장을 풀어주는 날입니다.",
+    "몸이 보내는 작은 신호에 귀 기울이세요. 무리하지 않는 게 상책입니다.",
+    "웃음이 최고의 운동인 날. 재미있는 것을 찾아 실컷 웃어보세요.",
+    "계단을 이용하면 건강운이 한 칸씩 올라갑니다."
+  ]
+};
+
+const COLORS = ["골드", "라벤더", "하늘색", "민트", "코랄", "네이비", "화이트", "버건디", "연두", "살구색", "은색", "청록"];
+const ITEMS  = ["손수건", "텀블러", "동전", "볼펜", "이어폰", "립밤", "열쇠고리", "책 한 권", "우산", "사탕", "머리끈", "향수"];
+
+function tell() {
+  const name = document.getElementById("nm").value.trim();
+  const bd = document.getElementById("bd").value;
+  if (!name && !bd) { alert("이름이나 생년월일 중 하나는 입력해 주세요!"); return; }
+
+  const today = new Date();
+  const dateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  const rng = mulberry32(hashSeed(dateStr + "|" + name + "|" + bd));
+
+  const score = 60 + Math.floor(rng() * 41); // 60~100
+  document.getElementById("score").textContent = score + "점";
+  document.getElementById("resTitle").textContent =
+    "🌙 " + (name || "당신") + "님의 " + (today.getMonth() + 1) + "월 " + today.getDate() + "일 운세";
+
+  let html = "";
+  for (const cat in POOLS) {
+    const stars = 2 + Math.floor(rng() * 4); // 2~5
+    const msg = POOLS[cat][Math.floor(rng() * POOLS[cat].length)];
+    html += '<div class="score-row"><span class="cat">' + cat + '</span>' +
+            '<span class="stars">' + "★".repeat(stars) + "☆".repeat(5 - stars) + "</span></div>" +
+            '<p class="fortune-msg">' + msg + "</p>";
+  }
+  document.getElementById("rows").innerHTML = html;
+
+  document.getElementById("lkColor").textContent = COLORS[Math.floor(rng() * COLORS.length)];
+  document.getElementById("lkNum").textContent = 1 + Math.floor(rng() * 45);
+  document.getElementById("lkItem").textContent = ITEMS[Math.floor(rng() * ITEMS.length)];
+
+  const res = document.getElementById("res");
+  res.classList.add("show");
+  res.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+</body>
+</html>

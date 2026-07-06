@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>궁합 보기 — 별별운세</title>
+<meta name="description" content="두 사람의 생년월일로 보는 띠 궁합과 별자리 궁합">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💞</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="logo" href="index.html">🔮 별별운세</a>
+    <p class="tagline">두 사람의 기운은 얼마나 잘 어울릴까요?</p>
+  </header>
+
+  <nav class="menu">
+    <a href="index.html">홈</a>
+    <a href="today.html">오늘의 운세</a>
+    <a href="tarot.html">타로</a>
+    <a href="saju.html">사주</a>
+    <a href="tti.html">띠별 운세</a>
+    <a href="gunghap.html" class="on">궁합</a>
+    <a href="lotto.html">로또</a>
+  </nav>
+
+  <div class="card">
+    <h2>💞 궁합 보기</h2>
+    <p class="desc">연인, 친구, 가족 누구든 좋아요. 두 사람의 정보를 입력해 주세요.</p>
+    <div class="duo">
+      <div class="person">
+        <h3>👤 첫 번째 사람</h3>
+        <label class="field" for="nmA">이름</label>
+        <input type="text" id="nmA" placeholder="예) 나" maxlength="20">
+        <label class="field" for="bdA">생년월일</label>
+        <input type="date" id="bdA" min="1930-01-01">
+      </div>
+      <div class="person">
+        <h3>💫 두 번째 사람</h3>
+        <label class="field" for="nmB">이름</label>
+        <input type="text" id="nmB" placeholder="예) 그 사람" maxlength="20">
+        <label class="field" for="bdB">생년월일</label>
+        <input type="date" id="bdB" min="1930-01-01">
+      </div>
+    </div>
+    <button class="primary" onclick="tell()">궁합 확인하기 💕</button>
+  </div>
+
+  <div class="card result" id="res">
+    <div class="vs-title" id="vsTitle"></div>
+    <div class="big-number" id="score"></div>
+    <p style="text-align:center; font-weight:800; color:var(--purple-soft); margin-bottom:6px;" id="band"></p>
+
+    <p class="section-label">🐾 띠 궁합</p>
+    <div class="score-row"><span class="cat" id="ttiPair"></span><span class="stars" id="ttiStars"></span></div>
+    <p class="fortune-msg" id="ttiMsg"></p>
+
+    <p class="section-label">✨ 별자리 궁합</p>
+    <div class="score-row"><span class="cat" id="starPair"></span><span class="stars" id="starStars"></span></div>
+    <p class="fortune-msg" id="starMsg"></p>
+
+    <p class="section-label">💌 두 사람을 위한 조언</p>
+    <p id="advice"></p>
+
+    <button class="ghost" onclick="location.reload()">다른 궁합 보기</button>
+  </div>
+
+  <footer class="site">
+    <p>✨ 모든 결과는 오락용입니다. 가볍게 재미로만 즐겨주세요 ✨</p>
+  </footer>
+
+</div>
+
+<script>
+function hashSeed(str) {
+  let h = 1779033703 ^ str.length;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return h >>> 0;
+}
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const ANIMALS = [
+  ["쥐", "🐭"], ["소", "🐮"], ["호랑이", "🐯"], ["토끼", "🐰"],
+  ["용", "🐲"], ["뱀", "🐍"], ["말", "🐴"], ["양", "🐑"],
+  ["원숭이", "🐵"], ["닭", "🐔"], ["개", "🐶"], ["돼지", "🐷"]
+];
+// 삼합: 서로 밀어주는 세 띠 묶음 / 육합: 짝을 이루는 두 띠 / 충: 정반대 띠
+const SAMHAP = [[0, 4, 8], [1, 5, 9], [2, 6, 10], [3, 7, 11]];
+const YUKHAP = [[0, 1], [2, 11], [3, 10], [4, 9], [5, 8], [6, 7]];
+
+// [이름, 이모지, 시작월, 시작일, 원소]
+const ZODIAC = [
+  ["물병자리", "🏺", 1, 20, "공기"], ["물고기자리", "🐟", 2, 19, "물"],
+  ["양자리", "🐏", 3, 21, "불"], ["황소자리", "🐂", 4, 20, "흙"],
+  ["쌍둥이자리", "👯", 5, 21, "공기"], ["게자리", "🦀", 6, 22, "물"],
+  ["사자자리", "🦁", 7, 23, "불"], ["처녀자리", "🌾", 8, 23, "흙"],
+  ["천칭자리", "⚖️", 9, 23, "공기"], ["전갈자리", "🦂", 10, 23, "물"],
+  ["사수자리", "🏹", 11, 23, "불"], ["염소자리", "🐐", 12, 22, "흙"]
+];
+function getZodiac(m, d) {
+  for (let i = ZODIAC.length - 1; i >= 0; i--) {
+    const z = ZODIAC[i];
+    if (m > z[2] || (m === z[2] && d >= z[3])) return z;
+  }
+  return ZODIAC[ZODIAC.length - 1];
+}
+
+const ADVICE = [
+  "서로의 '다름'을 고치려 하지 말고 구경해 보세요. 그게 이 관계의 가장 재미있는 부분입니다.",
+  "고마움은 마음속에 저축하지 말고 그때그때 말로 지불하세요. 이자가 몇 배로 붙습니다.",
+  "함께 새로운 것에 도전해 보세요. 낯선 곳에서 두 사람의 케미가 폭발합니다.",
+  "대화의 절반은 듣기입니다. 오늘은 상대의 이야기를 한 번 더 물어봐 주세요.",
+  "작은 기념일을 만들어 보세요. 사소한 이벤트가 관계의 비타민이 됩니다.",
+  "다툰 날에는 잠들기 전에 화해하는 것, 이 둘의 관계를 지키는 황금 규칙입니다.",
+  "가끔은 각자의 시간도 선물하세요. 잠깐의 거리가 애틋함을 충전해 줍니다.",
+  "함께 맛있는 것을 먹으며 나누는 수다가 이 궁합의 최고 보약입니다."
+];
+
+function tell() {
+  const nmA = document.getElementById("nmA").value.trim() || "첫 번째 사람";
+  const nmB = document.getElementById("nmB").value.trim() || "두 번째 사람";
+  const bdA = document.getElementById("bdA").value;
+  const bdB = document.getElementById("bdB").value;
+  if (!bdA || !bdB) { alert("두 사람의 생년월일을 모두 입력해 주세요!"); return; }
+
+  const [yA, mA, dA] = bdA.split("-").map(Number);
+  const [yB, mB, dB] = bdB.split("-").map(Number);
+  const tA = (yA - 4) % 12, tB = (yB - 4) % 12;
+  const zA = getZodiac(mA, dA), zB = getZodiac(mB, dB);
+
+  // 누가 먼저 입력하든 같은 결과가 나오도록 정렬해서 시드 생성
+  const key = [bdA + nmA, bdB + nmB].sort().join("|");
+  const rng = mulberry32(hashSeed(key));
+  let score = 48 + Math.floor(rng() * 38); // 48~85
+
+  // 띠 궁합
+  let ttiStars, ttiMsg;
+  const pairKey = [tA, tB].sort((a, b) => a - b).join(",");
+  if (tA === tB) {
+    score += 6; ttiStars = 4;
+    ttiMsg = "같은 띠끼리는 서로가 거울 같아요. 말하지 않아도 통하는 든든한 동지 궁합입니다.";
+  } else if (SAMHAP.some(g => g.includes(tA) && g.includes(tB))) {
+    score += 12; ttiStars = 5;
+    ttiMsg = "서로를 끌어주고 밀어주는 '삼합' 궁합! 함께 있을 때 각자의 운도 함께 커지는 최고의 조합이에요.";
+  } else if (YUKHAP.some(p => p.join(",") === pairKey)) {
+    score += 10; ttiStars = 5;
+    ttiMsg = "12간지가 짝으로 맺어준 '육합' 궁합이에요. 부족한 부분을 서로 채워주는 천생의 파트너입니다.";
+  } else if (Math.abs(tA - tB) === 6) {
+    score -= 6; ttiStars = 2;
+    ttiMsg = "정반대에 서 있는 '충' 관계예요. 티격태격 불꽃이 튀지만, 그만큼 서로에게 강렬하게 끌리는 애증의 궁합!";
+  } else {
+    ttiStars = 3;
+    ttiMsg = "무난하게 어울리는 궁합이에요. 큰 충돌 없이 편안하게 서로에게 스며드는 사이입니다.";
+  }
+
+  // 별자리 궁합 (원소: 불↔공기 / 흙↔물 잘 맞음)
+  let starStars, starMsg;
+  const eA = zA[4], eB = zB[4];
+  const goodPair = (eA === eB) ||
+    (eA === "불" && eB === "공기") || (eA === "공기" && eB === "불") ||
+    (eA === "흙" && eB === "물") || (eA === "물" && eB === "흙");
+  if (eA === eB) {
+    score += 7; starStars = 4;
+    starMsg = "같은 " + eA + "의 기운을 가진 두 사람이에요. 감정의 온도가 비슷해 말이 잘 통하고 편안합니다.";
+  } else if (goodPair) {
+    score += 9; starStars = 5;
+    starMsg = eA + "과(와) " + eB + "은(는) 서로를 살려주는 찰떡 원소 조합! 함께 있으면 시너지가 폭발합니다.";
+  } else {
+    score -= 2; starStars = 3;
+    starMsg = eA + "과(와) " + eB + "의 만남은 서로에게 없는 것을 배우는 조합이에요. 다름이 오히려 매력이 됩니다.";
+  }
+
+  score = Math.max(42, Math.min(99, score));
+  const band =
+    score >= 92 ? "💯 하늘이 맺어준 인연급!" :
+    score >= 84 ? "💖 천생연분 찰떡궁합!" :
+    score >= 74 ? "💗 함께할수록 좋아지는 궁합" :
+    score >= 62 ? "🌱 노력하면 활짝 피는 궁합" :
+    "🔥 밀당 스릴 만점, 반전 궁합";
+
+  document.getElementById("vsTitle").innerHTML =
+    ANIMALS[tA][1] + " " + nmA + ' <span class="heart">♥</span> ' + nmB + " " + ANIMALS[tB][1];
+  document.getElementById("score").textContent = score + "점";
+  document.getElementById("band").textContent = band;
+  document.getElementById("ttiPair").textContent =
+    ANIMALS[tA][1] + " " + ANIMALS[tA][0] + "띠 × " + ANIMALS[tB][1] + " " + ANIMALS[tB][0] + "띠";
+  document.getElementById("ttiStars").textContent = "★".repeat(ttiStars) + "☆".repeat(5 - ttiStars);
+  document.getElementById("ttiMsg").textContent = ttiMsg;
+  document.getElementById("starPair").textContent =
+    zA[1] + " " + zA[0] + " × " + zB[1] + " " + zB[0];
+  document.getElementById("starStars").textContent = "★".repeat(starStars) + "☆".repeat(5 - starStars);
+  document.getElementById("starMsg").textContent = starMsg;
+  document.getElementById("advice").textContent = ADVICE[Math.floor(rng() * ADVICE.length)];
+
+  const res = document.getElementById("res");
+  res.classList.add("show");
+  res.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+</body>
+</html>

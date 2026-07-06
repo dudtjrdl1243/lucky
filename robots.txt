@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dudtjrdl1243.github.io/lucky/sitemap.xml

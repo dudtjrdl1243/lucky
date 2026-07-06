@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#2c1b52"/>
+      <stop offset="45%" stop-color="#1a1033"/>
+      <stop offset="100%" stop-color="#0d0b1e"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="180" cy="120" r="2" fill="#fff" opacity=".7"/>
+  <circle cx="980" cy="90" r="2.5" fill="#f0c96a" opacity=".8"/>
+  <circle cx="1080" cy="300" r="2" fill="#fff" opacity=".6"/>
+  <circle cx="120" cy="480" r="2" fill="#b39ddb" opacity=".7"/>
+  <circle cx="1000" cy="520" r="2" fill="#fff" opacity=".5"/>
+  <text x="600" y="280" text-anchor="middle" font-size="120" font-family="'Noto Sans KR', sans-serif">🔮</text>
+  <text x="600" y="400" text-anchor="middle" font-size="76" font-weight="900" font-family="'Noto Sans KR', sans-serif" fill="#f0c96a">별별운세</text>
+  <text x="600" y="460" text-anchor="middle" font-size="32" font-family="'Noto Sans KR', sans-serif" fill="#b39ddb">오늘의 운세 · 타로 · 사주 · 궁합 · 로또번호생성</text>
+</svg>

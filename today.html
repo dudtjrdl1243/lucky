@@ -59,6 +59,8 @@
       <div class="item"><div class="k">행운의 아이템</div><div class="v" id="lkItem"></div></div>
     </div>
 
+    <div id="luckyShop"></div>
+
     <button class="ghost" onclick="location.reload()">다시 보기</button>
   </div>
 
@@ -69,6 +71,7 @@
 
 </div>
 
+<script src="lucky-items.js"></script>
 <script>
 // 문자열 → 시드 (같은 입력이면 항상 같은 결과)
 function hashSeed(str) {
@@ -180,7 +183,9 @@ function tell() {
 
   document.getElementById("lkColor").textContent = COLORS[Math.floor(rng() * COLORS.length)];
   document.getElementById("lkNum").textContent = 1 + Math.floor(rng() * 45);
-  document.getElementById("lkItem").textContent = ITEMS[Math.floor(rng() * ITEMS.length)];
+  const luckyItem = ITEMS[Math.floor(rng() * ITEMS.length)];
+  document.getElementById("lkItem").textContent = luckyItem;
+  renderLuckyShop("luckyShop", LUCKY_PRODUCTS[luckyItem]);
 
   const res = document.getElementById("res");
   res.classList.add("show");

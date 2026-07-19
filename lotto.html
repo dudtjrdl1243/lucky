@@ -50,6 +50,7 @@
     <h2>🍀 오늘의 행운 번호</h2>
     <div id="games"></div>
     <p class="fortune-msg" id="omen" style="margin-top:16px; text-align:center; color:var(--purple-soft);"></p>
+    <div id="luckyShop"></div>
     <button class="ghost" onclick="roll()">다시 뽑기</button>
   </div>
 
@@ -60,6 +61,7 @@
 
 </div>
 
+<script src="lucky-items.js"></script>
 <script>
 let gameCount = 1;
 
@@ -106,6 +108,10 @@ function roll() {
   }
   document.getElementById("games").innerHTML = html;
   document.getElementById("omen").textContent = OMENS[Math.floor(Math.random() * OMENS.length)];
+  const available = LOTTO_PRODUCTS.filter(p => p.url);
+  if (available.length) {
+    renderLuckyShop("luckyShop", available[Math.floor(Math.random() * available.length)], "🧧 당첨 기원 행운템");
+  }
 
   const res = document.getElementById("res");
   res.classList.add("show");

@@ -427,6 +427,47 @@ button.ghost:hover { color: var(--gold); border-color: var(--gold-dim); }
   .game-row { gap: 6px; }
 }
 
+/* ── 행운 아이템 (쿠팡 파트너스) ── */
+a.lucky-shop {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: rgba(240, 201, 106, .07);
+  border: 1px solid rgba(240, 201, 106, .3);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+a.lucky-shop:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  box-shadow: 0 6px 24px rgba(240, 201, 106, .2);
+}
+.lucky-shop .ls-emoji { font-size: 2rem; flex-shrink: 0; }
+.lucky-shop .ls-body { display: flex; flex-direction: column; min-width: 0; }
+.lucky-shop .ls-name { font-weight: 800; color: var(--gold); font-size: 1rem; }
+.lucky-shop .ls-pitch { font-size: .84rem; color: var(--text-dim); }
+.lucky-shop .ls-go {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.ls-notice {
+  margin-top: 8px;
+  font-size: .7rem;
+  color: var(--text-dim);
+  opacity: .7;
+  text-align: center;
+}
+@media (max-width: 420px) {
+  .lucky-shop .ls-go { display: none; }
+}
+
 /* ── 푸터 ── */
 footer.site {
   text-align: center;

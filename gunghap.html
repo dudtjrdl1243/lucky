@@ -44,14 +44,14 @@
         <label class="field" for="nmA">이름</label>
         <input type="text" id="nmA" placeholder="예) 나" maxlength="20">
         <label class="field" for="bdA">생년월일</label>
-        <input type="date" id="bdA" min="1930-01-01">
+        <input type="text" inputmode="numeric" id="bdA" data-birth placeholder="예) 19840825" maxlength="10">
       </div>
       <div class="person">
         <h3>💫 두 번째 사람</h3>
         <label class="field" for="nmB">이름</label>
         <input type="text" id="nmB" placeholder="예) 그 사람" maxlength="20">
         <label class="field" for="bdB">생년월일</label>
-        <input type="date" id="bdB" min="1930-01-01">
+        <input type="text" inputmode="numeric" id="bdB" data-birth placeholder="예) 19870103" maxlength="10">
       </div>
     </div>
     <button class="primary" onclick="tell()">궁합 확인하기 💕</button>
@@ -88,6 +88,7 @@
 
 </div>
 
+<script src="birth-input.js"></script>
 <script>
 function hashSeed(str) {
   let h = 1779033703 ^ str.length;
@@ -149,6 +150,7 @@ function tell() {
   const bdA = document.getElementById("bdA").value;
   const bdB = document.getElementById("bdB").value;
   if (!bdA || !bdB) { alert("두 사람의 생년월일을 모두 입력해 주세요!"); return; }
+  if (!isValidBirth(bdA) || !isValidBirth(bdB)) { alert("생년월일을 확인해 주세요! 예) 19840825"); return; }
 
   const [yA, mA, dA] = bdA.split("-").map(Number);
   const [yB, mB, dB] = bdB.split("-").map(Number);

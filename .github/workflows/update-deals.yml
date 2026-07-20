@@ -20,6 +20,7 @@ jobs:
           python-version: "3.12"
 
       - name: 골드박스 데이터 갱신
+        continue-on-error: true
         env:
           COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
           COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
@@ -31,6 +32,7 @@ jobs:
 
       - name: 텔레그램 특가 포스팅 (설정 시)
         if: github.event.schedule != '40 12 * * 6'
+        continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -45,6 +47,7 @@ jobs:
         run: python scripts/post_threads.py
 
       - name: 변경사항 커밋
+        if: always()
         run: |
           git config user.name "deals-bot"
           git config user.email "actions@users.noreply.github.com"

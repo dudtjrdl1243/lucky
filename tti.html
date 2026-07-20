@@ -56,6 +56,7 @@
       <div class="item"><div class="k">행운의 시간</div><div class="v" id="lkTime"></div></div>
       <div class="item"><div class="k">행운의 방향</div><div class="v" id="lkDir"></div></div>
     </div>
+    <button class="ghost" onclick="shareResult()" style="margin-top:20px;">📤 결과 공유하기</button>
   </div>
 
   <div class="card">
@@ -89,6 +90,7 @@
 
 </div>
 
+<script src="share.js"></script>
 <script>
 function hashSeed(str) {
   let h = 1779033703 ^ str.length;
@@ -175,6 +177,8 @@ function show(i) {
   document.getElementById("lkKey").textContent = KEYS[Math.floor(rng() * KEYS.length)];
   document.getElementById("lkTime").textContent = TIMES[Math.floor(rng() * TIMES.length)];
   document.getElementById("lkDir").textContent = DIRS[Math.floor(rng() * DIRS.length)];
+
+  window.SHARE_TEXT = em + " " + nm + "띠 오늘 " + score + "점, 12간지 중 " + rank + "위! 네 띠는 몇 위인지 무료로 확인해봐";
 
   const res = document.getElementById("res");
   res.classList.add("show");

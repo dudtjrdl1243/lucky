@@ -59,7 +59,8 @@
     <div id="games"></div>
     <p class="fortune-msg" id="omen" style="margin-top:16px; text-align:center; color:var(--purple-soft);"></p>
     <div id="luckyShop"></div>
-    <button class="ghost" onclick="roll()">다시 뽑기</button>
+    <button class="ghost" onclick="shareResult()" style="margin-top:20px;">📤 번호 공유하기</button>
+    <button class="ghost" onclick="roll()" style="margin-top:10px;">다시 뽑기</button>
   </div>
 
   <div style="margin-top:28px;display:flex;justify-content:center;">
@@ -75,6 +76,7 @@
 </div>
 
 <script src="lucky-items.js"></script>
+<script src="share.js"></script>
 <script>
 let gameCount = 1;
 
@@ -110,8 +112,10 @@ function drawSix() {
 
 function roll() {
   let html = "";
+  const allGames = [];
   for (let g = 0; g < gameCount; g++) {
     const nums = drawSix();
+    allGames.push(nums);
     html += '<div class="game-row"><span class="gname">' + String.fromCharCode(65 + g) + " 게임</span>";
     nums.forEach((n, i) => {
       html += '<span class="ball ' + ballClass(n) + '" style="animation-delay:' +
@@ -121,6 +125,7 @@ function roll() {
   }
   document.getElementById("games").innerHTML = html;
   document.getElementById("omen").textContent = OMENS[Math.floor(Math.random() * OMENS.length)];
+  window.SHARE_TEXT = "🍀 방금 뽑은 행운의 로또번호: " + allGames.map(g => g.join(",")).join(" / ") + " — 너도 무료로 뽑아봐!";
   const available = LOTTO_PRODUCTS.filter(p => p.url);
   if (available.length) {
     renderLuckyShop("luckyShop", available[Math.floor(Math.random() * available.length)], "🧧 당첨 기원 행운템");

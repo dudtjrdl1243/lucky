@@ -68,4 +68,6 @@ function renderDailyFortune(kind, idx, label) {
   document.getElementById("lkKey").textContent = DF_KEYS[Math.floor(rng() * DF_KEYS.length)];
   document.getElementById("lkTime").textContent = DF_TIMES[Math.floor(rng() * DF_TIMES.length)];
   document.getElementById("lkDir").textContent = DF_DIRS[Math.floor(rng() * DF_DIRS.length)];
+
+  window.SHARE_TEXT = "🔮 " + label + " 오늘 " + score + "점, " + group + " 중 " + rank + "위! 너도 무료로 확인해봐";
 }

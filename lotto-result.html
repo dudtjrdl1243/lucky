@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로또 1233회 당첨번호 조회 | 1등 당첨금 확인 — 별별운세</title>
+<meta name="description" content="로또 1233회 당첨번호와 보너스 번호, 1등 당첨금·당첨자 수를 확인하세요. 매주 토요일 자동 업데이트! 최근 5회차 당첨번호도 한눈에.">
+<meta name="keywords" content="로또당첨번호,로또1233회,로또당첨번호조회,이번주로또,로또1등당첨금">
+<link rel="canonical" href="https://dudtjrdl1243.github.io/lucky/lotto-result.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="로또 1233회 당첨번호 조회 — 별별운세">
+<meta property="og:description" content="이번 주 로또 당첨번호와 1등 당첨금, 최근 5회차까지 한눈에">
+<meta property="og:url" content="https://dudtjrdl1243.github.io/lucky/lotto-result.html">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="logo" href="index.html">🔮 별별운세</a>
+    <p class="tagline">이번 주 행운의 주인공은 누구였을까요?</p>
+  </header>
+
+  <nav class="menu">
+    <a href="index.html">홈</a>
+    <a href="today.html">오늘의 운세</a>
+    <a href="tarot.html">타로</a>
+    <a href="saju.html">사주</a>
+    <a href="tti.html">띠별 운세</a>
+    <a href="gunghap.html">궁합</a>
+    <a href="lotto.html" class="on">로또</a>
+    <a href="deals.html">특가</a>
+  </nav>
+
+  <div class="card">
+    <h2 id="mainTitle">🏆 로또 당첨번호</h2>
+    <p class="desc" id="drawInfo"></p>
+    <div class="game-row" style="border:none; justify-content:center; flex-wrap:wrap;" id="mainBalls"></div>
+    <div class="lucky-grid" style="grid-template-columns:repeat(2,1fr);">
+      <div class="item"><div class="k">1등 당첨금 (1인)</div><div class="v" id="prize"></div></div>
+      <div class="item"><div class="k">1등 당첨자</div><div class="v" id="winners"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📋 최근 5회차 당첨번호</h2>
+    <div id="history"></div>
+  </div>
+
+  <div class="card">
+    <h2>🍀 다음 회차 주인공은 나!</h2>
+    <p class="desc">우주의 기운을 담은 행운의 번호를 무료로 뽑아보세요.</p>
+    <a class="lucky-shop" href="lotto.html" style="margin-top:14px;">
+      <span class="ls-emoji">🎱</span>
+      <span class="ls-body"><span class="ls-name">행운의 로또번호 생성기</span>
+      <span class="ls-pitch">1~5게임까지 무료, 클릭 한 번이면 끝</span></span>
+      <span class="ls-go">번호 뽑으러 →</span>
+    </a>
+  </div>
+
+  <div style="margin-top:28px;display:flex;justify-content:center;">
+    <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-7Y8i4O6wwHmSqg0j" data-ad-width="300" data-ad-height="250"></ins>
+  </div>
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+
+  <footer class="site">
+    <p>✨ 당첨번호는 동행복권 공식 발표 기준이며, 구매·조회는 공식 채널을 이용하세요 ✨</p>
+    <p style="margin-top:6px;font-size:12px"><a href="privacy.html" style="color:inherit;opacity:.7">개인정보처리방침</a></p>
+  </footer>
+
+</div>
+
+<script src="lotto-data.js"></script>
+<script>
+(function () {
+  if (typeof LOTTO_ROUNDS === "undefined" || !LOTTO_ROUNDS.length) return;
+  var L = LOTTO_ROUNDS[0];
+
+  function ballClass(n) { return n <= 10 ? "b1" : n <= 20 ? "b2" : n <= 30 ? "b3" : n <= 40 ? "b4" : "b5"; }
+  function ballsHtml(nums, bonus, small) {
+    var h = nums.map(function (n, i) {
+      return '<span class="ball ' + ballClass(n) + '" style="animation-delay:' + (i * 0.08).toFixed(2) + 's">' + n + '</span>';
+    }).join("");
+    h += '<span style="color:var(--text-dim); font-weight:800; margin:0 2px;">+</span>';
+    h += '<span class="ball ' + ballClass(bonus) + '" style="animation-delay:0.55s; outline:2px solid var(--gold);">' + bonus + '</span>';
+    return h;
+  }
+  function fmtPrize(p) {
+    if (!p) return "-";
+    if (p >= 100000000) return (p / 100000000).toFixed(1).replace(/\.0$/, "") + "억원";
+    return Math.round(p / 10000).toLocaleString() + "만원";
+  }
+
+  document.title = "로또 " + L.round + "회 당첨번호 조회 | 1등 당첨금 확인 — 별별운세";
+  document.getElementById("mainTitle").textContent = "🏆 로또 " + L.round + "회 당첨번호";
+  document.getElementById("drawInfo").textContent = "추첨일: " + L.date + " (매주 토요일 밤 자동 업데이트)";
+  document.getElementById("mainBalls").innerHTML = ballsHtml(L.numbers, L.bonus);
+  document.getElementById("prize").textContent = fmtPrize(L.firstPrize);
+  document.getElementById("winners").textContent = L.firstWinners + "명";
+
+  var hist = "";
+  LOTTO_ROUNDS.slice(1).forEach(function (r) {
+    hist += '<div class="game-row"><span class="gname" style="width:52px;">' + r.round + '회</span>' +
+      ballsHtml(r.numbers, r.bonus) + '</div>';
+  });
+  document.getElementById("history").innerHTML = hist;
+})();
+</script>
+</body>
+</html>

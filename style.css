@@ -468,6 +468,35 @@ a.lucky-shop:hover {
   .lucky-shop .ls-go { display: none; }
 }
 
+/* ── 개별 페이지 링크 그리드 ── */
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.link-grid a {
+  padding: 10px 4px;
+  text-align: center;
+  background: rgba(13, 11, 30, .5);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: .85rem;
+  transition: all .2s;
+}
+.link-grid a:hover { border-color: var(--gold-dim); color: var(--gold); transform: translateY(-2px); }
+.link-grid a.cur { border-color: var(--gold); color: var(--gold); background: rgba(240, 201, 106, .1); }
+.trait-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.trait-chips span {
+  padding: 5px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  font-size: .84rem;
+  color: var(--purple-soft);
+}
+
 /* ── 오늘의 특가 ── */
 .deal-grid {
   display: grid;

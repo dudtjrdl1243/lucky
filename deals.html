@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 특가 | 쿠팡 골드박스 할인 모음 — 별별운세</title>
+<meta name="description" content="매일 아침 자동 업데이트되는 쿠팡 골드박스 오늘의 특가 모음! 로켓배송 할인 상품을 한눈에 확인하세요.">
+<meta name="keywords" content="쿠팡특가,골드박스,오늘의특가,쿠팡할인,로켓배송특가">
+<link rel="canonical" href="https://dudtjrdl1243.github.io/lucky/deals.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="오늘의 특가 | 쿠팡 골드박스 할인 모음">
+<meta property="og:description" content="매일 아침 자동 업데이트되는 쿠팡 골드박스 특가 모음">
+<meta property="og:url" content="https://dudtjrdl1243.github.io/lucky/deals.html">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="logo" href="index.html">🔮 별별운세</a>
+    <p class="tagline">오늘의 행운, 쇼핑에서도 이어지길</p>
+  </header>
+
+  <nav class="menu">
+    <a href="index.html">홈</a>
+    <a href="today.html">오늘의 운세</a>
+    <a href="tarot.html">타로</a>
+    <a href="saju.html">사주</a>
+    <a href="tti.html">띠별 운세</a>
+    <a href="gunghap.html">궁합</a>
+    <a href="lotto.html">로또</a>
+    <a href="deals.html" class="on">특가</a>
+  </nav>
+
+  <div class="card">
+    <h2>🔥 오늘의 쿠팡 특가</h2>
+    <p class="desc">쿠팡 골드박스 오늘의 특가를 매일 아침 자동으로 모아드려요. <span id="updated"></span></p>
+    <p class="ls-notice" style="text-align:left; margin-top:10px;">이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+
+  <div class="deal-grid" id="dealGrid"></div>
+
+  <div style="margin-top:28px;display:flex;justify-content:center;">
+    <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-7Y8i4O6wwHmSqg0j" data-ad-width="300" data-ad-height="250"></ins>
+  </div>
+  <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+
+  <footer class="site">
+    <p>✨ 가격과 재고는 쿠팡 사정에 따라 변동될 수 있어요 ✨</p>
+    <p style="margin-top:6px;font-size:12px"><a href="privacy.html" style="color:inherit;opacity:.7">개인정보처리방침</a></p>
+  </footer>
+
+</div>
+
+<script src="deals-data.js"></script>
+<script>
+(function () {
+  if (typeof DEALS === "undefined" || !DEALS.length) return;
+  document.getElementById("updated").textContent = "(" + DEALS_UPDATED + " 업데이트)";
+  var html = "";
+  DEALS.forEach(function (d) {
+    html += '<a class="deal-card" href="' + d.url + '" target="_blank" rel="noopener sponsored">' +
+      '<div class="dc-img"><img loading="lazy" src="' + d.image + '" alt="' + d.name.replace(/"/g, "&quot;") + '"></div>' +
+      '<div class="dc-name">' + d.name + '</div>' +
+      '<div class="dc-price">' + d.price.toLocaleString() + '원' + (d.rocket ? ' <span class="dc-rocket">🚀로켓</span>' : '') + '</div>' +
+    '</a>';
+  });
+  document.getElementById("dealGrid").innerHTML = html;
+})();
+</script>
+</body>
+</html>

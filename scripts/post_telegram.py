@@ -25,7 +25,8 @@ lines = ["🔥 <b>오늘의 쿠팡 골드박스 특가</b> ({}/{})".format(kst.t
 for n, d in enumerate(deals, 1):
     name = d["name"][:45] + ("…" if len(d["name"]) > 45 else "")
     rocket = " 🚀" if d.get("rocket") else ""
-    lines.append('{}. <a href="{}">{}</a>\n   💰 {:,}원{}'.format(n, d["url"], name, d["price"], rocket))
+    url = d["url"] + ("&" if "?" in d["url"] else "?") + "subid=tg"  # 텔레그램 유입 구분
+    lines.append('{}. <a href="{}">{}</a>\n   💰 {:,}원{}'.format(n, url, name, d["price"], rocket))
 lines.append("")
 lines.append("🔮 무료 운세도 보고 가세요 → https://dudtjrdl1243.github.io/lucky/")
 lines.append("")

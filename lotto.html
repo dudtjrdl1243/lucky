@@ -128,7 +128,8 @@ function roll() {
   window.SHARE_TEXT = "🍀 방금 뽑은 행운의 로또번호: " + allGames.map(g => g.join(",")).join(" / ") + " — 너도 무료로 뽑아봐!";
   const available = LOTTO_PRODUCTS.filter(p => p.url);
   if (available.length) {
-    renderLuckyShop("luckyShop", available[Math.floor(Math.random() * available.length)], "🧧 당첨 기원 행운템");
+    const luckyPick = available[Math.floor(Math.random() * available.length)];
+    renderLuckyShop("luckyShop", luckyPick, "🧧 당첨 기원 행운템", luckyPick.sub);
   }
 
   const res = document.getElementById("res");

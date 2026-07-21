@@ -105,9 +105,10 @@ def build_text():
     name = deal["name"]
     if len(name) > 40:
         name = name[:40] + "…"
+    url = deal["url"] + ("&" if "?" in deal["url"] else "?") + "subid=th"  # 스레드 유입 구분
     return "[광고] {}\n\n{}\n{:,}원{}\n\n{}\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.".format(
         pick(DEAL_HOOKS), name, deal["price"],
-        " · 로켓배송" if deal.get("rocket") else "", deal["url"])
+        " · 로켓배송" if deal.get("rocket") else "", url)
 
 text = build_text()
 

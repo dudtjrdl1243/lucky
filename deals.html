@@ -70,7 +70,8 @@
   document.getElementById("updated").textContent = "(" + DEALS_UPDATED + " 업데이트)";
   var html = "";
   DEALS.forEach(function (d) {
-    html += '<a class="deal-card" href="' + d.url + '" target="_blank" rel="noopener sponsored">' +
+    var href = d.url + (d.url.indexOf("?") >= 0 ? "&" : "?") + "subid=deals";
+    html += '<a class="deal-card" href="' + href + '" target="_blank" rel="noopener sponsored">' +
       '<div class="dc-img"><img loading="lazy" src="' + d.image + '" alt="' + d.name.replace(/"/g, "&quot;") + '"></div>' +
       '<div class="dc-name">' + d.name + '</div>' +
       '<div class="dc-price">' + d.price.toLocaleString() + '원' + (d.rocket ? ' <span class="dc-rocket">🚀로켓</span>' : '') + '</div>' +

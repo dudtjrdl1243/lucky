@@ -98,11 +98,20 @@ nav.menu a.on {
 }
 .card p.desc { color: var(--text-dim); font-size: .95rem; }
 
-/* ── 메인 페이지 메뉴 카드 ── */
+/* ── 메인 페이지 메뉴 카드 (2열 그리드) ── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 22px;
+}
 a.feature {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   color: inherit;
+  margin-top: 0;
+  padding: 22px 18px;
   transition: transform .2s, box-shadow .2s, border-color .2s;
 }
 a.feature:hover {
@@ -110,13 +119,20 @@ a.feature:hover {
   border-color: var(--gold-dim);
   box-shadow: 0 8px 32px rgba(139, 111, 216, .25);
 }
-a.feature .emoji { font-size: 2.4rem; display: block; margin-bottom: 10px; }
+a.feature h2 { font-size: 1.08rem; margin-bottom: 8px; }
+a.feature .emoji { font-size: 2.1rem; display: block; margin-bottom: 8px; }
+a.feature p.desc { font-size: .86rem; line-height: 1.6; flex: 1; }
 a.feature .go {
   display: inline-block;
   margin-top: 12px;
   color: var(--gold);
-  font-size: .9rem;
+  font-size: .86rem;
   font-weight: 700;
+}
+@media (max-width: 400px) {
+  .feature-grid { gap: 10px; }
+  a.feature { padding: 18px 14px; }
+  a.feature p.desc { font-size: .8rem; }
 }
 
 /* ── 폼 요소 ── */

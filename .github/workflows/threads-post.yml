@@ -1,0 +1,32 @@
+name: 스레드 수동 포스팅
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: "올릴 글 종류"
+        required: true
+        default: fortune
+        type: choice
+        options:
+          - fortune
+          - deal
+          - lotto
+          - daily
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 스레드 포스팅
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_FORCE_TYPE: ${{ inputs.type }}
+        run: python scripts/post_threads.py

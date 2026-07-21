@@ -89,14 +89,16 @@ def load_deal():
     return rockets[(week + kst.tm_yday) % len(rockets)]
 
 def build_text():
+    # 수동 실행 시 THREADS_FORCE_TYPE 로 콘텐츠 종류 지정 가능
+    forced = os.environ.get("THREADS_FORCE_TYPE", "").strip().lower()
     wd = kst.tm_wday  # 0=월
-    if wd in (0, 2, 4):
+    if forced == "fortune" or (not forced and wd in (0, 2, 4)):
         return pick(FORTUNE)
-    if wd == 5:
+    if forced == "lotto" or (not forced and wd == 5):
         return pick(LOTTO)
-    if wd == 6:
+    if forced == "daily" or (not forced and wd == 6):
         return pick(DAILY)
-    # 화·목 : 가성비템
+    # 화·목 (또는 forced == "deal") : 가성비템
     deal = load_deal()
     if not deal:
         return pick(FORTUNE)

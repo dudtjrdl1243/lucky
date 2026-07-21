@@ -443,6 +443,30 @@ button.ghost:hover { color: var(--gold); border-color: var(--gold-dim); }
   .game-row { gap: 6px; }
 }
 
+/* ── 명리 풀이 설명 ── */
+.mg-explain {
+  background: rgba(13, 11, 30, .5);
+  border: 1px solid rgba(139, 111, 216, .25);
+  border-left: 3px solid var(--gold-dim);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.mg-explain p {
+  font-size: .92rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.mg-explain p:last-child { margin-bottom: 0; }
+.mg-explain .mg-note {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(139, 111, 216, .25);
+  font-size: .78rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
 /* ── 행운 아이템 (쿠팡 파트너스) ── */
 a.lucky-shop {
   display: flex;

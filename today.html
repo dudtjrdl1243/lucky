@@ -54,6 +54,11 @@
 
     <div id="rows"></div>
 
+    <div id="mgBox" style="display:none;">
+      <p class="section-label">📜 오늘 이 운세가 나온 이유</p>
+      <div class="mg-explain" id="mgExplain"></div>
+    </div>
+
     <p class="section-label">🍀 오늘의 행운</p>
     <div class="lucky-grid">
       <div class="item"><div class="k">행운의 색</div><div class="v" id="lkColor"></div></div>
@@ -84,6 +89,7 @@
 
 <script src="lucky-items.js"></script>
 <script src="birth-input.js"></script>
+<script src="myeongri.js"></script>
 <script src="share.js"></script>
 <script>
 // 문자열 → 시드 (같은 입력이면 항상 같은 결과)
@@ -201,23 +207,46 @@ function tell() {
   const dateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   const rng = mulberry32(hashSeed(dateStr + "|" + name + "|" + bd));
 
-  const score = 60 + Math.floor(rng() * 41); // 60~100
+  // 생년월일이 있으면 명리(일진×일간) 기반으로 계산, 없으면 기존 방식
+  const mg = bd ? MG.compute(+bd.slice(0, 4), +bd.slice(5, 7), +bd.slice(8, 10), today) : null;
+
+  const CAT_EMOJI = { "총운": "🌟", "애정운": "💗", "금전운": "💰", "직장·학업운": "📚", "건강운": "🌿" };
+  const score = mg
+    ? Math.round(MG.CATS.reduce((s, c) => s + mg.scores[c], 0) / MG.CATS.length)
+    : 60 + Math.floor(rng() * 41);
+
   document.getElementById("score").textContent = score + "점";
   document.getElementById("scoreMsg").textContent = SCORE_MSGS.find(t => score >= t[0])[1];
   document.getElementById("resTitle").textContent =
     "🌙 " + (name || "당신") + "님의 " + (today.getMonth() + 1) + "월 " + today.getDate() + "일 운세";
 
   let html = "";
-  for (const cat in POOLS) {
-    const stars = 2 + Math.floor(rng() * 4); // 2~5
-    const msg = POOLS[cat][Math.floor(rng() * POOLS[cat].length)];
-    html += '<div class="score-row"><span class="cat">' + cat + '</span>' +
-            '<span class="stars">' + "★".repeat(stars) + "☆".repeat(5 - stars) + "</span></div>" +
-            '<p class="fortune-msg">' + msg + "</p>";
+  if (mg) {
+    MG.CATS.forEach(function (cat) {
+      const v = mg.scores[cat];
+      const stars = v >= 90 ? 5 : v >= 78 ? 4 : v >= 66 ? 3 : v >= 54 ? 2 : 1;
+      html += '<div class="score-row"><span class="cat">' + cat + " " + CAT_EMOJI[cat] + '</span>' +
+              '<span class="stars">' + "★".repeat(stars) + "☆".repeat(5 - stars) +
+              ' <span style="color:var(--text-dim);font-size:.8rem">' + v + '</span></span></div>' +
+              '<p class="fortune-msg">' + mg.msgs[cat] + "</p>";
+    });
+    document.getElementById("mgExplain").innerHTML =
+      mg.explain.map(function (line) { return "<p>" + line + "</p>"; }).join("") +
+      '<p class="mg-note">일주(日柱) 간지와 오행 상생·상극, 지지 합충(合沖)으로 계산한 결과입니다. 정통 사주는 태어난 시각과 절기까지 보지만, 이곳은 일주 중심의 간이 풀이예요.</p>';
+    document.getElementById("mgBox").style.display = "";
+  } else {
+    for (const cat in POOLS) {
+      const stars = 2 + Math.floor(rng() * 4); // 2~5
+      const msg = POOLS[cat][Math.floor(rng() * POOLS[cat].length)];
+      html += '<div class="score-row"><span class="cat">' + cat + '</span>' +
+              '<span class="stars">' + "★".repeat(stars) + "☆".repeat(5 - stars) + "</span></div>" +
+              '<p class="fortune-msg">' + msg + "</p>";
+    }
+    document.getElementById("mgBox").style.display = "none";
   }
   document.getElementById("rows").innerHTML = html;
 
-  document.getElementById("lkColor").textContent = COLORS[Math.floor(rng() * COLORS.length)];
+  document.getElementById("lkColor").textContent = mg ? mg.luckyColor : COLORS[Math.floor(rng() * COLORS.length)];
   document.getElementById("lkNum").textContent = 1 + Math.floor(rng() * 45);
   const luckyItem = ITEMS[Math.floor(rng() * ITEMS.length)];
   document.getElementById("lkItem").textContent = luckyItem;

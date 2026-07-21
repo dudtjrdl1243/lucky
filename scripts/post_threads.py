@@ -9,9 +9,20 @@ TOKEN = os.environ.get("THREADS_ACCESS_TOKEN", "")
 USER_ID = os.environ.get("THREADS_USER_ID", "")
 SITE = "https://dudtjrdl1243.github.io/lucky/"
 
-if not TOKEN or not USER_ID:
-    print("스레드 설정 없음 - 건너뜁니다.")
+if not TOKEN:
+    print("스레드 토큰 없음 - 건너뜁니다.")
     sys.exit(0)
+
+# USER_ID를 따로 넣지 않아도 토큰으로 자동 조회
+if not USER_ID:
+    try:
+        url = "https://graph.threads.net/v1.0/me?fields=id&access_token=" + urllib.parse.quote(TOKEN)
+        with urllib.request.urlopen(url, timeout=30) as r:
+            USER_ID = json.loads(r.read().decode())["id"]
+        print("스레드 사용자 ID 자동 조회:", USER_ID)
+    except Exception as e:
+        print("스레드 사용자 ID 조회 실패:", e)
+        sys.exit(0)
 
 kst = time.gmtime(time.time() + 9 * 3600)
 weekday = ["월", "화", "수", "목", "금", "토", "일"][kst.tm_wday]

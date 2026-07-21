@@ -46,6 +46,7 @@ function renderDailyFortune(kind, idx, label) {
   const t = new Date();
   const dateStr = t.getFullYear() + "-" + (t.getMonth() + 1) + "-" + t.getDate();
   const useMyeongri = kind === "tti" && typeof MG !== "undefined";
+  const useAstro = kind === "zodiac" && typeof ASTRO !== "undefined";
 
   let score, rank, mg = null;
   if (useMyeongri) {
@@ -53,6 +54,11 @@ function renderDailyFortune(kind, idx, label) {
     mg = MG.ttiFortune(idx, t);
     score = mg.total;
     rank = MG.ttiRanking(t).rank[idx];
+  } else if (useAstro) {
+    // 별자리는 오늘 태양궁과의 각(애스펙트) + 원소 + 달 위상으로 계산
+    mg = ASTRO.zodiacFortune(idx, t);
+    score = mg.total;
+    rank = ASTRO.zodiacRanking(t).rank[idx];
   } else {
     const scores = [];
     for (let i = 0; i < 12; i++) {
@@ -63,7 +69,7 @@ function renderDailyFortune(kind, idx, label) {
     rank = 1 + scores.filter((s, j) => s > score || (s === score && j < idx)).length;
   }
   const rng = mulberry32(hashSeed(dateStr + "|" + kind + "-detail|" + idx));
-  const stars = useMyeongri
+  const stars = (useMyeongri || useAstro)
     ? (score >= 82 ? 5 : score >= 73 ? 4 : score >= 65 ? 3 : score >= 56 ? 2 : 1)
     : (score >= 92 ? 5 : score >= 80 ? 4 : score >= 66 ? 3 : 2);
   const group = kind === "tti" ? "12간지" : "12별자리";
@@ -77,12 +83,17 @@ function renderDailyFortune(kind, idx, label) {
   document.getElementById("stars").textContent = "★".repeat(stars) + "☆".repeat(5 - stars);
   document.getElementById("msg").textContent = mg ? mg.msgs["총운"] : DF_MSGS[Math.floor(rng() * DF_MSGS.length)];
 
+  const label2 = document.querySelector("#mgBox .section-label");
+  if (label2) label2.textContent = useAstro ? "📜 이 별자리 운세의 근거" : "📜 이 순위가 나온 이유";
+
   const box = document.getElementById("mgBox");
   if (box) {
     if (mg) {
       document.getElementById("mgExplain").innerHTML =
         mg.explain.map(function (line) { return "<p>" + line + "</p>"; }).join("") +
-        '<p class="mg-note">일진(日辰)과 띠 지지의 오행 관계(십신)·합충으로 계산한 결과입니다. 순위도 12띠 점수를 계산해 매긴 것이며, 무작위가 아닙니다.</p>';
+        '<p class="mg-note">' + (useAstro
+          ? "오늘 태양궁과의 각(애스펙트), 4원소 상성, 달의 위상으로 계산한 결과입니다. 순위도 12별자리 점수를 계산해 매긴 것이며, 무작위가 아닙니다. 행성 전체를 보는 정통 점성술과 달리 태양·달만 반영한 간이 방식이에요."
+          : "일진(日辰)과 띠 지지의 오행 관계(십신)·합충으로 계산한 결과입니다. 순위도 12띠 점수를 계산해 매긴 것이며, 무작위가 아닙니다.") + '</p>';
       box.style.display = "";
     } else {
       box.style.display = "none";

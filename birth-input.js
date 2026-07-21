@@ -1,5 +1,5 @@
 /* ===== 생년월일 입력 자동 포맷 =====
- * 숫자만 쭉 입력하면 YYYY-MM-DD로 자동 변환 (19840825 → 1984-08-25)
+ * 숫자만 쭉 입력하면 YYYY-MM-DD로 자동 변환 (19950412 → 1995-04-12)
  * data-birth 속성이 있는 input에 자동 적용
  */
 function formatBirthValue(raw) {

@@ -139,6 +139,7 @@ PAGE = """<!DOCTYPE html>
 
 <script src="share.js"></script>
 <script src="myeongri.js"></script>
+<script src="astro.js"></script>
 <script src="daily-fortune.js"></script>
 <script>renderDailyFortune("{kind}", {idx}, "{name}");</script>
 <script src="visitor-count.js"></script>

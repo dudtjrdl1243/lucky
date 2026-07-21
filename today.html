@@ -42,7 +42,7 @@
     <label class="field" for="nm">이름 (또는 닉네임)</label>
     <input type="text" id="nm" placeholder="예) 홍길동" maxlength="20">
     <label class="field" for="bd">생년월일 (숫자만 쭉 입력하세요)</label>
-    <input type="text" inputmode="numeric" id="bd" data-birth placeholder="예) 19840825" maxlength="10" autocomplete="bday">
+    <input type="text" inputmode="numeric" id="bd" data-birth placeholder="예) 19950412" maxlength="10" autocomplete="bday">
     <button class="primary" onclick="tell()">오늘의 운세 보기 ✨</button>
   </div>
 
@@ -201,7 +201,7 @@ function tell() {
   const name = document.getElementById("nm").value.trim();
   const bd = document.getElementById("bd").value;
   if (!name && !bd) { alert("이름이나 생년월일 중 하나는 입력해 주세요!"); return; }
-  if (bd && !isValidBirth(bd)) { alert("생년월일을 확인해 주세요! 예) 19840825"); return; }
+  if (bd && !isValidBirth(bd)) { alert("생년월일을 확인해 주세요! 예) 19950412"); return; }
 
   const today = new Date();
   const dateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();

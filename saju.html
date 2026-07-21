@@ -40,7 +40,7 @@
     <h2>🐉 간단 사주</h2>
     <p class="desc">생년월일을 입력해 주세요. 태어난 시간을 알면 숨은 기질까지 볼 수 있어요.</p>
     <label class="field" for="bd">생년월일 (숫자만 쭉 입력하세요)</label>
-    <input type="text" inputmode="numeric" id="bd" data-birth placeholder="예) 19840825" maxlength="10" autocomplete="bday">
+    <input type="text" inputmode="numeric" id="bd" data-birth placeholder="예) 19950412" maxlength="10" autocomplete="bday">
     <label class="field" for="hr">태어난 시간 (모르면 그대로 두세요)</label>
     <select id="hr">
       <option value="-1">🤷 모름</option>
@@ -210,7 +210,7 @@ function getZodiac(m, d) {
 function tell() {
   const bd = document.getElementById("bd").value;
   if (!bd) { alert("생년월일을 입력해 주세요!"); return; }
-  if (!isValidBirth(bd)) { alert("생년월일을 확인해 주세요! 예) 19840825"); return; }
+  if (!isValidBirth(bd)) { alert("생년월일을 확인해 주세요! 예) 19950412"); return; }
   const [y, m, d] = bd.split("-").map(Number);
 
   const stem = STEMS[(y - 4) % 10];

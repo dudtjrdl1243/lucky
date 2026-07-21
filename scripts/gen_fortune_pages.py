@@ -94,6 +94,10 @@ PAGE = """<!DOCTYPE html>
       <div class="item"><div class="k">행운의 시간</div><div class="v" id="lkTime"></div></div>
       <div class="item"><div class="k">행운의 방향</div><div class="v" id="lkDir"></div></div>
     </div>
+    <div id="mgBox" style="display:none;">
+      <p class="section-label">📜 이 순위가 나온 이유</p>
+      <div class="mg-explain" id="mgExplain"></div>
+    </div>
     <button class="ghost" onclick="shareResult()" style="margin-top:20px;">📤 결과 공유하기</button>
   </div>
 
@@ -134,6 +138,7 @@ PAGE = """<!DOCTYPE html>
 </div>
 
 <script src="share.js"></script>
+<script src="myeongri.js"></script>
 <script src="daily-fortune.js"></script>
 <script>renderDailyFortune("{kind}", {idx}, "{name}");</script>
 <script src="visitor-count.js"></script>

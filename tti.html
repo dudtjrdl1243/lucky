@@ -56,6 +56,12 @@
       <div class="item"><div class="k">행운의 시간</div><div class="v" id="lkTime"></div></div>
       <div class="item"><div class="k">행운의 방향</div><div class="v" id="lkDir"></div></div>
     </div>
+
+    <div id="mgBox" style="display:none;">
+      <p class="section-label">📜 이 순위가 나온 이유</p>
+      <div class="mg-explain" id="mgExplain"></div>
+    </div>
+
     <button class="ghost" onclick="shareResult()" style="margin-top:20px;">📤 결과 공유하기</button>
   </div>
 
@@ -91,6 +97,7 @@
 </div>
 
 <script src="share.js"></script>
+<script src="myeongri.js"></script>
 <script>
 function hashSeed(str) {
   let h = 1779033703 ^ str.length;
@@ -141,11 +148,8 @@ const DIRS  = ["동쪽", "서쪽", "남쪽", "북쪽", "남동쪽", "북동쪽",
 const today = new Date();
 const dateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
-// 오늘의 12간지 점수 (모두에게 동일하게 매일 바뀜)
-const SCORES = ANIMALS.map((a, i) => {
-  const r = mulberry32(hashSeed(dateStr + "|tti|" + i));
-  return 55 + Math.floor(r() * 46); // 55~100
-});
+// 오늘의 12간지 운세: 일진과 각 띠 지지의 관계로 실제 계산 (myeongri.js)
+const RANKING = MG.ttiRanking(today);
 
 function yearsOf(i) {
   const list = [];
@@ -160,8 +164,9 @@ function show(i) {
     b.classList.toggle("sel", j === i));
 
   const [nm, em] = ANIMALS[i];
-  const score = SCORES[i];
-  const rank = 1 + SCORES.filter((s, j) => s > score || (s === score && j < i)).length;
+  const f = MG.ttiFortune(i, today);
+  const score = f.total;
+  const rank = RANKING.rank[i];
   const rng = mulberry32(hashSeed(dateStr + "|tti-detail|" + i));
 
   document.getElementById("resTitle").textContent = em + " " + nm + "띠 오늘의 운세";
@@ -171,9 +176,13 @@ function show(i) {
     "오늘 12간지 중 <b>" + rank + "위</b>" +
     (rank === 1 ? " 👑 오늘의 주인공!" : rank <= 3 ? " ✨ 상위권이에요!" : rank >= 11 ? " — 이런 날일수록 여유가 무기!" : "");
 
-  const stars = score >= 92 ? 5 : score >= 80 ? 4 : score >= 66 ? 3 : 2;
+  const stars = score >= 82 ? 5 : score >= 73 ? 4 : score >= 65 ? 3 : score >= 56 ? 2 : 1;
   document.getElementById("stars").textContent = "★".repeat(stars) + "☆".repeat(5 - stars);
-  document.getElementById("msg").textContent = MSGS[Math.floor(rng() * MSGS.length)];
+  document.getElementById("msg").textContent = f.msgs["총운"];
+  document.getElementById("mgExplain").innerHTML =
+    f.explain.map(function (line) { return "<p>" + line + "</p>"; }).join("") +
+    '<p class="mg-note">일진(日辰)과 띠 지지의 오행 관계(십신)·합충으로 계산한 결과입니다. 순위도 12띠 점수를 계산해 매긴 것이며, 무작위가 아닙니다.</p>';
+  document.getElementById("mgBox").style.display = "";
   document.getElementById("lkKey").textContent = KEYS[Math.floor(rng() * KEYS.length)];
   document.getElementById("lkTime").textContent = TIMES[Math.floor(rng() * TIMES.length)];
   document.getElementById("lkDir").textContent = DIRS[Math.floor(rng() * DIRS.length)];

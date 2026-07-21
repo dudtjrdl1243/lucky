@@ -76,12 +76,12 @@ const MG = (function () {
     "관성": "나를 다잡는 기운. 일과 규율에는 힘이 실리지만 몸은 무리하기 쉬워요.",
     "인성": "나를 살려주는 기운. 도움과 배움, 귀인이 들어오는 자리예요.",
   };
-  const REL_DESC = {
-    "육합": "태어난 날의 지지와 오늘 지지가 육합(六合) — 서로 끌어당기는 관계라 매사 순조롭습니다.",
-    "삼합": "태어난 날의 지지와 오늘 지지가 삼합(三合) — 힘을 모아주는 관계라 흐름이 좋습니다.",
-    "동일": "태어난 날의 지지와 오늘 지지가 같아 기운이 겹칩니다. 익숙한 일이 잘 풀려요.",
-    "무관": "태어난 날의 지지와 오늘 지지는 특별한 합충 관계가 없어 무난한 하루입니다.",
-    "충": "태어난 날의 지지와 오늘 지지가 충(沖) — 부딪히는 관계라 변동수가 있습니다. 이동·계약은 한 번 더 확인하세요.",
+  const REL_TAIL = {
+    "육합": "육합(六合) — 서로 끌어당기는 관계라 매사 순조롭습니다.",
+    "삼합": "삼합(三合) — 힘을 모아주는 관계라 흐름이 좋습니다.",
+    "동일": "같은 지지라 기운이 겹칩니다. 익숙한 일이 잘 풀려요.",
+    "무관": "특별한 합충(合沖) 관계가 없어 무난한 하루입니다.",
+    "충": "충(沖) — 부딪히는 관계라 변동수가 있습니다. 이동·계약은 한 번 더 확인하세요.",
   };
 
   const CATS = ["총운", "애정운", "금전운", "직장·학업운", "건강운"];
@@ -152,7 +152,7 @@ const MG = (function () {
       "오늘은 " + day.name + "(" + day.hanja + ")일 — " + ELEM[day.stemElem] + "(" + ELEM_H[day.stemElem] + ")의 기운이 도는 날입니다.",
       "당신이 태어난 날은 " + me.name + "(" + me.hanja + ")일, 일간은 " + STEMS[me.stem] + "(" + STEM_H[me.stem] + ") — 오행으로 " + ELEM[meElem] + "(" + ELEM_H[meElem] + ")입니다.",
       godSentence(god, day.stemElem, meElem) + " " + GOD_DESC[god],
-      REL_DESC[rel],
+      relSentence(rel, "태어난 날의 지지", me.branch, day.branch),
     ];
 
     // 행운의 색: 나를 살려주는 오행(인성)의 색 — X생me 이므로 X = (me+4)%5
@@ -176,6 +176,15 @@ const MG = (function () {
     return code >= 0 && code <= 11171 && code % 28 !== 0;
   }
 
+  /* 지지 관계 문장 — 주어와 두 지지를 받아 조사까지 맞춰 조립
+   * 예) "호랑이띠의 인(寅)과 오늘 지지 신(申)이 충(沖) — ..." */
+  function relSentence(rel, ownerLabel, myBranch, dayBranch) {
+    const aName = BRANCHES[myBranch], bName = BRANCHES[dayBranch];
+    const a = aName + "(" + BRANCH_H[myBranch] + ")" + (hasBatchim(aName) ? "과" : "와");
+    const b = bName + "(" + BRANCH_H[dayBranch] + ")" + (hasBatchim(bName) ? "이" : "가");
+    return ownerLabel + " " + a + " 오늘 지지 " + b + " " + REL_TAIL[rel];
+  }
+
   /* 십신 관계를 자연스러운 한 문장으로 */
   function godSentence(god, dayE, meE) {
     const dayName = ELEM[dayE], meName = ELEM[meE];
@@ -191,5 +200,54 @@ const MG = (function () {
     return dayTopic + " " + meObj + " 살려주는 인성(印星)입니다.";
   }
 
-  return { compute: compute, pillar: pillar, CATS: CATS };
+  /* ===== 띠별 오늘의 운세 =====
+   * 띠는 곧 지지(자~해)이므로, 오늘 일진과의 관계를 실제 규칙으로 계산한다.
+   *   - 띠 지지의 오행 vs 오늘 일간 오행 → 십신
+   *   - 띠 지지 vs 오늘 일지 → 육합·삼합·충
+   * 12띠 점수를 모두 계산해 순위까지 산출 (난수 아님).
+   */
+  function ttiFortune(branchIdx, today) {
+    const t = today || new Date();
+    const day = pillar(t.getFullYear(), t.getMonth() + 1, t.getDate());
+    const myElem = BRANCH_ELEM[branchIdx];
+    const god = tenGod(myElem, day.stemElem);
+    const rel = branchRel(branchIdx, day.branch);
+
+    const base = GOD_SCORE[god], bonus = REL_SCORE[rel];
+    const scores = {};
+    CATS.forEach(function (c, i) {
+      scores[c] = Math.max(41, Math.min(99, 62 + base[i] + bonus));
+    });
+    const total = Math.round(CATS.reduce(function (s, c) { return s + scores[c]; }, 0) / CATS.length);
+
+    const explain = [
+      "오늘은 " + day.name + "(" + day.hanja + ")일 — " + ELEM[day.stemElem] + "(" + ELEM_H[day.stemElem] + ")의 기운이 도는 날입니다.",
+      ANIMALS[branchIdx] + "띠는 지지 " + BRANCHES[branchIdx] + "(" + BRANCH_H[branchIdx] + "), 오행으로 " + ELEM[myElem] + "(" + ELEM_H[myElem] + ")입니다.",
+      godSentence(god, day.stemElem, myElem).replace("당신의", ANIMALS[branchIdx] + "띠의") + " " + GOD_DESC[god],
+      relSentence(rel, ANIMALS[branchIdx] + "띠의", branchIdx, day.branch),
+    ];
+
+    return {
+      animal: ANIMALS[branchIdx], branch: BRANCHES[branchIdx],
+      god: god, rel: rel, total: total, scores: scores,
+      msgs: (function () { const m = {}; CATS.forEach(function (c, i) { m[c] = MSG[god][i][day.stem % 2]; }); return m; })(),
+      explain: explain, dayPillar: day,
+    };
+  }
+
+  /* 12띠 전체 점수 → 순위 (동점이면 지지 순서가 앞선 띠가 상위) */
+  function ttiRanking(today) {
+    const list = [];
+    for (let i = 0; i < 12; i++) list.push({ idx: i, total: ttiFortune(i, today).total });
+    const sorted = list.slice().sort(function (a, b) { return b.total - a.total || a.idx - b.idx; });
+    const rank = {};
+    sorted.forEach(function (e, n) { rank[e.idx] = n + 1; });
+    return { rank: rank, totals: list };
+  }
+
+  return {
+    compute: compute, pillar: pillar, CATS: CATS,
+    ttiFortune: ttiFortune, ttiRanking: ttiRanking,
+    ANIMALS: ANIMALS, BRANCHES: BRANCHES,
+  };
 })();

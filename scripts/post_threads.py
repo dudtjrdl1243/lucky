@@ -30,22 +30,26 @@ if not USER_ID:
 kst = time.gmtime(time.time() + 9 * 3600)
 week = int(time.strftime("%W", kst))  # 주차 → 같은 요일이라도 매주 다른 문구
 
+# 본문에는 링크를 넣지 않고 첫 댓글로 분리한다.
+# (스레드는 본문에 외부 링크가 있으면 노출이 줄어드는 편)
+# 형식: (본문, 댓글에 붙일 페이지, 댓글 앞머리)
+
 # ── 운세 티저 (월·수·금) ─────────────────────────────
 FORTUNE = [
-    "오늘 12간지 중에 1위인 띠가 있다는데\n내 띠는 몇 위려나\n\n👉 " + SITE + "tti.html",
-    "출근길에 오늘 운세 한 번 보고 가는 사람\n나만 그런 거 아니지\n\n👉 " + SITE + "today.html",
-    "행운의 시간이랑 방향까지 알려주더라\n오늘은 좀 믿어보려고\n\n👉 " + SITE + "today.html",
-    "별자리 운세 오늘 순위 나왔는데\n1위 아니면 안 보는 걸로\n\n👉 " + SITE + "saju.html",
-    "이름이랑 생년월일만 넣으면 30초컷\n금전운만 보고 나올 예정\n\n👉 " + SITE + "today.html",
-    "띠별 순위 매일 바뀌는 거 알고 있었나\n어제 꼴찌였는데 오늘은 좀\n\n👉 " + SITE + "tti.html",
+    ("오늘 12간지 중에 1위인 띠가 있다는데\n내 띠는 몇 위려나", "tti.html", "여기서 확인함"),
+    ("출근길에 오늘 운세 한 번 보고 가는 사람\n나만 그런 거 아니지", "today.html", "보는 곳 남겨둠"),
+    ("행운의 시간이랑 방향까지 알려주더라\n오늘은 좀 믿어보려고", "today.html", "여기"),
+    ("별자리 운세 오늘 순위 나왔는데\n1위 아니면 안 보는 걸로", "zodiac.html", "순위 여기서 봄"),
+    ("이름이랑 생년월일만 넣으면 30초컷\n금전운만 보고 나올 예정", "today.html", "링크 두고 감"),
+    ("띠별 순위 매일 바뀌는 거 알고 있었나\n어제 꼴찌였는데 오늘은 좀", "tti.html", "여기"),
 ]
 
 # ── 로또 (토) ────────────────────────────────────────
 LOTTO = [
-    "토요일이다\n번호는 뽑았고 이제 기다리면 된다\n\n👉 " + SITE + "lotto.html",
-    "이번 주도 조용히 번호 하나 뽑고 감\n되면 좋고 아니면 말고\n\n👉 " + SITE + "lotto.html",
-    "당첨번호 확인은 밤에\n번호 뽑는 건 지금\n\n👉 " + SITE + "lotto.html",
-    "로또는 사는 게 아니라 일주일치 상상을 사는 거라던데\n오늘도 상상 결제 완료\n\n👉 " + SITE + "lotto.html",
+    ("토요일이다\n번호는 뽑았고 이제 기다리면 된다", "lotto.html", "번호 뽑은 곳"),
+    ("이번 주도 조용히 번호 하나 뽑고 감\n되면 좋고 아니면 말고", "lotto.html", "여기"),
+    ("당첨번호 확인은 밤에\n번호 뽑는 건 지금", "lotto.html", "링크 두고 감"),
+    ("로또는 사는 게 아니라 일주일치 상상을 사는 거라던데\n오늘도 상상 결제 완료", "lotto.html", "여기서 뽑음"),
 ]
 
 # ── 일상·공감 (일) : 링크 없음 ───────────────────────
@@ -89,28 +93,36 @@ def load_deal():
     return rockets[(week + kst.tm_yday) % len(rockets)]
 
 def build_text():
+    """(본문, 첫 댓글) 을 돌려준다. 댓글이 없으면 None."""
     # 수동 실행 시 THREADS_FORCE_TYPE 로 콘텐츠 종류 지정 가능
     forced = os.environ.get("THREADS_FORCE_TYPE", "").strip().lower()
     wd = kst.tm_wday  # 0=월
+
+    def with_link(item):
+        body, page, lead = item
+        return body, lead + "\n👉 " + SITE + page
+
     if forced == "fortune" or (not forced and wd in (0, 2, 4)):
-        return pick(FORTUNE)
+        return with_link(pick(FORTUNE))
     if forced == "lotto" or (not forced and wd == 5):
-        return pick(LOTTO)
+        return with_link(pick(LOTTO))
     if forced == "daily" or (not forced and wd == 6):
-        return pick(DAILY)
+        return pick(DAILY), None  # 일상글은 링크 없이 (도달 확보용)
+
     # 화·목 (또는 forced == "deal") : 가성비템
     deal = load_deal()
     if not deal:
-        return pick(FORTUNE)
+        return with_link(pick(FORTUNE))
     name = deal["name"]
     if len(name) > 40:
         name = name[:40] + "…"
     url = deal["url"] + ("&" if "?" in deal["url"] else "?") + "subid=th"  # 스레드 유입 구분
-    return "[광고] {}\n\n{}\n{:,}원{}\n\n{}\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.".format(
-        pick(DEAL_HOOKS), name, deal["price"],
-        " · 로켓배송" if deal.get("rocket") else "", url)
+    body = "[광고] {}\n\n{}\n{:,}원{}".format(
+        pick(DEAL_HOOKS), name, deal["price"], " · 로켓배송" if deal.get("rocket") else "")
+    reply = "링크 두고 감\n" + url + "\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다."
+    return body, reply
 
-text = build_text()
+text, reply_text = build_text()
 
 def api(path, params):
     data = urllib.parse.urlencode(dict(params, access_token=TOKEN)).encode()
@@ -118,13 +130,30 @@ def api(path, params):
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode())
 
-try:
-    container = api(USER_ID + "/threads", {"media_type": "TEXT", "text": text})
+def publish(txt, reply_to=None):
+    params = {"media_type": "TEXT", "text": txt}
+    if reply_to:
+        params["reply_to_id"] = reply_to
+    c = api(USER_ID + "/threads", params)
     time.sleep(3)
-    result = api(USER_ID + "/threads_publish", {"creation_id": container["id"]})
-    print("스레드 포스팅 성공:", result.get("id"))
-    print("--- 내용 ---")
+    return api(USER_ID + "/threads_publish", {"creation_id": c["id"]})
+
+try:
+    result = publish(text)
+    post_id = result.get("id")
+    print("스레드 포스팅 성공:", post_id)
+    print("--- 본문 ---")
     print(text)
+
+    # 링크는 본문이 아니라 첫 댓글로 (본문에 외부 링크가 있으면 노출이 줄어드는 편)
+    if reply_text and post_id:
+        try:
+            rep = publish(reply_text, reply_to=post_id)
+            print("첫 댓글 작성 성공:", rep.get("id"))
+            print("--- 댓글 ---")
+            print(reply_text)
+        except Exception as e:
+            print("첫 댓글 작성 실패(본문은 정상 게시됨):", e)
 except Exception as e:
     print("스레드 포스팅 실패:", e)
     sys.exit(0)

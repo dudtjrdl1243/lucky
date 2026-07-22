@@ -102,12 +102,13 @@ def post_threads():
         with urllib.request.urlopen(url, timeout=30) as r:
             uid = json.loads(r.read().decode())["id"]
 
+    # 본문에는 링크를 넣지 않는다 (스레드는 외부 링크가 있으면 노출이 줄어드는 편)
     body = ["{}회 당첨번호 나왔다".format(L["round"]), "", nums + "  +  " + str(L["bonus"]), "",
             "1등 {}명 · 1인당 {}".format(L.get("firstWinners", 0), prize_txt)]
     if score_line:
         body += ["", score_line]
-    body += ["", "👉 " + SITE + "lotto-result.html"]
     text = "\n".join(body)
+    reply_text = "회차별 당첨번호랑 추천 성적표\n👉 " + SITE + "lotto-result.html"
 
     def api(path, params):
         data = urllib.parse.urlencode(dict(params, access_token=TH_TOKEN)).encode()
@@ -115,11 +116,24 @@ def post_threads():
         with urllib.request.urlopen(req, timeout=30) as r:
             return json.loads(r.read().decode())
 
-    c = api(uid + "/threads", {"media_type": "TEXT", "text": text})
-    time.sleep(3)
-    res = api(uid + "/threads_publish", {"creation_id": c["id"]})
-    print("스레드 발송 성공:", res.get("id"))
+    def publish(txt, reply_to=None):
+        params = {"media_type": "TEXT", "text": txt}
+        if reply_to:
+            params["reply_to_id"] = reply_to
+        c = api(uid + "/threads", params)
+        time.sleep(3)
+        return api(uid + "/threads_publish", {"creation_id": c["id"]})
+
+    res = publish(text)
+    pid = res.get("id")
+    print("스레드 발송 성공:", pid)
     print(text)
+    if pid:
+        try:
+            rep = publish(reply_text, reply_to=pid)
+            print("첫 댓글 작성 성공:", rep.get("id"))
+        except Exception as e:
+            print("첫 댓글 작성 실패(본문은 정상 게시됨):", e)
     return True
 
 

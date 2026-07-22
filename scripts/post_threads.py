@@ -101,7 +101,7 @@ def load_deal():
     return rockets[(week + kst.tm_yday) % len(rockets)]
 
 def build_text():
-    """(본문, 첫 댓글) 을 돌려준다. 댓글이 없으면 None."""
+    """(본문, 첫 댓글, 본문에 붙일 이미지 URL) 을 돌려준다. 없으면 None."""
     # 수동 실행 시 THREADS_FORCE_TYPE 로 콘텐츠 종류 지정 가능
     forced = os.environ.get("THREADS_FORCE_TYPE", "").strip().lower()
     wd = kst.tm_wday  # 0=월
@@ -111,26 +111,27 @@ def build_text():
         return body, lead + "\n👉 " + SITE + page
 
     if forced == "fortune" or (not forced and wd in (0, 2, 4)):
-        return with_link(pick(FORTUNE))
+        b, r = with_link(pick(FORTUNE)); return b, r, None
     if forced == "lotto" or (not forced and wd == 5):
-        return with_link(pick(LOTTO))
+        b, r = with_link(pick(LOTTO)); return b, r, None
     if forced == "daily" or (not forced and wd == 6):
-        return pick(DAILY), None  # 일상글은 링크 없이 (도달 확보용)
+        return pick(DAILY), None, None  # 일상글은 링크 없이 (도달 확보용)
 
     # 화·목 (또는 forced == "deal") : 가성비템
     deal = load_deal()
     if not deal:
-        return with_link(pick(FORTUNE))
+        b, r = with_link(pick(FORTUNE)); return b, r, None
     name = deal["name"]
     if len(name) > 40:
         name = name[:40] + "…"
     url = deal["url"] + ("&" if "?" in deal["url"] else "?") + "subid=th"  # 스레드 유입 구분
-    body = pick(DEAL_HOOKS)  # 본문은 제품을 특정하지 않는 한 줄
-    reply = "[광고]\n{}\n{:,}원{}\n\n{}\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.".format(
+    # 본문에 제품 사진이 들어가므로 광고 표기를 본문에도 남긴다 (표시 위치 규정 대응)
+    body = pick(DEAL_HOOKS) + "\n\n#광고"
+    reply = "{}\n{:,}원{}\n\n{}\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.".format(
         name, deal["price"], " · 로켓배송" if deal.get("rocket") else "", url)
-    return body, reply
+    return body, reply, (deal.get("image") or None)
 
-text, reply_text = build_text()
+text, reply_text, image_url = build_text()
 
 def api(path, params):
     data = urllib.parse.urlencode(dict(params, access_token=TOKEN)).encode()
@@ -138,16 +139,28 @@ def api(path, params):
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode())
 
-def publish(txt, reply_to=None):
-    params = {"media_type": "TEXT", "text": txt}
+def publish(txt, reply_to=None, image=None):
+    params = {"text": txt}
+    if image:
+        params["media_type"] = "IMAGE"
+        params["image_url"] = image
+    else:
+        params["media_type"] = "TEXT"
     if reply_to:
         params["reply_to_id"] = reply_to
     c = api(USER_ID + "/threads", params)
-    time.sleep(3)
+    time.sleep(3 if not image else 6)  # 이미지는 처리 시간이 더 필요
     return api(USER_ID + "/threads_publish", {"creation_id": c["id"]})
 
 try:
-    result = publish(text)
+    try:
+        result = publish(text, image=image_url)
+    except Exception as e:
+        if image_url:
+            print("이미지 게시 실패, 글만 올립니다:", e)
+            result = publish(text)
+        else:
+            raise
     post_id = result.get("id")
     print("스레드 포스팅 성공:", post_id)
     print("--- 본문 ---")

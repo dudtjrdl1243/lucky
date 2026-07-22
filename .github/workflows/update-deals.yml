@@ -2,8 +2,13 @@ name: 오늘의 특가 자동 갱신
 
 on:
   schedule:
-    - cron: "10 22 * * *" # 매일 KST 07:10 (특가 + 로또 갱신)
-    - cron: "40 12 * * 6" # 토요일 KST 21:40 (로또 추첨 직후)
+    - cron: "10 22 * * *" # 매일 KST 07:10 (특가 + 스레드/텔레그램 일상 포스팅)
+    # 토요일 추첨은 20:45. 미러 반영 시점이 들쭉날쭉해 세 번 시도한다.
+    # 새 회차를 이미 알렸으면 알림 스크립트가 스스로 건너뛴다.
+    - cron: "5 12 * * 6"  # 토 KST 21:05
+    - cron: "20 12 * * 6" # 토 KST 21:20
+    - cron: "40 12 * * 6" # 토 KST 21:40
+    - cron: "30 13 * * 6" # 토 KST 22:30 (지연 대비 예비)
   workflow_dispatch:
 
 permissions:
@@ -34,8 +39,19 @@ jobs:
         continue-on-error: true
         run: python scripts/update_lotto_stats.py
 
+      # 새 회차가 확인되면 즉시 알린다 (중복 발송은 스크립트가 자체 차단)
+      - name: 로또 당첨번호 즉시 알림
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: python scripts/announce_lotto.py
+
+      # 아래 두 단계는 아침 정기 실행에서만 (토요일 밤 알림과 겹치지 않게)
       - name: 텔레그램 특가 포스팅 (설정 시)
-        if: github.event.schedule != '40 12 * * 6'
+        if: github.event.schedule == '10 22 * * *' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -43,7 +59,7 @@ jobs:
         run: python scripts/post_telegram.py
 
       - name: 스레드 운세 티저 포스팅 (설정 시)
-        if: github.event.schedule != '40 12 * * 6'
+        if: github.event.schedule == '10 22 * * *' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
@@ -55,6 +71,6 @@ jobs:
         run: |
           git config user.name "deals-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add deals-data.js lotto-data.js lotto-result.html lotto-picks.js lotto-history.json
+          git add deals-data.js lotto-data.js lotto-result.html lotto-picks.js lotto-history.json lotto-announced.json
           git diff --cached --quiet || git commit -m "특가/로또 자동 갱신 $(TZ=Asia/Seoul date +'%Y-%m-%d')"
           git push

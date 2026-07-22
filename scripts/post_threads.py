@@ -64,6 +64,8 @@ DAILY = [
 ]
 
 # ── 가성비템 (화·목) : 쿠팡 파트너스 ─────────────────
+# 본문은 제품을 특정하지 않는 혼잣말 한 줄만 둔다.
+# 제품명·가격·광고표기·링크·수수료 고지는 전부 첫 댓글에 모은다.
 DEAL_HOOKS = [
     "이거 필요한 시기가 되었나",
     "가격 보고 좀 놀람",
@@ -71,6 +73,12 @@ DEAL_HOOKS = [
     "고민하다 결국 담음",
     "이런 건 있으면 확실히 편하더라",
     "쟁여두면 마음이 편한 종류",
+    "장바구니에서 일주일 버티다 결국 졌다",
+    "살 땐 몰랐는데 없으면 아쉬운 것들 있잖아",
+    "방구석 살림 난이도 한 칸 내려감",
+    "이런 건 진작 알았어야 했는데",
+    "안 사도 되는데 자꾸 눈에 밟히는 종류",
+    "지출은 했지만 후회는 없는 쪽",
 ]
 
 def pick(pool):
@@ -117,9 +125,9 @@ def build_text():
     if len(name) > 40:
         name = name[:40] + "…"
     url = deal["url"] + ("&" if "?" in deal["url"] else "?") + "subid=th"  # 스레드 유입 구분
-    body = "[광고] {}\n\n{}\n{:,}원{}".format(
-        pick(DEAL_HOOKS), name, deal["price"], " · 로켓배송" if deal.get("rocket") else "")
-    reply = "링크 두고 감\n" + url + "\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다."
+    body = pick(DEAL_HOOKS)  # 본문은 제품을 특정하지 않는 한 줄
+    reply = "[광고]\n{}\n{:,}원{}\n\n{}\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.".format(
+        name, deal["price"], " · 로켓배송" if deal.get("rocket") else "", url)
     return body, reply
 
 text, reply_text = build_text()

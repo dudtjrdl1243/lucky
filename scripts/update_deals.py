@@ -4,8 +4,11 @@ GitHub Actions에서 매일 실행. API 키는 환경변수로 주입.
 """
 import hmac, hashlib, json, os, re, sys, time, urllib.request
 
-ACCESS_KEY = os.environ.get("COUPANG_ACCESS_KEY", "")
-SECRET_KEY = os.environ.get("COUPANG_SECRET_KEY", "")
+# 값 앞뒤 공백/줄바꿈이 섞이면 서명이 깨져 401이 난다
+ACCESS_KEY = os.environ.get("COUPANG_ACCESS_KEY", "").strip()
+SECRET_KEY = os.environ.get("COUPANG_SECRET_KEY", "").strip()
+# 비밀값은 노출하지 않고 길이만 확인 (정상: ACCESS 36, SECRET 40)
+print("키 점검 — ACCESS 길이 {} / SECRET 길이 {}".format(len(ACCESS_KEY), len(SECRET_KEY)))
 DOMAIN = "https://api-gateway.coupang.com"
 PATH = "/v2/providers/affiliate_open_api/apis/openapi/products/goldbox"
 

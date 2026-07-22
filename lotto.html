@@ -37,6 +37,26 @@
   <a href="deals.html">특가</a>
   </nav>
 
+  <div class="card">
+    <h2>🎱 행운의 로또 번호</h2>
+    <p class="desc">몇 게임을 뽑을까요?</p>
+    <div class="mode-row" id="modes">
+      <button onclick="setGames(1)" class="sel">1게임</button>
+      <button onclick="setGames(3)">3게임</button>
+      <button onclick="setGames(5)">5게임</button>
+    </div>
+    <button class="primary" onclick="roll()">번호 뽑기 🍀</button>
+  </div>
+
+  <div class="card result" id="res">
+    <h2>🍀 오늘의 행운 번호</h2>
+    <div id="games"></div>
+    <p class="fortune-msg" id="omen" style="margin-top:16px; text-align:center; color:var(--purple-soft);"></p>
+    <div id="luckyShop"></div>
+    <button class="ghost" onclick="shareResult()" style="margin-top:20px;">📤 번호 공유하기</button>
+    <button class="ghost" onclick="roll()" style="margin-top:10px;">다시 뽑기</button>
+  </div>
+
   <a class="lucky-shop" href="lotto-result.html" style="margin-top:22px;">
     <span class="ls-emoji">🏆</span>
     <span class="ls-body"><span class="ls-name">이번 주 당첨번호 확인</span>
@@ -58,26 +78,6 @@
     <h2>🎯 지난 추천번호 성적표</h2>
     <p class="desc">좋은 결과만 고르지 않고 <b>전 회차를 그대로</b> 기록합니다.</p>
     <div id="hitBody"></div>
-  </div>
-
-  <div class="card">
-    <h2>🎱 행운의 로또 번호</h2>
-    <p class="desc">몇 게임을 뽑을까요?</p>
-    <div class="mode-row" id="modes">
-      <button onclick="setGames(1)" class="sel">1게임</button>
-      <button onclick="setGames(3)">3게임</button>
-      <button onclick="setGames(5)">5게임</button>
-    </div>
-    <button class="primary" onclick="roll()">번호 뽑기 🍀</button>
-  </div>
-
-  <div class="card result" id="res">
-    <h2>🍀 오늘의 행운 번호</h2>
-    <div id="games"></div>
-    <p class="fortune-msg" id="omen" style="margin-top:16px; text-align:center; color:var(--purple-soft);"></p>
-    <div id="luckyShop"></div>
-    <button class="ghost" onclick="shareResult()" style="margin-top:20px;">📤 번호 공유하기</button>
-    <button class="ghost" onclick="roll()" style="margin-top:10px;">다시 뽑기</button>
   </div>
 
   <div style="margin-top:28px;display:flex;justify-content:center;">

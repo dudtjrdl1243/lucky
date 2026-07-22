@@ -47,6 +47,15 @@
     </div>
   </div>
 
+  <div class="card" id="scoreCard" style="display:none;">
+    <h2>📊 별별운세 추천번호는 몇 개 맞았을까?</h2>
+    <p class="desc" id="scoreLine"></p>
+    <div id="scoreGames"></div>
+    <p style="text-align:center;margin-top:14px;">
+      <a href="lotto.html" style="color:var(--gold);font-size:.9rem;font-weight:700;">전체 성적표와 다음 회차 추천번호 보기 →</a>
+    </p>
+  </div>
+
   <div class="card">
     <h2>📋 최근 5회차 당첨번호</h2>
     <div id="history"></div>
@@ -76,6 +85,7 @@
 </div>
 
 <script src="lotto-data.js"></script>
+<script src="lotto-picks.js"></script>
 <script>
 (function () {
   if (typeof LOTTO_ROUNDS === "undefined" || !LOTTO_ROUNDS.length) return;
@@ -109,6 +119,35 @@
       ballsHtml(r.numbers, r.bonus) + '</div>';
   });
   document.getElementById("history").innerHTML = hist;
+
+  // ── 이번 회차 추천번호 성적 (lotto-picks.js의 채점 결과 중 현재 회차) ──
+  if (typeof LOTTO_PICKS !== "undefined" && LOTTO_PICKS.results && LOTTO_PICKS.results.length) {
+    var r = null;
+    LOTTO_PICKS.results.forEach(function (x) { if (x.round === L.round) r = x; });
+    if (r) {
+      var best = Math.max.apply(null, r.games.map(function (g) { return g.hit; }));
+      var bestGame = r.games.filter(function (g) { return g.hit === best; })[0];
+      document.getElementById("scoreLine").innerHTML =
+        r.round + "회 추천번호 5게임 중 최고 <b style=\"color:var(--gold)\">" + best + "개 적중</b>" +
+        (bestGame ? " (" + bestGame.label + " 전략)" : "");
+
+      var g2 = "";
+      r.games.forEach(function (g) {
+        var win = {};
+        L.numbers.forEach(function (n) { win[n] = 1; });
+        g2 += '<div class="game-row"><span class="gname" style="width:74px;">' + g.label + '</span>' +
+          g.numbers.map(function (n) {
+            var on = win[n];
+            return '<span class="ball ' + ballClass(n) + '"' +
+              (on ? ' style="outline:2px solid var(--gold);"' : ' style="opacity:.35;"') + '>' + n + '</span>';
+          }).join("") +
+          '<span style="margin-left:auto;color:' + (g.hit >= 3 ? 'var(--gold)' : 'var(--text-dim)') +
+          ';font-size:.78rem;white-space:nowrap;">' + g.hit + '개' + (g.rank ? ' · ' + g.rank + '등' : '') + '</span></div>';
+      });
+      document.getElementById("scoreGames").innerHTML = g2;
+      document.getElementById("scoreCard").style.display = "";
+    }
+  }
 })();
 </script>
 <script src="visitor-count.js"></script>

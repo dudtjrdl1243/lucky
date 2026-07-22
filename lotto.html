@@ -44,6 +44,22 @@
     <span class="ls-go">보러 가기 →</span>
   </a>
 
+  <div class="card" id="pickCard" style="display:none;">
+    <h2>📊 <span id="pickRound"></span>회 추천번호</h2>
+    <p class="desc" id="pickBasis"></p>
+    <div id="pickGames"></div>
+    <p class="ls-notice" style="text-align:left; margin-top:14px;">
+      과거 당첨번호의 통계 분포(출현 빈도·미출현 기간·홀짝·합계 구간)에 맞춰 조합한 번호입니다.
+      <b>로또는 매회 독립 추첨이므로 어떤 방식으로도 당첨 확률은 높아지지 않습니다.</b> 재미로만 참고하세요.
+    </p>
+  </div>
+
+  <div class="card" id="hitCard" style="display:none;">
+    <h2>🎯 지난 추천번호 성적표</h2>
+    <p class="desc">좋은 결과만 고르지 않고 <b>전 회차를 그대로</b> 기록합니다.</p>
+    <div id="hitBody"></div>
+  </div>
+
   <div class="card">
     <h2>🎱 행운의 로또 번호</h2>
     <p class="desc">몇 게임을 뽑을까요?</p>
@@ -78,6 +94,7 @@
 
 <script src="lucky-items.js"></script>
 <script src="share.js"></script>
+<script src="lotto-picks.js"></script>
 <script>
 let gameCount = 1;
 
@@ -110,6 +127,47 @@ function drawSix() {
   }
   return nums.sort((a, b) => a - b);
 }
+
+// ── 통계 기반 추천번호 + 지난 성적표 ──
+(function () {
+  if (typeof LOTTO_PICKS === "undefined" || !LOTTO_PICKS.games) return;
+  const P = LOTTO_PICKS, b = P.basedOn;
+
+  document.getElementById("pickRound").textContent = P.targetRound;
+  document.getElementById("pickBasis").textContent =
+    "과거 " + b.rounds + "회차 분석 · 최근 " + b.recentWindow + "회 기준 핫/콜드 · " +
+    "당첨번호 합계 정상범위 " + b.sumRange[0] + "~" + b.sumRange[1] + " · 홀수 " + b.oddMode + "개가 최빈";
+
+  let html = "";
+  P.games.forEach(function (g) {
+    html += '<div class="game-row"><span class="gname" style="width:74px;">' + g.label + '</span>' +
+      g.numbers.map(function (n, i) {
+        return '<span class="ball ' + ballClass(n) + '" style="animation-delay:' + (i * 0.06).toFixed(2) + 's">' + n + '</span>';
+      }).join("") +
+      '<span style="margin-left:auto;color:var(--text-dim);font-size:.75rem;white-space:nowrap;">합 ' + g.sum + '</span></div>';
+  });
+  document.getElementById("pickGames").innerHTML = html;
+  document.getElementById("pickCard").style.display = "";
+
+  if (P.results && P.results.length) {
+    let h = "";
+    P.results.forEach(function (r) {
+      const best = Math.max.apply(null, r.games.map(function (g) { return g.hit; }));
+      h += '<div style="padding:12px 0;border-bottom:1px dashed rgba(139,111,216,.25);">' +
+        '<div style="color:var(--purple-soft);font-size:.9rem;margin-bottom:6px;">' +
+        r.round + '회 (' + r.date + ') · 당첨 ' + r.win.join(", ") + ' + ' + r.bonus +
+        ' — <b style="color:var(--gold)">최고 ' + best + '개 적중</b></div>';
+      r.games.forEach(function (g) {
+        const badge = g.rank ? ' <span style="color:var(--gold)">' + g.rank + '등</span>' : '';
+        h += '<div style="font-size:.85rem;color:var(--text-dim);">· ' + g.label + ' — ' +
+             g.numbers.join(", ") + ' → ' + g.hit + '개' + badge + '</div>';
+      });
+      h += '</div>';
+    });
+    document.getElementById("hitBody").innerHTML = h;
+    document.getElementById("hitCard").style.display = "";
+  }
+})();
 
 function roll() {
   let html = "";

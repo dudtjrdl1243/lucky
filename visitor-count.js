@@ -16,6 +16,23 @@
 
   var firstVisitToday = !ls(function () { return localStorage.getItem(visitFlag); }, "1");
 
+  // 유입원 분류: 어디서 들어왔는지 (검색/SNS/직접)
+  function trafficSource() {
+    var r = document.referrer || "";
+    if (!r) return "direct";                        // 직접 입력·즐겨찾기·앱
+    var h = "";
+    try { h = new URL(r).hostname; } catch (e) { return "etc"; }
+    if (h.indexOf("dudtjrdl1243.github.io") >= 0) return null; // 내부 이동은 집계 제외
+    if (/naver/.test(h)) return "naver";
+    if (/google/.test(h)) return "google";
+    if (/daum|kakao/.test(h)) return "daum";
+    if (/threads|instagram/.test(h)) return "threads";
+    if (/t\.co|twitter|x\.com/.test(h)) return "twitter";
+    if (/t\.me|telegram/.test(h)) return "telegram";
+    if (/tistory|blog/.test(h)) return "blog";
+    return "etc";
+  }
+
   function call(key, increment) {
     return fetch(API + key + (increment ? "/up" : "/"), { cache: "no-store" })
       .then(function (r) { return r.json(); })
@@ -47,7 +64,12 @@
 
   Promise.all([call("total", firstVisitToday), call(dayKey, firstVisitToday)])
     .then(function (res) {
-      if (firstVisitToday) ls(function () { return localStorage.setItem(visitFlag, "1"); });
+      if (firstVisitToday) {
+        ls(function () { return localStorage.setItem(visitFlag, "1"); });
+        // 오늘 첫 방문일 때만 유입원 1 증가 (관리자 통계에서 합산해 봄)
+        var src = trafficSource();
+        if (src) call("src_" + src, true);
+      }
       render(res[0], res[1]);
     });
 })();

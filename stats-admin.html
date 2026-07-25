@@ -35,6 +35,11 @@
   </div>
 
   <div id="bars"></div>
+
+  <h1 style="font-size:1.1rem;margin-top:34px;">🔎 유입 경로 (누적)</h1>
+  <p class="sub">방문자가 어디서 들어왔는지</p>
+  <div id="sources" style="margin-top:12px;"></div>
+
   <p class="note" id="note">불러오는 중…</p>
 </div>
 
@@ -82,9 +87,38 @@
           '<span class="v">' + counts[i] + '</span></div>';
       }
       document.getElementById("bars").innerHTML = html;
-      document.getElementById("note").textContent =
-        "하루 1인당 1회로 집계(새로고침 중복 제외). 이 페이지는 검색에 노출되지 않으며 주소를 아는 사람만 볼 수 있습니다.";
+      loadSources();
     });
+
+  // ── 유입 경로 (누적) ──
+  var SRC = [
+    ["naver", "네이버 검색"], ["google", "구글 검색"], ["daum", "다음/카카오"],
+    ["threads", "스레드/인스타"], ["telegram", "텔레그램"], ["blog", "블로그"],
+    ["twitter", "X(트위터)"], ["direct", "직접·즐겨찾기"], ["etc", "기타"],
+  ];
+  function loadSources() {
+    Promise.all(SRC.map(function (s) { return get("src_" + s[0]); }))
+      .then(function (vals) {
+        var total = vals.reduce(function (a, b) { return a + b; }, 0) || 1;
+        var rows = SRC.map(function (s, i) { return { label: s[1], v: vals[i] }; })
+                      .filter(function (r) { return r.v > 0; })
+                      .sort(function (a, b) { return b.v - a.v; });
+        if (!rows.length) {
+          document.getElementById("sources").innerHTML =
+            '<p class="sub">아직 유입 기록이 없어요. 방문이 쌓이면 여기 표시됩니다.</p>';
+          return;
+        }
+        var max = rows[0].v;
+        document.getElementById("sources").innerHTML = rows.map(function (r) {
+          var pct = Math.round(r.v / total * 100);
+          return '<div class="bar-row"><span class="day">' + r.label + '</span>' +
+            '<span class="track"><span class="fill" style="width:' + (r.v / max * 100) + '%"></span></span>' +
+            '<span class="v">' + r.v + ' <span style="color:var(--text-dim);font-size:.72rem;">' + pct + '%</span></span></div>';
+        }).join("");
+      });
+    document.getElementById("note").textContent =
+      "하루 1인당 1회 집계(새로고침 제외). 유입 경로는 방문 시점의 이전 페이지 기준. 이 페이지는 검색 비노출입니다.";
+  }
 })();
 </script>
 </body>

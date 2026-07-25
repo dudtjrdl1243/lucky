@@ -1,0 +1,24 @@
+name: 스레드 저녁 일상글
+
+# 매일 저녁 KST 19:00 에 링크 없는 일상글 하나를 올린다.
+# 아침(07:10) 링크 글과 시간대를 벌려, 계정이 '홍보 계정'으로 보이지 않게 한다.
+on:
+  schedule:
+    - cron: "0 10 * * *" # KST 19:00
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 스레드 일상글 포스팅
+        continue-on-error: true
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_FORCE_TYPE: daily
+        run: python scripts/post_threads.py

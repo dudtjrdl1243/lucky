@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>방문 통계 (관리자)</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .stat-wrap { max-width: 640px; margin: 0 auto; padding: 24px 16px 60px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0; }
+  .kpi { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px 10px; text-align: center; }
+  .kpi .n { font-size: 1.6rem; font-weight: 900; color: var(--gold); }
+  .kpi .l { font-size: .78rem; color: var(--text-dim); margin-top: 4px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin: 7px 0; }
+  .bar-row .day { width: 92px; font-size: .82rem; color: var(--text-dim); flex-shrink: 0; }
+  .bar-row .track { flex: 1; background: rgba(139,111,216,.12); border-radius: 6px; height: 22px; position: relative; overflow: hidden; }
+  .bar-row .fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 6px; min-width: 2px; transition: width .4s; }
+  .bar-row .v { width: 46px; text-align: right; font-size: .85rem; font-weight: 700; color: var(--text); flex-shrink: 0; }
+  .today .day, .today .v { color: var(--gold); font-weight: 800; }
+  .note { color: var(--text-dim); font-size: .8rem; margin-top: 20px; line-height: 1.6; }
+  h1 { color: var(--gold); font-size: 1.4rem; margin-bottom: 4px; }
+  .sub { color: var(--text-dim); font-size: .85rem; }
+</style>
+</head>
+<body>
+<div class="stat-wrap">
+  <h1>📊 방문 통계</h1>
+  <p class="sub">별별운세 · 관리자 전용 (검색 비노출)</p>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="n" id="kToday">-</div><div class="l">오늘</div></div>
+    <div class="kpi"><div class="n" id="kWeek">-</div><div class="l">최근 7일</div></div>
+    <div class="kpi"><div class="n" id="kTotal">-</div><div class="l">전체 누적</div></div>
+  </div>
+
+  <div id="bars"></div>
+  <p class="note" id="note">불러오는 중…</p>
+</div>
+
+<script>
+(function () {
+  var API = "https://api.counterapi.dev/v1/byeolbyeol-unse/";
+  var DAYS = 30; // 최근 30일 표시
+
+  function pad(n){ return n < 10 ? "0"+n : ""+n; }
+  function keyOf(d){ return "d" + d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate()); }
+  function label(d){ return (d.getMonth()+1) + "/" + d.getDate() + " (" + "일월화수목금토"[d.getDay()] + ")"; }
+
+  var today = new Date();
+  var days = [];
+  for (var i = DAYS - 1; i >= 0; i--) {
+    var d = new Date(today); d.setDate(today.getDate() - i);
+    days.push(d);
+  }
+
+  function get(key){
+    return fetch(API + key + "/", {cache:"no-store"})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ return typeof j.count === "number" ? j.count : 0; })
+      .catch(function(){ return 0; });
+  }
+
+  Promise.all(days.map(function(d){ return get(keyOf(d)); }).concat([get("total")]))
+    .then(function(res){
+      var total = res.pop();
+      var counts = res;
+      var max = Math.max.apply(null, counts.concat([1]));
+      var todayCount = counts[counts.length - 1];
+      var week = counts.slice(-7).reduce(function(a,b){ return a+b; }, 0);
+
+      document.getElementById("kToday").textContent = todayCount;
+      document.getElementById("kWeek").textContent = week;
+      document.getElementById("kTotal").textContent = total;
+
+      var html = "";
+      for (var i = counts.length - 1; i >= 0; i--) {  // 최신이 위로
+        var isToday = i === counts.length - 1;
+        html += '<div class="bar-row' + (isToday ? ' today' : '') + '">' +
+          '<span class="day">' + label(days[i]) + '</span>' +
+          '<span class="track"><span class="fill" style="width:' + (counts[i]/max*100) + '%"></span></span>' +
+          '<span class="v">' + counts[i] + '</span></div>';
+      }
+      document.getElementById("bars").innerHTML = html;
+      document.getElementById("note").textContent =
+        "하루 1인당 1회로 집계(새로고침 중복 제외). 이 페이지는 검색에 노출되지 않으며 주소를 아는 사람만 볼 수 있습니다.";
+    });
+})();
+</script>
+</body>
+</html>

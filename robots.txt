@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /lucky/stats-admin.html
 
 Sitemap: https://dudtjrdl1243.github.io/lucky/sitemap.xml

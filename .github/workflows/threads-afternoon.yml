@@ -1,33 +1,24 @@
-name: 스레드 수동 포스팅
+name: 스레드 오후 정보글
 
+# 매일 오후 KST 15:00 에 '저장하고 싶은' 실용 정보글 하나를 올린다.
+# 재미글이 아니라 정보글이라 팔로우·저장 전환에 유리하다. 링크 없음.
 on:
+  schedule:
+    - cron: "0 6 * * *" # KST 15:00
   workflow_dispatch:
-    inputs:
-      type:
-        description: "올릴 글 종류"
-        required: true
-        default: fortune
-        type: choice
-        options:
-          - fortune
-          - deal
-          - lotto
-          - daily
-          - tips
 
 jobs:
   post:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: 스레드 포스팅
+      - name: 스레드 정보글 포스팅
+        continue-on-error: true
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
-          THREADS_FORCE_TYPE: ${{ inputs.type }}
+          THREADS_FORCE_TYPE: tips
         run: python scripts/post_threads.py

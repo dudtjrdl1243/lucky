@@ -74,6 +74,11 @@
       var todayCount = counts[counts.length - 1];
       var week = counts.slice(-7).reduce(function(a,b){ return a+b; }, 0);
 
+      // total과 날짜 합계를 찍는 시점 사이에 방문이 늘면 역전돼 보일 수 있어,
+      // 누적은 최소한 최근 30일 합보다 크거나 같게 보정한다.
+      var sumShown = counts.reduce(function(a,b){ return a+b; }, 0);
+      total = Math.max(total, sumShown);
+
       document.getElementById("kToday").textContent = todayCount;
       document.getElementById("kWeek").textContent = week;
       document.getElementById("kTotal").textContent = total;

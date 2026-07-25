@@ -15,7 +15,7 @@
   .bar-row { display: flex; align-items: center; gap: 10px; margin: 7px 0; }
   .bar-row .day { width: 92px; font-size: .82rem; color: var(--text-dim); flex-shrink: 0; }
   .bar-row .track { flex: 1; background: rgba(139,111,216,.12); border-radius: 6px; height: 22px; position: relative; overflow: hidden; }
-  .bar-row .fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 6px; min-width: 2px; transition: width .4s; }
+  .bar-row .fill { display: block; height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 6px; min-width: 2px; transition: width .4s; }
   .bar-row .v { width: 46px; text-align: right; font-size: .85rem; font-weight: 700; color: var(--text); flex-shrink: 0; }
   .today .day, .today .v { color: var(--gold); font-weight: 800; }
   .note { color: var(--text-dim); font-size: .8rem; margin-top: 20px; line-height: 1.6; }

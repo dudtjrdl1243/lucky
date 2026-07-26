@@ -210,13 +210,14 @@ def build_text():
     if forced == "tips":
         # 오후 정보글 (저장 유도용, 링크 없음)
         return TIPS[kst.tm_yday % len(TIPS)], None, None
-    if forced == "daily" or (not forced and wd == 6):
-        # 일상글은 링크 없이 (도달 확보용). 저녁 슬롯이라 날짜에 오프셋을 줘
-        # 같은 날 아침 글과, 어제 저녁 글과 겹치지 않게 한다.
+    if forced == "daily":
+        # 일상글은 링크 없이 (도달 확보용). 저녁 슬롯 전용 - 아침 슬롯은
+        # 절대 이 분기로 오지 않도록 위 요일 조건에서 wd==6도 daily가 아닌
+        # 다른 콘텐츠(가성비템)로 빠지게 해뒀다. 같은 날 아침 글과 겹치지 않게.
         idx = (kst.tm_yday * 2 + 1) % len(DAILY)
         return DAILY[idx], None, None
 
-    # 화·목 (또는 forced == "deal") : 가성비템
+    # 화·목·일 (또는 forced == "deal") : 가성비템
     deal = load_deal()
     if not deal:
         b, r = with_link(pick(FORTUNE)); return b, r, None

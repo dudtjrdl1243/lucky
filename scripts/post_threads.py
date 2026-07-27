@@ -7,10 +7,13 @@
 말투는 계정 톤(짧고 건조한 반말 혼잣말)에 맞춤. 하루 1개만 게시.
 THREADS_ACCESS_TOKEN 없으면 조용히 건너뜀. USER_ID는 토큰으로 자동 조회.
 """
-import json, os, re, sys, time, urllib.request, urllib.parse
+import datetime, json, os, re, sys, time, urllib.request, urllib.parse
 
-TOKEN = os.environ.get("THREADS_ACCESS_TOKEN", "")
-USER_ID = os.environ.get("THREADS_USER_ID", "")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import fortune_calc
+
+TOKEN = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
+USER_ID = os.environ.get("THREADS_USER_ID", "").strip()
 SITE = "https://dudtjrdl1243.github.io/lucky/"
 
 if not TOKEN:
@@ -29,12 +32,91 @@ if not USER_ID:
 
 kst = time.gmtime(time.time() + 9 * 3600)
 week = int(time.strftime("%W", kst))  # 주차 → 같은 요일이라도 매주 다른 문구
+KST_TODAY = time.strftime("%Y-%m-%d", kst)
+KST_TZ = datetime.timezone(datetime.timedelta(hours=9))
+
+# ── 이미 올린 글 조회 (중복 방지의 핵심) ───────────────
+# 깃허브 액션 예약 실행은 1~2시간씩 밀리거나 통째로 건너뛴다. 그래서 한 슬롯에
+# 여러 번 예약을 걸어두는데, 그러면 같은 글이 두 번 나갈 수 있다.
+# 실제로 올라간 글을 API로 확인해서 (1) 오늘 이 슬롯 글이 이미 나갔으면 건너뛰고
+# (2) 최근에 쓴 문구는 다시 고르지 않는다.
+def fetch_recent(limit=50):
+    url = ("https://graph.threads.net/v1.0/" + USER_ID + "/threads"
+           "?fields=text,timestamp&limit=" + str(limit) +
+           "&access_token=" + urllib.parse.quote(TOKEN))
+    with urllib.request.urlopen(url, timeout=30) as r:
+        return json.loads(r.read().decode()).get("data", [])
+
+
+def _norm(s):
+    """공백·줄바꿈 차이를 무시하고 같은 글인지 비교하기 위한 정규화"""
+    return re.sub(r"\s+", "", s or "")
+
+
+def _kst_date(ts):
+    try:
+        return datetime.datetime.strptime(ts, "%Y-%m-%dT%H:%M:%S%z") \
+                               .astimezone(KST_TZ).strftime("%Y-%m-%d")
+    except Exception:
+        return ""
+
+
+RECENT, RECENT_OK = [], False
+for _try in range(2):
+    try:
+        RECENT = fetch_recent()
+        RECENT_OK = True
+        print("최근 게시물 {}건 조회 — 중복 검사에 사용".format(len(RECENT)))
+        break
+    except Exception as e:
+        print("최근 게시물 조회 실패 ({}/2): {}".format(_try + 1, e))
+        if _try == 0:
+            time.sleep(5)
+
+# 조회에 실패하면 중복인지 알 수 없다. 이때 재시도 예약까지 글을 올리면
+# 같은 글이 여러 번 나가므로, 확인이 안 된 재시도 실행은 그냥 포기한다.
+# (본 예약 실행은 하루 한 번뿐이라 그대로 진행해도 중복이 생기지 않는다.)
+if not RECENT_OK and os.environ.get("THREADS_REQUIRE_CHECK", "").strip() == "1":
+    print("중복 확인을 못 했고 이번은 재시도 실행이라 건너뜁니다.")
+    sys.exit(0)
+
+RECENT_TEXTS = set(_norm(p.get("text")) for p in RECENT)
+TODAY_TEXTS = set(_norm(p.get("text")) for p in RECENT
+                  if _kst_date(p.get("timestamp", "")) == KST_TODAY)
 
 # 본문에는 링크를 넣지 않고 첫 댓글로 분리한다.
 # (스레드는 본문에 외부 링크가 있으면 노출이 줄어드는 편)
 # 형식: (본문, 댓글에 붙일 페이지, 댓글 앞머리)
 
 # ── 운세 티저 (월·수·금) ─────────────────────────────
+# 오늘 실제로 계산된 순위를 그대로 넣는 티저.
+# 사이트에서 나오는 값과 같아야 하므로 fortune_calc(=JS 엔진과 동일 규칙)로 계산한다.
+# 매일 내용이 바뀌므로 같은 문구가 반복될 일이 없다.
+def live_fortune():
+    try:
+        f = fortune_calc.today_facts()
+    except Exception as e:
+        print("오늘의 순위 계산 실패 — 일반 문구만 사용합니다:", e)
+        return []
+    tti, zod = f["tti"], f["zodiac"]
+    t1, t2, t3, tlast = tti[0][0], tti[1][0], tti[2][0], tti[-1][0]
+    z1, z2, z3 = zod[0][0], zod[1][0], zod[2][0]
+    return [
+        ("오늘 띠별 운세 1위 {}띠\n2위 {}띠, 3위 {}띠\n내 띠는 몇 위인지 보고 옴".format(t1, t2, t3),
+         "tti.html", "12띠 순위 여기서 봄"),
+        ("오늘 별자리 1위 {}\n2위 {}, 3위 {}\n내 자리는 어디쯤인지 확인함".format(z1, z2, z3),
+         "zodiac.html", "12별자리 순위 여기"),
+        ("오늘은 {}일 — {} 기운이 도는 날\n띠 순위 1위는 {}띠라는데".format(f["day_name"], f["day_elem"], t1),
+         "tti.html", "계산 근거까지 여기 있음"),
+        ("오늘 {}띠가 1위\n{}띠가 12위\n같은 날인데 이렇게 갈리네".format(t1, tlast),
+         "tti.html", "전체 순위 여기"),
+        ("달은 지금 {} 단계\n오늘 별자리 1위는 {}로 나옴".format(f["moon"], z1),
+         "zodiac.html", "내 별자리 순위 여기"),
+        ("태양이 지금 {}에 있어서\n오늘은 {} 흐름이 제일 좋다고".format(f["sun_sign"], z1),
+         "zodiac.html", "순위 확인은 여기"),
+    ]
+
+
 FORTUNE = [
     ("오늘 12간지 중에 1위인 띠가 있다는데\n내 띠는 몇 위려나", "tti.html", "여기서 확인함"),
     ("출근길에 오늘 운세 한 번 보고 가는 사람\n나만 그런 거 아니지", "today.html", "보는 곳 남겨둠"),
@@ -174,9 +256,25 @@ DEAL_HOOKS = [
     "지출은 했지만 후회는 없는 쪽",
 ]
 
-def pick(pool):
-    # 날짜 기준으로 골라야 같은 주의 월·수·금이 서로 다른 문구가 됨
-    return pool[kst.tm_yday % len(pool)]
+def choose(cands):
+    """후보 [(본문, 댓글|None, 이미지|None), ...] 에서 하나 고른다.
+
+    - 오늘 이 슬롯 글이 이미 나갔으면 None → 아예 게시하지 않는다.
+      (예약이 밀려 같은 슬롯이 두 번 돌아도 중복 발행되지 않게 하는 안전장치)
+    - 최근에 이미 쓴 문구는 건너뛰고 다음 것을 고른다.
+    """
+    if not cands:
+        return None
+    if any(_norm(c[0]) in TODAY_TEXTS for c in cands):
+        print("오늘 이 슬롯 글은 이미 올라갔습니다 — 건너뜁니다.")
+        return None
+    start = kst.tm_yday % len(cands)
+    for k in range(len(cands)):
+        c = cands[(start + k) % len(cands)]
+        if _norm(c[0]) not in RECENT_TEXTS:
+            return c
+    print("후보가 전부 최근에 쓰였습니다 — 순번대로 재사용합니다.")
+    return cands[start]
 
 def load_deal():
     """deals-data.js에서 로켓배송 상품 하나 고르기 (주차별로 다른 상품)"""
@@ -193,45 +291,49 @@ def load_deal():
     rockets = [d for d in deals if d.get("rocket")] or deals
     return rockets[(week + kst.tm_yday) % len(rockets)]
 
+def linked(pool):
+    """(본문, 페이지, 댓글 앞머리) 목록 → 후보 형식으로"""
+    return [(b, lead + "\n👉 " + SITE + page, None) for b, page, lead in pool]
+
+
 def build_text():
-    """(본문, 첫 댓글, 본문에 붙일 이미지 URL) 을 돌려준다. 없으면 None."""
+    """(본문, 첫 댓글, 본문에 붙일 이미지 URL) 을 돌려준다. 올릴 게 없으면 None."""
     # 수동 실행 시 THREADS_FORCE_TYPE 로 콘텐츠 종류 지정 가능
     forced = os.environ.get("THREADS_FORCE_TYPE", "").strip().lower()
     wd = kst.tm_wday  # 0=월
 
-    def with_link(item):
-        body, page, lead = item
-        return body, lead + "\n👉 " + SITE + page
-
-    if forced == "fortune" or (not forced and wd in (0, 2, 4)):
-        b, r = with_link(pick(FORTUNE)); return b, r, None
-    if forced == "lotto" or (not forced and wd == 5):
-        b, r = with_link(pick(LOTTO)); return b, r, None
     if forced == "tips":
         # 오후 정보글 (저장 유도용, 링크 없음)
-        return TIPS[kst.tm_yday % len(TIPS)], None, None
+        return choose([(t, None, None) for t in TIPS])
     if forced == "daily":
-        # 일상글은 링크 없이 (도달 확보용). 저녁 슬롯 전용 - 아침 슬롯은
-        # 절대 이 분기로 오지 않도록 위 요일 조건에서 wd==6도 daily가 아닌
-        # 다른 콘텐츠(가성비템)로 빠지게 해뒀다. 같은 날 아침 글과 겹치지 않게.
-        idx = (kst.tm_yday * 2 + 1) % len(DAILY)
-        return DAILY[idx], None, None
+        # 저녁 일상글 (도달 확보용, 링크 없음). 아침 슬롯은 여기로 오지 않는다.
+        return choose([(t, None, None) for t in DAILY])
+    if forced == "fortune" or (not forced and wd in (0, 2, 4)):
+        # 오늘 계산된 실제 순위를 쓴 티저를 앞에 두고, 일반 문구를 뒤에 붙인다
+        return choose(linked(live_fortune() + FORTUNE))
+    if forced == "lotto" or (not forced and wd == 5):
+        return choose(linked(LOTTO))
 
     # 화·목·일 (또는 forced == "deal") : 가성비템
     deal = load_deal()
     if not deal:
-        b, r = with_link(pick(FORTUNE)); return b, r, None
+        return choose(linked(live_fortune() + FORTUNE))
     name = deal["name"]
     if len(name) > 40:
         name = name[:40] + "…"
     url = deal["url"] + ("&" if "?" in deal["url"] else "?") + "subid=th"  # 스레드 유입 구분
-    # 본문에 제품 사진이 들어가므로 광고 표기를 본문에도 남긴다 (표시 위치 규정 대응)
-    body = pick(DEAL_HOOKS) + "\n\n#광고"
     reply = "{}\n{:,}원{}\n\n{}\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.".format(
         name, deal["price"], " · 로켓배송" if deal.get("rocket") else "", url)
-    return body, reply, (deal.get("image") or None)
+    image = deal.get("image") or None
+    # 본문에 제품 사진이 들어가므로 광고 표기를 본문에도 남긴다 (표시 위치 규정 대응)
+    return choose([(h + "\n\n#광고", reply, image) for h in DEAL_HOOKS])
 
-text, reply_text, image_url = build_text()
+
+chosen = build_text()
+if not chosen:
+    print("올릴 글이 없어 종료합니다.")
+    sys.exit(0)
+text, reply_text, image_url = chosen
 
 def api(path, params):
     data = urllib.parse.urlencode(dict(params, access_token=TOKEN)).encode()
@@ -267,14 +369,21 @@ try:
     print(text)
 
     # 링크는 본문이 아니라 첫 댓글로 (본문에 외부 링크가 있으면 노출이 줄어드는 편)
+    # 본문 직후에는 답글이 실패하는 경우가 있어 간격을 두고 세 번까지 시도한다.
     if reply_text and post_id:
-        try:
-            rep = publish(reply_text, reply_to=post_id)
-            print("첫 댓글 작성 성공:", rep.get("id"))
-            print("--- 댓글 ---")
-            print(reply_text)
-        except Exception as e:
-            print("첫 댓글 작성 실패(본문은 정상 게시됨):", e)
+        for attempt in range(1, 4):
+            try:
+                rep = publish(reply_text, reply_to=post_id)
+                print("첫 댓글 작성 성공:", rep.get("id"))
+                print("--- 댓글 ---")
+                print(reply_text)
+                break
+            except Exception as e:
+                print("첫 댓글 작성 실패 ({}/3): {}".format(attempt, e))
+                if attempt < 3:
+                    time.sleep(15)
+        else:
+            print("첫 댓글을 끝내 못 달았습니다 (본문은 정상 게시됨).")
 except Exception as e:
     print("스레드 포스팅 실패:", e)
     sys.exit(0)

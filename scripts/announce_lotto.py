@@ -38,15 +38,24 @@ if not rounds:
 L = rounds[0]
 
 # 이미 알린 회차인지 확인
-last = 0
+state = {}
 if os.path.exists(STATE):
     try:
         # utf-8-sig: 편집기가 붙인 BOM이 있어도 읽히도록
-        last = json.load(open(STATE, encoding="utf-8-sig")).get("announced", 0)
+        state = json.load(open(STATE, encoding="utf-8-sig")) or {}
     except Exception:
-        last = 0
-if L["round"] <= last:
-    print("{}회는 이미 알렸습니다. 건너뜁니다.".format(L["round"]))
+        state = {}
+last = state.get("announced", 0)
+same_round = (L["round"] == last)
+
+# 본문·첫 댓글을 따로 기억한다. 본문만 올라가고 댓글이 실패했던 적이 있는데,
+# 예전에는 그것도 '발송 완료'로 적어버려서 링크 없는 글이 그대로 남았다.
+# 이제는 댓글이 빠졌으면 다음 실행에서 본문은 그대로 두고 댓글만 다시 단다.
+if L["round"] < last:
+    print("{}회는 이미 지난 회차입니다. 건너뜁니다.".format(L["round"]))
+    sys.exit(0)
+if same_round and state.get("threads_reply_ok") and state.get("telegram_ok"):
+    print("{}회는 이미 알렸습니다(첫 댓글까지). 건너뜁니다.".format(L["round"]))
     sys.exit(0)
 
 # 우리 추천번호 성적 (있으면 함께 알린다)
@@ -69,6 +78,9 @@ def post_telegram():
     if not TG_TOKEN or not TG_CHAT:
         print("텔레그램 설정 없음 — 건너뜀")
         return False
+    if same_round and state.get("telegram_ok"):
+        print("텔레그램은 이미 보냈습니다 — 건너뜀")
+        return True
     lines = [
         "🎱 <b>로또 {}회 당첨번호</b>".format(L["round"]),
         "",
@@ -92,10 +104,10 @@ def post_telegram():
 
 
 def post_threads():
-    """실제로 발송했으면 True. 설정이 없어 건너뛴 경우는 False."""
+    """(본문 게시됨?, 게시물 id, 첫 댓글 성공?) 을 돌려준다."""
     if not TH_TOKEN:
         print("스레드 토큰 없음 — 건너뜀")
-        return False
+        return False, None, False
     uid = TH_USER
     if not uid:
         url = "https://graph.threads.net/v1.0/me?fields=id&access_token=" + urllib.parse.quote(TH_TOKEN)
@@ -121,34 +133,68 @@ def post_threads():
         if reply_to:
             params["reply_to_id"] = reply_to
         c = api(uid + "/threads", params)
-        time.sleep(3)
+        time.sleep(5)
         return api(uid + "/threads_publish", {"creation_id": c["id"]})
+
+    def reply_to(pid):
+        """본문 직후에는 답글이 실패하는 경우가 있어 간격을 두고 세 번까지 시도"""
+        if not pid:
+            return False
+        for attempt in range(1, 4):
+            try:
+                rep = publish(reply_text, reply_to=pid)
+                print("첫 댓글 작성 성공:", rep.get("id"))
+                return True
+            except Exception as e:
+                print("첫 댓글 작성 실패 ({}/3): {}".format(attempt, e))
+                if attempt < 3:
+                    time.sleep(15)
+        return False
+
+    # 본문이 이미 올라가 있으면(지난 실행에서 댓글만 실패) 본문은 다시 올리지 않는다
+    prev = state.get("threads_post_id") if same_round else None
+    if prev:
+        print("본문은 이미 게시됨({}) — 첫 댓글만 다시 시도합니다.".format(prev))
+        return True, prev, reply_to(prev)
 
     res = publish(text)
     pid = res.get("id")
     print("스레드 발송 성공:", pid)
     print(text)
-    if pid:
-        try:
-            rep = publish(reply_text, reply_to=pid)
-            print("첫 댓글 작성 성공:", rep.get("id"))
-        except Exception as e:
-            print("첫 댓글 작성 실패(본문은 정상 게시됨):", e)
-    return True
+    return True, pid, reply_to(pid)
 
 
-sent = False
-for fn in (post_telegram, post_threads):
-    try:
-        if fn():
-            sent = True
-    except Exception as e:
-        print("{} 실패: {}".format(fn.__name__, e))
+tg_ok = bool(same_round and state.get("telegram_ok"))
+th_ok = bool(same_round and state.get("threads_post_id"))
+th_pid = state.get("threads_post_id") if same_round else None
+th_reply_ok = bool(same_round and state.get("threads_reply_ok"))
 
-if not sent:
+try:
+    tg_ok = post_telegram() or tg_ok
+except Exception as e:
+    print("post_telegram 실패:", e)
+
+try:
+    posted, pid, reply_ok = post_threads()
+    th_ok = posted or th_ok
+    th_pid = pid or th_pid
+    th_reply_ok = reply_ok or th_reply_ok
+except Exception as e:
+    print("post_threads 실패:", e)
+
+if not (tg_ok or th_ok):
     print("어느 채널에도 발송하지 못해 상태를 저장하지 않습니다 (다음 실행에서 재시도).")
+    sys.exit(0)
 
-if sent:
-    json.dump({"announced": L["round"], "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime(time.time() + 9 * 3600))},
-              open(STATE, "w", encoding="utf-8"), ensure_ascii=False)
+json.dump({
+    "announced": L["round"],
+    "telegram_ok": tg_ok,
+    "threads_post_id": th_pid,
+    "threads_reply_ok": th_reply_ok,
+    "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime(time.time() + 9 * 3600)),
+}, open(STATE, "w", encoding="utf-8"), ensure_ascii=False)
+
+if th_ok and not th_reply_ok:
+    print("{}회 본문은 나갔지만 첫 댓글(링크)이 빠졌습니다 — 다음 실행에서 댓글만 다시 답니다.".format(L["round"]))
+else:
     print("{}회 발송 완료 — 상태 저장".format(L["round"]))

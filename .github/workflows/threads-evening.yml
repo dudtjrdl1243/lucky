@@ -1,10 +1,13 @@
 name: 스레드 저녁 일상글
 
-# 매일 저녁 KST 19:00 에 링크 없는 일상글 하나를 올린다.
-# 아침(07:10) 링크 글과 시간대를 벌려, 계정이 '홍보 계정'으로 보이지 않게 한다.
+# 매일 저녁에 링크 없는 일상글 하나를 올린다.
+# 아침 링크 글과 시간대를 벌려, 계정이 '홍보 계정'으로 보이지 않게 한다.
+# 예약이 밀리는 문제와 중복 방지는 threads-afternoon.yml 설명 참고.
 on:
   schedule:
-    - cron: "0 10 * * *" # KST 19:00
+    - cron: "50 8 * * *"  # KST 17:50 (밀리는 시간 감안한 본 예약 → 대개 19시 전후 게시)
+    - cron: "20 10 * * *" # KST 19:20 (건너뛰었을 때 대비)
+    - cron: "40 11 * * *" # KST 20:40 (마지막 재시도)
   workflow_dispatch:
 
 jobs:
@@ -21,4 +24,6 @@ jobs:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_FORCE_TYPE: daily
+          # 본 예약(17:50)이 아닌 재시도 실행은, 중복 확인이 안 되면 올리지 않는다
+          THREADS_REQUIRE_CHECK: ${{ github.event.schedule == '50 8 * * *' && '0' || '1' }}
         run: python scripts/post_threads.py

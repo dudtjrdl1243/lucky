@@ -1,10 +1,18 @@
 name: 스레드 오후 정보글
 
-# 매일 오후 KST 15:00 에 '저장하고 싶은' 실용 정보글 하나를 올린다.
+# 매일 오후에 '저장하고 싶은' 실용 정보글 하나를 올린다.
 # 재미글이 아니라 정보글이라 팔로우·저장 전환에 유리하다. 링크 없음.
+#
+# 깃허브 예약 실행은 정시(0분)에 요청이 몰려 1~2시간씩 밀리고, 아예 건너뛰기도 한다.
+# 그래서 (1) 정각을 피해 예약하고 (2) 목표 시각보다 앞당겨 걸고
+# (3) 놓쳤을 때를 대비해 뒤에 두 번 더 걸어둔다.
+# 스크립트가 "오늘 이 슬롯 글이 이미 나갔는지"를 스레드 API로 확인하므로
+# 여러 번 실행돼도 중복으로 올라가지 않는다.
 on:
   schedule:
-    - cron: "0 6 * * *" # KST 15:00
+    - cron: "20 4 * * *"  # KST 13:20 (밀리는 시간 감안한 본 예약 → 대개 15시 전후 게시)
+    - cron: "20 6 * * *"  # KST 15:20 (건너뛰었을 때 대비)
+    - cron: "30 7 * * *"  # KST 16:30 (마지막 재시도)
   workflow_dispatch:
 
 jobs:
@@ -21,4 +29,6 @@ jobs:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_FORCE_TYPE: tips
+          # 본 예약(13:20)이 아닌 재시도 실행은, 중복 확인이 안 되면 올리지 않는다
+          THREADS_REQUIRE_CHECK: ${{ github.event.schedule == '20 4 * * *' && '0' || '1' }}
         run: python scripts/post_threads.py

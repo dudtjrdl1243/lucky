@@ -53,6 +53,11 @@
     <p style="text-align:center; color:var(--text-dim); font-size:.85rem; margin-bottom:4px;">오늘의 운세 지수</p>
     <p class="fortune-msg" id="scoreMsg" style="text-align:center; color:var(--purple-soft); margin-bottom:12px;"></p>
 
+    <!-- 총평 직후가 가장 집중도가 높은 자리라 광고를 여기 둔다.
+         결과 카드는 처음엔 숨겨져 있으므로, 광고는 결과가 뜬 뒤에 붙인다.
+         (숨은 상태로 두면 보이지도 않는 채 노출만 잡힌다) -->
+    <div id="adInResult" style="margin:18px 0 22px; display:flex; justify-content:center;"></div>
+
     <div id="rows"></div>
 
     <div id="mgBox" style="display:none;">
@@ -262,7 +267,32 @@ function tell() {
 
   const res = document.getElementById("res");
   res.classList.add("show");
+  mountResultAd();
   res.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+/* 결과 카드가 보이게 된 뒤에 광고를 붙인다.
+   애드핏 스크립트는 로드 시점에 아직 처리하지 않은 .kakao_ad_area 를 찾아 채우므로,
+   ins 를 넣은 다음 스크립트를 함께 append 하면 뒤늦게 추가된 자리도 채워진다.
+   다시 보기로 tell()이 여러 번 불려도 광고는 한 번만 만든다. */
+function mountResultAd() {
+  const box = document.getElementById("adInResult");
+  if (!box || box.dataset.mounted) return;
+  box.dataset.mounted = "1";
+
+  const ins = document.createElement("ins");
+  ins.className = "kakao_ad_area";
+  ins.style.display = "none";
+  ins.setAttribute("data-ad-unit", "DAN-9QaJ7W036Uxey8Xw");
+  ins.setAttribute("data-ad-width", "300");
+  ins.setAttribute("data-ad-height", "250");
+  box.appendChild(ins);
+
+  const s = document.createElement("script");
+  s.type = "text/javascript";
+  s.src = "//t1.kakaocdn.net/kas/static/ba.min.js";
+  s.async = true;
+  box.appendChild(s);
 }
 </script>
 <script src="visitor-count.js"></script>

@@ -238,23 +238,21 @@ TIPS = [
     "냄비 눌어붙은 거\n물+베이킹소다 넣고 5분 끓이면 스르륵 떨어짐\n박박 긁지 마",
 ]
 
-# ── 가성비템 (화·목) : 쿠팡 파트너스 ─────────────────
-# 본문은 제품을 특정하지 않는 혼잣말 한 줄만 둔다.
-# 제품명·가격·광고표기·링크·수수료 고지는 전부 첫 댓글에 모은다.
-DEAL_HOOKS = [
-    "이거 필요한 시기가 되었나",
-    "가격 보고 좀 놀람",
-    "이 가격이면 그냥 사는 게 맞지",
-    "고민하다 결국 담음",
-    "이런 건 있으면 확실히 편하더라",
-    "쟁여두면 마음이 편한 종류",
-    "장바구니에서 일주일 버티다 결국 졌다",
-    "살 땐 몰랐는데 없으면 아쉬운 것들 있잖아",
-    "방구석 살림 난이도 한 칸 내려감",
-    "이런 건 진작 알았어야 했는데",
-    "안 사도 되는데 자꾸 눈에 밟히는 종류",
-    "지출은 했지만 후회는 없는 쪽",
-]
+# ── 특가 (화·목) : 사이트 특가 페이지로 보내는 글 ──────
+# 예전에는 상품 하나를 골라 사진을 붙이고, 본문에는 상품과 무관한 혼잣말을
+# 무작위로 얹었다. 그러다 보니 글과 제품이 겉돌아서 광고 티만 났다.
+# 지금은 본문을 deals-data.js 실제 값(개수·최저가·카테고리·가격)으로 만든다.
+# 사실만 쓰니 어긋날 일이 없고, 링크는 특가 페이지 하나로 보내 사이트도 같이 키운다.
+def _won(n):
+    return "{:,}원".format(int(n))
+
+
+def _short(s, n=24):
+    return s if len(s) <= n else s[:n] + "…"
+
+
+def _line(d):
+    return "· {} {}".format(_short(d["name"]), _won(d["price"]))
 
 def choose(cands):
     """후보 [(본문, 댓글|None, 이미지|None), ...] 에서 하나 고른다.
@@ -276,20 +274,72 @@ def choose(cands):
     print("후보가 전부 최근에 쓰였습니다 — 순번대로 재사용합니다.")
     return cands[start]
 
-def load_deal():
-    """deals-data.js에서 로켓배송 상품 하나 고르기 (주차별로 다른 상품)"""
+def load_deals():
+    """deals-data.js 의 상품 목록 전체"""
     base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     path = os.path.join(base, "deals-data.js")
     if not os.path.exists(path):
-        return None
+        return []
     m = re.search(r"const DEALS = (\[.*?\]);", open(path, encoding="utf-8").read(), re.S)
     if not m:
-        return None
-    deals = [d for d in json.loads(m.group(1)) if d.get("url")]
+        return []
+    return [d for d in json.loads(m.group(1)) if d.get("url")]
+
+
+def deal_candidates():
+    """오늘 특가 데이터로 만든 홍보글 후보. 본문에 쓰는 숫자·상품명은 전부 실제 값."""
+    deals = load_deals()
     if not deals:
-        return None
+        return []
     rockets = [d for d in deals if d.get("rocket")] or deals
-    return rockets[(week + kst.tm_yday) % len(rockets)]
+    by_price = sorted(rockets, key=lambda d: d["price"])
+    cheap3 = by_price[:3]
+    under20 = [d for d in by_price if d["price"] < 20000]
+
+    # 문구에 맞는 가격대에서만 뽑는다. 아무거나 뽑으면
+    # "장바구니 채우기 좋은" 자리에 63만원짜리 TV가 들어가는 식으로 어긋난다.
+    budget = under20 or by_price                                        # 부담 없이 담는 가격
+    mid = [d for d in by_price if 10000 <= d["price"] <= 80000] or by_price  # 하나만 짚어 말할 가격
+
+    seed = week + kst.tm_yday  # 주차로 회전시켜 같은 상품이 매주 반복되지 않게
+
+    def rot(lst, k, extra=0):
+        if not lst:
+            return []
+        s = (seed + extra) % len(lst)
+        return [lst[(s + i) % len(lst)] for i in range(min(k, len(lst)))]
+
+    cats = {}
+    for d in rockets:
+        cats.setdefault(d.get("category") or "기타", []).append(d)
+    multi = sorted(c for c, v in cats.items() if len(v) >= 2)
+
+    out = []
+    out.append(("오늘 로켓배송 특가 {}개 올라옴\n제일 싼 게 {}\n\n{}".format(
+        len(rockets), _won(by_price[0]["price"]),
+        "\n".join(_line(d) for d in cheap3)), cheap3[0]))
+    cart = rot(budget, 3, 2)  # 위 '제일 싼 것' 목록과 겹치지 않게 시작점을 밀어둔다
+    if len(cart) == 3:
+        out.append(("장바구니 채우기 좋은 것들만 추려봄\n\n{}".format(
+            "\n".join(_line(d) for d in cart)), cart[0]))
+    one = rot(mid, 1)
+    if one:
+        out.append(("오늘 특가 중에 제일 눈에 밟힌 거\n{} {}\n로켓배송이라 금방 옴".format(
+            _short(one[0]["name"], 30), _won(one[0]["price"])), one[0]))
+    if len(under20) >= 3:
+        u = rot(under20, 3, 5)
+        out.append(("2만원 아래로만 {}개 있길래 모아둠\n\n{}\n\n장 볼 때 같이 담으면 됨".format(
+            len(under20), "\n".join(_line(d) for d in u)), u[0]))
+    if multi:
+        cat = multi[seed % len(multi)]
+        cl = sorted(cats[cat], key=lambda d: d["price"])[:3]
+        out.append(("오늘 {} 쪽만 {}개 떴는데\n\n{}".format(
+            cat, len(cats[cat]), "\n".join(_line(d) for d in cl)), cl[0]))
+
+    reply = ("전체 목록은 여기\n👉 " + SITE + "deals.html\n\n"
+             "쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.")
+    # 사진 속 상품은 본문에 이름이 나온 것으로 맞춘다
+    return [(body + "\n\n#광고", reply, (d.get("image") or None)) for body, d in out]
 
 def linked(pool):
     """(본문, 페이지, 댓글 앞머리) 목록 → 후보 형식으로"""
@@ -314,19 +364,11 @@ def build_text():
     if forced == "lotto" or (not forced and wd == 5):
         return choose(linked(LOTTO))
 
-    # 화·목·일 (또는 forced == "deal") : 가성비템
-    deal = load_deal()
-    if not deal:
+    # 화·목·일 (또는 forced == "deal") : 특가 페이지 홍보
+    cands = deal_candidates()
+    if not cands:
         return choose(linked(live_fortune() + FORTUNE))
-    name = deal["name"]
-    if len(name) > 40:
-        name = name[:40] + "…"
-    url = deal["url"] + ("&" if "?" in deal["url"] else "?") + "subid=th"  # 스레드 유입 구분
-    reply = "{}\n{:,}원{}\n\n{}\n\n쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.".format(
-        name, deal["price"], " · 로켓배송" if deal.get("rocket") else "", url)
-    image = deal.get("image") or None
-    # 본문에 제품 사진이 들어가므로 광고 표기를 본문에도 남긴다 (표시 위치 규정 대응)
-    return choose([(h + "\n\n#광고", reply, image) for h in DEAL_HOOKS])
+    return choose(cands)
 
 
 chosen = build_text()

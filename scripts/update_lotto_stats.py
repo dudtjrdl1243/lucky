@@ -82,7 +82,55 @@ def build_stats(hist):
     }
 
 
-def pick_games(stats, seed, games=5):
+def ac_value(nums):
+    """AC값(산술복잡도) = 두 수 차이의 가짓수 - 5. 번호가 고르게 흩어질수록 커진다(최대 10)."""
+    diffs = {abs(a - b) for i, a in enumerate(nums) for b in nums[i + 1:]}
+    return len(diffs) - (len(nums) - 1)
+
+
+def build_patterns(hist):
+    """당첨번호에 실제로 나타나는 패턴 지표. 전부 과거 회차에서 계산한 사실이다."""
+    rounds = sorted((int(k) for k in hist), reverse=True)
+    carry, consec, tails, acs, lows = [], 0, [], [], []
+    zones = [0] * 5
+    for i, r in enumerate(rounds):
+        ns = sorted(hist[str(r)]["numbers"])
+        tails.append(sum(n % 10 for n in ns))
+        acs.append(ac_value(ns))
+        lows.append(sum(1 for n in ns if n <= 22))
+        if any(ns[k + 1] - ns[k] == 1 for k in range(len(ns) - 1)):
+            consec += 1
+        for n in ns:
+            zones[min((n - 1) // 10, 4)] += 1
+        if i + 1 < len(rounds):  # 직전 회차와 겹치는 번호 = 이월수
+            carry.append(len(set(ns) & set(hist[str(rounds[i + 1])]["numbers"])))
+    n = len(rounds)
+    pct = lambda v, p: sorted(v)[min(len(v) - 1, int(len(v) * p))]
+    return {
+        "carryAvg": round(sum(carry) / len(carry), 2) if carry else 0,
+        "carryAnyPct": round(sum(1 for c in carry if c) / len(carry) * 100) if carry else 0,
+        "consecPct": round(consec / n * 100),
+        "tailRange": [pct(tails, 0.15), pct(tails, 0.85)],
+        "acRange": [pct(acs, 0.15), pct(acs, 0.85)],
+        "acMode": Counter(acs).most_common(1)[0][0],
+        "lowMode": Counter(lows).most_common(1)[0][0],
+        "zoneAvg": [round(z / n, 2) for z in zones],
+    }
+
+
+def build_exclude(hist, window=7, min_hit=2):
+    """제외수 — 최근 window회에서 min_hit회 이상 나온 '단기 과출현' 번호.
+    이월수 평균이 1개 남짓인 걸 감안한 것으로, 실제로 조합에서 뺀다(표시만 하는 게 아니다).
+    window=7이면 대략 10개 안팎이 걸린다. 더 넓히면 후보 풀이 너무 줄어든다."""
+    rounds = sorted((int(k) for k in hist), reverse=True)[:window]
+    c = Counter()
+    for r in rounds:
+        for n in hist[str(r)]["numbers"]:
+            c[n] += 1
+    return sorted(n for n, v in c.items() if v >= min_hit)
+
+
+def pick_games(stats, seed, exclude=(), games=5):
     """전략을 나눠 5게임 생성 — 각 게임의 근거가 서로 다르다."""
     rng = random.Random(seed)
     freq_r, last_seen = stats["freqRecent"], stats["lastSeen"]
@@ -92,13 +140,18 @@ def pick_games(stats, seed, games=5):
     cold = sorted(pool, key=lambda n: (-last_seen.get(n, 999), n))[:15]    # 오래 안 나온 번호
     mid = sorted(pool, key=lambda n: abs(freq_r.get(n, 0) - (6 * RECENT_WINDOW / 45)))[:20]
 
+    # 제외수를 실제로 뺀다. 단 '핫넘버 중심'은 과출현 번호를 일부러 쓰는 전략이라 그대로 둔다.
+    ex = set(exclude)
+    cut = lambda lst: [n for n in lst if n not in ex] or lst
+    cold_x, mid_x, pool_x = cut(cold), cut(mid), cut(pool)
+
     strategies = [
         ("핫넘버 중심", lambda: rng.sample(hot, 4) + rng.sample([n for n in pool if n not in hot], 2)),
-        ("콜드넘버 중심", lambda: rng.sample(cold, 4) + rng.sample([n for n in pool if n not in cold], 2)),
-        ("핫·콜드 반반", lambda: rng.sample(hot, 3) + rng.sample(cold, 3)),
-        ("출현 평균대", lambda: rng.sample(mid, 6)),
-        ("전 구간 균형", lambda: [rng.choice([n for n in pool if lo <= n <= hi]) for lo, hi in
-                                 [(1, 9), (10, 18), (19, 27), (28, 36), (37, 45), (1, 45)]]),
+        ("콜드넘버 중심", lambda: rng.sample(cold_x, 4) + rng.sample([n for n in pool_x if n not in cold_x], 2)),
+        ("핫·콜드 반반", lambda: rng.sample(hot, 3) + rng.sample(cold_x, 3)),
+        ("출현 평균대", lambda: rng.sample(mid_x, 6)),
+        ("전 구간 균형", lambda: [rng.choice([n for n in pool_x if lo <= n <= hi] or [n for n in pool if lo <= n <= hi])
+                                 for lo, hi in [(1, 9), (10, 18), (19, 27), (28, 36), (37, 45), (1, 45)]]),
     ]
 
     out = []
@@ -164,12 +217,16 @@ def main():
         print("{}회 채점 완료: 최고 {}개 적중".format(latest_no, max(s["hit"] for s in scored)))
 
     target = latest_no + 1
-    games = pick_games(stats, seed=target)
+    patterns = build_patterns(hist)
+    exclude = build_exclude(hist)
+    games = pick_games(stats, seed=target, exclude=exclude)
 
     data = {
         "targetRound": target,
         "basedOn": {"rounds": stats["total"], "recentWindow": RECENT_WINDOW,
                     "sumRange": [stats["sumMin"], stats["sumMax"]], "oddMode": stats["oddMode"]},
+        "exclude": exclude,
+        "patterns": patterns,
         "games": games,
         "results": history_log,
     }

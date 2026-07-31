@@ -124,6 +124,38 @@ def live_fortune():
     ]
 
 
+def live_lotto():
+    """lotto-picks.js 의 실제 값으로 만든 로또 티저.
+    제외수 개수나 통계 수치는 매주 바뀌므로 글에 직접 적어두면 사이트와 어긋난다.
+    그래서 운세와 마찬가지로 파일에서 읽어 그때그때 문장을 만든다."""
+    base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    path = os.path.join(base, "lotto-picks.js")
+    try:
+        m = re.search(r"const LOTTO_PICKS = (\{.*\});", open(path, encoding="utf-8").read(), re.S)
+        p = json.loads(m.group(1))
+    except Exception as e:
+        print("로또 추천 데이터 읽기 실패 — 일반 문구만 사용합니다:", e)
+        return []
+
+    out = []
+    ex, pat, res = p.get("exclude") or [], p.get("patterns") or {}, p.get("results") or []
+    if ex:
+        out.append(("이번 회차 제외수 {}개 뽑아뒀다\n최근 7회에 두 번 이상 나온 번호들".format(len(ex)),
+                    "lotto.html", "제외수랑 추천번호 여기"))
+    if pat.get("carryAnyPct"):
+        out.append(("직전 회차 번호가 다음 주에 또 나온 경우가 {}%더라\n생각보다 높지 않나".format(pat["carryAnyPct"]),
+                    "lotto.html", "이런 통계 정리해둠"))
+    if pat.get("consecPct"):
+        out.append(("당첨번호에 연속된 두 수가 들어간 회차가 {}%\n절반이 넘네".format(pat["consecPct"]),
+                    "lotto.html", "패턴 정리해둔 곳"))
+    if res:
+        best = max(g["hit"] for g in res[0]["games"])
+        out.append(("지난 회차 우리 추천번호 최고 {}개 맞았다\n{}\n\n그래도 성적표는 지우지 않고 그대로 둠".format(
+            best, "이 정도면 선방" if best >= 3 else "처참하네"),
+            "lotto.html", "전 회차 성적표 여기"))
+    return out
+
+
 FORTUNE = [
     ("오늘 12간지 중에 1위인 띠가 있다는데\n내 띠는 몇 위려나", "tti.html", "여기서 확인함"),
     ("출근길에 오늘 운세 한 번 보고 가는 사람\n나만 그런 거 아니지", "today.html", "보는 곳 남겨둠"),
@@ -134,9 +166,16 @@ FORTUNE = [
 ]
 
 # ── 로또 (토) ────────────────────────────────────────
+# 이 판은 "1등 예상번호" 자랑글로 이미 포화 상태다. 똑같이 해봐야 묻힌다.
+# 우리만 가진 건 전 회차 성적표를 그대로 공개한다는 것 — 맞은 것만 보여주는 데는 많아도
+# 틀린 걸 남기는 데는 거의 없다. 자랑 대신 그 정직함을 앞에 둔다.
 LOTTO = [
     ("토요일이다\n번호는 뽑았고 이제 기다리면 된다", "lotto.html", "번호 뽑은 곳"),
     ("이번 주도 조용히 번호 하나 뽑고 감\n되면 좋고 아니면 말고", "lotto.html", "여기"),
+    ("우리 추천번호 성적표 그대로 올려둠\n맞은 것만 보여주는 건 좀 그렇잖아",
+     "lotto.html", "전 회차 기록 여기"),
+    ("로또 번호 고를 때 뭐 보고 고름?\n난 그냥 통계 돌린 거 쓰는 편",
+     "lotto.html", "돌린 결과 여기 있음"),
     ("당첨번호 확인은 밤에\n번호 뽑는 건 지금", "lotto.html", "링크 두고 감"),
     ("로또는 사는 게 아니라 일주일치 상상을 사는 거라던데\n오늘도 상상 결제 완료", "lotto.html", "여기서 뽑음"),
 ]
@@ -383,7 +422,7 @@ def build_text():
         # 오늘 계산된 실제 순위를 쓴 티저를 앞에 두고, 일반 문구를 뒤에 붙인다
         return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"]
     if forced == "lotto" or (not forced and wd == 5):
-        return choose(linked(LOTTO)), TOPIC["lotto"]
+        return choose(linked(live_lotto() + LOTTO)), TOPIC["lotto"]
 
     # 화·목·일 (또는 forced == "deal") : 특가 페이지 홍보
     cands = deal_candidates()

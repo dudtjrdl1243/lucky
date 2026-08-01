@@ -150,8 +150,12 @@ def live_lotto():
                     "lotto.html", "패턴 정리해둔 곳"))
     if res:
         best = max(g["hit"] for g in res[0]["games"])
+        tone = ("이 정도면 선방" if best >= 4 else
+                "3개면 5등은 됐다" if best == 3 else
+                "아쉽게 두 개" if best == 2 else
+                "처참하네")
         out.append(("지난 회차 우리 추천번호 최고 {}개 맞았다\n{}\n\n그래도 성적표는 지우지 않고 그대로 둠".format(
-            best, "이 정도면 선방" if best >= 3 else "처참하네"),
+            best, tone),
             "lotto.html", "전 회차 성적표 여기"))
     return out
 

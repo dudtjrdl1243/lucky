@@ -49,9 +49,12 @@ jobs:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
         run: python scripts/announce_lotto.py
 
-      # 아래 두 단계는 아침 정기 실행에서만 (토요일 밤 알림과 겹치지 않게)
+      # 아래 두 단계는 아침 정기 실행에서만 (토요일 밤 알림과 겹치지 않게).
+      # 수동 실행(workflow_dispatch)은 데이터 갱신·로또 알림 재시도용이라 여기서 제외한다.
+      # 예전엔 수동 실행에도 걸려 있어서, 로또 알림 하나 다시 올리려다 아침 티저까지
+      # 같이 나가버린 적이 있다. 티저를 수동으로 올릴 땐 '스레드 수동 포스팅'을 쓸 것.
       - name: 텔레그램 특가 포스팅 (설정 시)
-        if: github.event.schedule == '10 22 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '10 22 * * *'
         continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -59,7 +62,7 @@ jobs:
         run: python scripts/post_telegram.py
 
       - name: 스레드 운세 티저 포스팅 (설정 시)
-        if: github.event.schedule == '10 22 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '10 22 * * *'
         continue-on-error: true
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}

@@ -218,13 +218,25 @@ def main():
 
     target = latest_no + 1
     patterns = build_patterns(hist)
-    exclude = build_exclude(hist)
-    games = pick_games(stats, seed=target, exclude=exclude)
+
+    # 한 번 발표한 회차의 번호는 절대 바꾸지 않는다.
+    # 시드가 회차라 같은 코드면 같은 번호가 나오지만, 생성 로직을 손대면 결과가 달라진다.
+    # 실제로 1235회 도중에 제외수 로직을 넣었다가 5게임 중 4게임이 바뀌어,
+    # 그 번호를 보고 산 사람의 기록과 사이트 성적표가 어긋난 적이 있다.
+    if prev.get("targetRound") == target and prev.get("games"):
+        games = prev["games"]
+        exclude = prev.get("exclude", [])
+        based = prev.get("basedOn") or {}
+        print("{}회 추천번호는 이미 발표됨 — 그대로 유지합니다.".format(target))
+    else:
+        exclude = build_exclude(hist)
+        games = pick_games(stats, seed=target, exclude=exclude)
+        based = {"rounds": stats["total"], "recentWindow": RECENT_WINDOW,
+                 "sumRange": [stats["sumMin"], stats["sumMax"]], "oddMode": stats["oddMode"]}
 
     data = {
         "targetRound": target,
-        "basedOn": {"rounds": stats["total"], "recentWindow": RECENT_WINDOW,
-                    "sumRange": [stats["sumMin"], stats["sumMax"]], "oddMode": stats["oddMode"]},
+        "basedOn": based,
         "exclude": exclude,
         "patterns": patterns,
         "games": games,

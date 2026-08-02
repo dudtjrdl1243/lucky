@@ -124,6 +124,49 @@ def live_fortune():
     ]
 
 
+# 서울 기준. Open-Meteo는 API 키가 필요 없고 무료라 등록·토큰 관리가 없다.
+# 실패하면 그냥 빈 목록을 돌려주고 기존 일상글로 넘어간다.
+WEATHER_URL = ("https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780"
+               "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code"
+               "&timezone=Asia%2FSeoul&forecast_days=1")
+
+
+def weather_daily():
+    """오늘 실제 날씨로 만든 일상글. 날씨가 '할 말이 있을 때'만 후보를 낸다.
+    선선하고 평범한 날엔 빈 목록을 돌려줘서, 날씨 얘기가 매일 나오는 패턴이 되지 않게 한다."""
+    try:
+        with urllib.request.urlopen(WEATHER_URL, timeout=15) as r:
+            d = json.loads(r.read().decode())["daily"]
+        hi = int(round(d["temperature_2m_max"][0]))
+        lo = int(round(d["temperature_2m_min"][0]))
+        rain = float(d["precipitation_sum"][0] or 0)
+        code = int(d["weather_code"][0])
+    except Exception as e:
+        print("날씨 조회 실패 — 일반 일상글로 넘어갑니다:", e)
+        return []
+
+    out = []
+    if rain >= 3 or code in (61, 63, 65, 80, 81, 82, 95, 96, 99):
+        out += ["비 와서 널어둔 빨래 다시 들여놨다\n오늘은 글렀네",
+                "종일 비 오네\n나가려던 거 그냥 다 미뤘다"]
+    elif code in (71, 73, 75, 77, 85, 86):
+        out += ["눈 온다\n창밖만 보고 있는 중"]
+    if hi >= 33:
+        out += ["오늘 {}도\n에어컨 없이는 못 버티겠다".format(hi),
+                "{}도래\n낮에 잠깐 나갔다가 바로 후회했다".format(hi)]
+    elif hi >= 30:
+        out += ["오늘 {}도\n선풍기 앞에서 안 움직이는 중".format(hi)]
+    elif hi <= 0:
+        out += ["오늘 최고가 {}도\n나가기 싫어서 그냥 배달 시켰다".format(hi)]
+    elif hi <= 10:
+        out += ["오늘 {}도까지밖에 안 올랐다\n이불 밖이 위험한 계절".format(hi)]
+    if lo >= 25:
+        out += ["밤인데 {}도\n창문 열어놔도 소용이 없다".format(lo)]
+    if hi - lo >= 12:
+        out += ["낮엔 {}도였는데 지금 {}도\n일교차 뭐지".format(hi, lo)]
+    return out
+
+
 def live_lotto():
     """lotto-picks.js 의 실제 값으로 만든 로또 티저.
     제외수 개수나 통계 수치는 매주 바뀌므로 글에 직접 적어두면 사이트와 어긋난다.
@@ -331,16 +374,18 @@ def _short(s, n=24):
 def _line(d):
     return "· {} {}".format(_short(d["name"]), _won(d["price"]))
 
-def choose(cands):
+def choose(cands, guard=None):
     """후보 [(본문, 댓글|None, 이미지|None), ...] 에서 하나 고른다.
 
     - 오늘 이 슬롯 글이 이미 나갔으면 None → 아예 게시하지 않는다.
       (예약이 밀려 같은 슬롯이 두 번 돌아도 중복 발행되지 않게 하는 안전장치)
     - 최근에 이미 쓴 문구는 건너뛰고 다음 것을 고른다.
+    - guard: 중복 검사에 쓸 후보 목록(기본은 cands 자신). 한 슬롯 안에서
+      묶음을 갈아끼울 때, 다른 묶음으로 이미 나간 글까지 검사에 넣기 위한 것.
     """
     if not cands:
         return None
-    if any(_norm(c[0]) in TODAY_TEXTS for c in cands):
+    if any(_norm(c[0]) in TODAY_TEXTS for c in (guard or cands)):
         print("오늘 이 슬롯 글은 이미 올라갔습니다 — 건너뜁니다.")
         return None
     start = kst.tm_yday % len(cands)
@@ -445,7 +490,11 @@ def build_text():
         return choose([(t, None, None) for t in TIPS]), TOPIC["tips"]
     if forced == "daily":
         # 저녁 일상글 (도달 확보용, 링크 없음). 아침 슬롯은 여기로 오지 않는다.
-        return choose([(t, None, None) for t in DAILY]), TOPIC["daily"]
+        # 날씨 글은 사흘에 한 번꼴로만 — 매일 날씨 얘기면 그것도 결국 패턴이다.
+        wx = [(t, None, None) for t in weather_daily()]
+        base = [(t, None, None) for t in DAILY]
+        pool = wx if (wx and kst.tm_yday % 3 == 0) else base
+        return choose(pool, guard=wx + base), TOPIC["daily"]
     if forced == "fortune" or (not forced and wd in (0, 2, 4)):
         # 오늘 계산된 실제 순위를 쓴 티저를 앞에 두고, 일반 문구를 뒤에 붙인다
         return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"]

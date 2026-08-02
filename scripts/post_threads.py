@@ -124,9 +124,9 @@ def live_fortune():
     ]
 
 
-# 서울 기준. Open-Meteo는 API 키가 필요 없고 무료라 등록·토큰 관리가 없다.
+# 인천 기준. Open-Meteo는 API 키가 필요 없고 무료라 등록·토큰 관리가 없다.
 # 실패하면 그냥 빈 목록을 돌려주고 기존 일상글로 넘어간다.
-WEATHER_URL = ("https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780"
+WEATHER_URL = ("https://api.open-meteo.com/v1/forecast?latitude=37.4563&longitude=126.7052"
                "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code"
                "&timezone=Asia%2FSeoul&forecast_days=1")
 
@@ -436,27 +436,30 @@ def deal_candidates():
         cats.setdefault(d.get("category") or "기타", []).append(d)
     multi = sorted(c for c, v in cats.items() if len(v) >= 2)
 
+    # 글에 상품 두어 개만 적으면 "이게 전부"로 읽힌다. 전체가 몇 개인지 먼저 밝혀서
+    # 오늘 올라온 골드박스 묶음 중 일부를 고른 거라는 게 드러나게 한다.
+    total = len(deals)
     out = []
-    out.append(("오늘 로켓배송 특가 {}개 올라옴\n제일 싼 게 {}\n\n{}".format(
-        len(rockets), _won(by_price[0]["price"]),
+    out.append(("오늘 쿠팡 골드박스 {}개 올라왔는데\n제일 싼 게 {}\n\n{}".format(
+        total, _won(by_price[0]["price"]),
         "\n".join(_line(d) for d in cheap3)), cheap3[0]))
     cart = rot(budget, 3, 2)  # 위 '제일 싼 것' 목록과 겹치지 않게 시작점을 밀어둔다
     if len(cart) == 3:
-        out.append(("장바구니 채우기 좋은 것들만 추려봄\n\n{}".format(
-            "\n".join(_line(d) for d in cart)), cart[0]))
+        out.append(("오늘 골드박스 {}개 중에\n장바구니 채우기 좋은 것만 추려봄\n\n{}".format(
+            total, "\n".join(_line(d) for d in cart)), cart[0]))
     one = rot(mid, 1)
     if one:
-        out.append(("오늘 특가 중에 제일 눈에 밟힌 거\n{} {}\n로켓배송이라 금방 옴".format(
-            _short(one[0]["name"], 30), _won(one[0]["price"])), one[0]))
+        out.append(("오늘 올라온 골드박스 {}개 훑다가\n제일 눈에 밟힌 거\n\n{} {}\n로켓배송이라 금방 옴".format(
+            total, _short(one[0]["name"], 30), _won(one[0]["price"])), one[0]))
     if len(under20) >= 3:
         u = rot(under20, 3, 5)
-        out.append(("2만원 아래로만 {}개 있길래 모아둠\n\n{}\n\n장 볼 때 같이 담으면 됨".format(
-            len(under20), "\n".join(_line(d) for d in u)), u[0]))
+        out.append(("골드박스 {}개 중에 2만원 아래만 {}개\n그중 세 개만 적어둠\n\n{}\n\n장 볼 때 같이 담으면 됨".format(
+            total, len(under20), "\n".join(_line(d) for d in u)), u[0]))
     if multi:
         cat = multi[seed % len(multi)]
         cl = sorted(cats[cat], key=lambda d: d["price"])[:3]
-        out.append(("오늘 {} 쪽만 {}개 떴는데\n\n{}".format(
-            cat, len(cats[cat]), "\n".join(_line(d) for d in cl)), cl[0]))
+        out.append(("오늘 골드박스 {}개 중에\n{} 쪽만 {}개 있길래\n\n{}".format(
+            total, cat, len(cats[cat]), "\n".join(_line(d) for d in cl)), cl[0]))
 
     reply = ("전체 목록은 여기\n👉 " + SITE + "deals.html\n\n"
              "쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.")

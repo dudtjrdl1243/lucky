@@ -45,55 +45,134 @@
 
 <script>
 (function () {
+  /* counterapi.dev 는 응답이 느리다(요청당 수 초). 30일치를 한꺼번에 던지면
+     브라우저 동시 연결 제한에 걸려 상당수가 실패하고, 실패를 0으로 처리하면
+     새로고침할 때마다 숫자가 달라 보인다. 그래서
+       - 지난 날짜 값은 변하지 않으므로 한 번 받으면 localStorage에 영구 보관
+       - 오늘·누적·유입경로만 매번 새로 받고, 그것도 조금씩 나눠서 요청
+       - 실패는 0이 아니라 '모름(-)'으로 표시하고 합계에서 뺀다
+     로 바꿨다. */
   var API = "https://api.counterapi.dev/v1/byeolbyeol-unse/";
-  var DAYS = 30; // 최근 30일 표시
+  var DAYS = 30;
+  var CONCURRENCY = 3;
+  var CACHE_PREFIX = "bb_stat_";
+  var SRC_TTL = 10 * 60 * 1000; // 유입경로는 10분간 재사용
 
-  function pad(n){ return n < 10 ? "0"+n : ""+n; }
-  function keyOf(d){ return "d" + d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate()); }
-  function label(d){ return (d.getMonth()+1) + "/" + d.getDate() + " (" + "일월화수목금토"[d.getDay()] + ")"; }
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function keyOf(d) { return "d" + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()); }
+  function label(d) { return (d.getMonth() + 1) + "/" + d.getDate() + " (" + "일월화수목금토"[d.getDay()] + ")"; }
+
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
   var today = new Date();
+  var todayKey = keyOf(today);
   var days = [];
   for (var i = DAYS - 1; i >= 0; i--) {
     var d = new Date(today); d.setDate(today.getDate() - i);
     days.push(d);
   }
 
-  function get(key){
-    return fetch(API + key + "/", {cache:"no-store"})
-      .then(function(r){ return r.json(); })
-      .then(function(j){ return typeof j.count === "number" ? j.count : 0; })
-      .catch(function(){ return 0; });
+  /* 값: 숫자 = 확인됨, null = 아직/실패 */
+  var counts = days.map(function () { return null; });
+  var total = null;
+  var failed = 0;
+
+  function fetchCount(key) {
+    return fetch(API + key + "/", { cache: "no-store" })
+      .then(function (r) {
+        if (r.status === 400) return 0;      // 그날 방문이 없어 카운터가 없는 경우
+        if (!r.ok) throw new Error(r.status);
+        return r.json().then(function (j) {
+          return typeof j.count === "number" ? j.count : 0;
+        });
+      });
   }
 
-  Promise.all(days.map(function(d){ return get(keyOf(d)); }).concat([get("total")]))
-    .then(function(res){
-      var total = res.pop();
-      var counts = res;
-      var max = Math.max.apply(null, counts.concat([1]));
-      var todayCount = counts[counts.length - 1];
-      var week = counts.slice(-7).reduce(function(a,b){ return a+b; }, 0);
-
-      // total과 날짜 합계를 찍는 시점 사이에 방문이 늘면 역전돼 보일 수 있어,
-      // 누적은 최소한 최근 30일 합보다 크거나 같게 보정한다.
-      var sumShown = counts.reduce(function(a,b){ return a+b; }, 0);
-      total = Math.max(total, sumShown);
-
-      document.getElementById("kToday").textContent = todayCount;
-      document.getElementById("kWeek").textContent = week;
-      document.getElementById("kTotal").textContent = total;
-
-      var html = "";
-      for (var i = counts.length - 1; i >= 0; i--) {  // 최신이 위로
-        var isToday = i === counts.length - 1;
-        html += '<div class="bar-row' + (isToday ? ' today' : '') + '">' +
-          '<span class="day">' + label(days[i]) + '</span>' +
-          '<span class="track"><span class="fill" style="width:' + (counts[i]/max*100) + '%"></span></span>' +
-          '<span class="v">' + counts[i] + '</span></div>';
-      }
-      document.getElementById("bars").innerHTML = html;
-      loadSources();
+  /* 한 번 실패하면 잠깐 쉬었다 한 번 더 */
+  function fetchRetry(key) {
+    return fetchCount(key).catch(function () {
+      return new Promise(function (res) { setTimeout(res, 800); })
+        .then(function () { return fetchCount(key); })
+        .catch(function () { return null; });
     });
+  }
+
+  /* 동시 요청 수를 제한해 순서대로 처리 */
+  function runQueue(jobs, done) {
+    var idx = 0, active = 0, finished = 0;
+    function next() {
+      while (active < CONCURRENCY && idx < jobs.length) {
+        var job = jobs[idx++];
+        active++;
+        job().then(function () {
+          active--; finished++;
+          if (finished === jobs.length) { done(); } else { next(); }
+        });
+      }
+    }
+    if (!jobs.length) { done(); return; }
+    next();
+  }
+
+  function renderBars() {
+    var known = counts.filter(function (c) { return c !== null; });
+    var max = Math.max.apply(null, known.concat([1]));
+    var html = "";
+    for (var i = counts.length - 1; i >= 0; i--) {
+      var isToday = i === counts.length - 1;
+      var c = counts[i];
+      var w = c === null ? 0 : (c / max * 100);
+      html += '<div class="bar-row' + (isToday ? ' today' : '') + '">' +
+        '<span class="day">' + label(days[i]) + '</span>' +
+        '<span class="track"><span class="fill" style="width:' + w + '%"></span></span>' +
+        '<span class="v">' + (c === null ? '·' : c) + '</span></div>';
+    }
+    document.getElementById("bars").innerHTML = html;
+  }
+
+  function renderKpi() {
+    var t = counts[counts.length - 1];
+    var week = 0, weekKnown = true;
+    for (var i = Math.max(0, counts.length - 7); i < counts.length; i++) {
+      if (counts[i] === null) { weekKnown = false; } else { week += counts[i]; }
+    }
+    document.getElementById("kToday").textContent = t === null ? "-" : t;
+    document.getElementById("kWeek").textContent = weekKnown ? week : week + "+";
+    document.getElementById("kTotal").textContent = total === null ? "-" : total;
+  }
+
+  function setNote() {
+    var base = "하루 1인당 1회 집계(새로고침 제외). 지난 날짜는 값이 변하지 않아 기기에 저장해두고 다시 쓰므로, 두 번째부터는 바로 뜹니다. 이 페이지는 검색 비노출입니다.";
+    document.getElementById("note").textContent =
+      (failed ? "· " + failed + "개 항목을 못 불러왔습니다(-로 표시). 새로고침하면 다시 시도합니다.\n" : "") + base;
+  }
+
+  // ── 날짜별 ──
+  var jobs = [];
+  days.forEach(function (d, i) {
+    var key = keyOf(d);
+    var cached = key === todayKey ? null : lsGet(CACHE_PREFIX + key);
+    if (cached !== null) { counts[i] = parseInt(cached, 10); return; }
+    jobs.push(function () {
+      return fetchRetry(key).then(function (v) {
+        counts[i] = v;
+        if (v === null) { failed++; }
+        else if (key !== todayKey) { lsSet(CACHE_PREFIX + key, v); } // 지난 날짜만 저장
+        renderBars(); renderKpi();
+      });
+    });
+  });
+  jobs.push(function () {
+    return fetchRetry("total").then(function (v) {
+      total = v;
+      if (v === null) { failed++; }
+      renderKpi();
+    });
+  });
+
+  renderBars(); renderKpi();
+  runQueue(jobs, function () { setNote(); loadSources(); });
 
   // ── 유입 경로 (누적) ──
   var SRC = [
@@ -101,28 +180,44 @@
     ["threads", "스레드/인스타"], ["telegram", "텔레그램"], ["blog", "블로그"],
     ["twitter", "X(트위터)"], ["direct", "직접·즐겨찾기"], ["etc", "기타"],
   ];
+
+  function paintSources(vals) {
+    var sum = vals.reduce(function (a, b) { return a + (b || 0); }, 0) || 1;
+    var rows = SRC.map(function (s, i) { return { label: s[1], v: vals[i] || 0 }; })
+                  .filter(function (r) { return r.v > 0; })
+                  .sort(function (a, b) { return b.v - a.v; });
+    var box = document.getElementById("sources");
+    if (!rows.length) {
+      box.innerHTML = '<p class="sub">아직 유입 기록이 없어요. 방문이 쌓이면 여기 표시됩니다.</p>';
+      return;
+    }
+    var max = rows[0].v;
+    box.innerHTML = rows.map(function (r) {
+      var pct = Math.round(r.v / sum * 100);
+      return '<div class="bar-row"><span class="day">' + r.label + '</span>' +
+        '<span class="track"><span class="fill" style="width:' + (r.v / max * 100) + '%"></span></span>' +
+        '<span class="v">' + r.v + ' <span style="color:var(--text-dim);font-size:.72rem;">' + pct + '%</span></span></div>';
+    }).join("");
+  }
+
   function loadSources() {
-    Promise.all(SRC.map(function (s) { return get("src_" + s[0]); }))
-      .then(function (vals) {
-        var total = vals.reduce(function (a, b) { return a + b; }, 0) || 1;
-        var rows = SRC.map(function (s, i) { return { label: s[1], v: vals[i] }; })
-                      .filter(function (r) { return r.v > 0; })
-                      .sort(function (a, b) { return b.v - a.v; });
-        if (!rows.length) {
-          document.getElementById("sources").innerHTML =
-            '<p class="sub">아직 유입 기록이 없어요. 방문이 쌓이면 여기 표시됩니다.</p>';
-          return;
-        }
-        var max = rows[0].v;
-        document.getElementById("sources").innerHTML = rows.map(function (r) {
-          var pct = Math.round(r.v / total * 100);
-          return '<div class="bar-row"><span class="day">' + r.label + '</span>' +
-            '<span class="track"><span class="fill" style="width:' + (r.v / max * 100) + '%"></span></span>' +
-            '<span class="v">' + r.v + ' <span style="color:var(--text-dim);font-size:.72rem;">' + pct + '%</span></span></div>';
-        }).join("");
-      });
-    document.getElementById("note").textContent =
-      "하루 1인당 1회 집계(새로고침 제외). 유입 경로는 방문 시점의 이전 페이지 기준. 이 페이지는 검색 비노출입니다.";
+    var cached = lsGet(CACHE_PREFIX + "src");
+    if (cached) {
+      try {
+        var o = JSON.parse(cached);
+        if (Date.now() - o.at < SRC_TTL) { paintSources(o.v); return; }
+      } catch (e) {}
+    }
+    var vals = SRC.map(function () { return 0; });
+    var sjobs = SRC.map(function (s, i) {
+      return function () {
+        return fetchRetry("src_" + s[0]).then(function (v) { vals[i] = v || 0; });
+      };
+    });
+    runQueue(sjobs, function () {
+      paintSources(vals);
+      lsSet(CACHE_PREFIX + "src", JSON.stringify({ at: Date.now(), v: vals }));
+    });
   }
 })();
 </script>

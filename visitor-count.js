@@ -3,6 +3,11 @@
  *   주소 뒤에 #stats  → 이 브라우저에서 계속 보임
  *   주소 뒤에 #stats-off → 다시 숨김
  * 같은 사람이 새로고침해도 하루 1회만 집계됨.
+ *
+ * 운영자 본인 방문 제외:
+ *   주소 뒤에 #nocount  → 이 브라우저는 앞으로 집계에서 빠짐
+ *   주소 뒤에 #count-on → 다시 집계에 포함
+ * 관리자 통계 페이지(stats-admin.html)를 열면 자동으로 제외 표시가 붙는다.
  */
 (function () {
   var API = "https://api.counterapi.dev/v1/byeolbyeol-unse/";
@@ -14,7 +19,16 @@
 
   function ls(fn, dflt) { try { return fn(); } catch (e) { return dflt; } }
 
-  var firstVisitToday = !ls(function () { return localStorage.getItem(visitFlag); }, "1");
+  // 운영자 브라우저인지 판정 (해시로 켜고 끌 수 있음)
+  if (location.hash === "#nocount") {
+    ls(function () { return localStorage.setItem("bb_admin", "1"); });
+  } else if (location.hash === "#count-on") {
+    ls(function () { return localStorage.removeItem("bb_admin"); });
+  }
+  var isAdmin = ls(function () { return localStorage.getItem("bb_admin") === "1"; }, false);
+
+  var firstVisitToday = !ls(function () { return localStorage.getItem(visitFlag); }, "1")
+                        && !isAdmin;
 
   // 유입원 분류: 어디서 들어왔는지 (검색/SNS/직접)
   function trafficSource() {
@@ -58,7 +72,8 @@
     if (!footer) return;
     var p = document.createElement("p");
     p.style.cssText = "margin-top:6px;font-size:12px;opacity:.65";
-    p.textContent = "👀 오늘 " + (today === null ? "-" : today) + "명 · 전체 " + total + "명";
+    p.textContent = "👀 오늘 " + (today === null ? "-" : today) + "명 · 전체 " + total + "명"
+                    + (isAdmin ? " (내 방문은 집계 제외)" : "");
     footer.appendChild(p);
   }
 

@@ -52,6 +52,10 @@
        - 오늘·누적·유입경로만 매번 새로 받고, 그것도 조금씩 나눠서 요청
        - 실패는 0이 아니라 '모름(-)'으로 표시하고 합계에서 뺀다
      로 바꿨다. */
+  /* 이 페이지를 여는 사람은 운영자뿐이다. 여기 왔다는 것 자체를 표시로 삼아
+     이 브라우저의 방문은 앞으로 집계에서 뺀다(visitor-count.js 가 이 값을 본다). */
+  try { localStorage.setItem("bb_admin", "1"); } catch (e) {}
+
   var API = "https://api.counterapi.dev/v1/byeolbyeol-unse/";
   var DAYS = 30;
   var CONCURRENCY = 3;

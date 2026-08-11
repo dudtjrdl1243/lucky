@@ -8,9 +8,15 @@
  *   주소 뒤에 #nocount  → 이 브라우저는 앞으로 집계에서 빠짐
  *   주소 뒤에 #count-on → 다시 집계에 포함
  * 관리자 통계 페이지(stats-admin.html)를 열면 자동으로 제외 표시가 붙는다.
+ *
+ * 2026-08-10: counterapi v1 이 서비스 종료(HTTP 410)돼 집계가 통째로 멈춰 있었다.
+ * v2 는 워크스페이스 등록이 필요해 자동 이전이 안 되므로 abacus 로 갈아탔다.
+ * 여긴 증가(hit)와 조회(get) 엔드포인트가 분리돼 있어 통계 페이지가
+ * 숫자를 부풀리지 않고 읽을 수 있고, 응답도 훨씬 빠르다.
  */
 (function () {
-  var API = "https://api.counterapi.dev/v1/byeolbyeol-unse/";
+  var API = "https://abacus.jasoncameron.dev/";
+  var NS = "byeolbyeol-unse";
 
   function pad(n) { return n < 10 ? "0" + n : "" + n; }
   var d = new Date();
@@ -48,9 +54,14 @@
   }
 
   function call(key, increment) {
-    return fetch(API + key + (increment ? "/up" : "/"), { cache: "no-store" })
-      .then(function (r) { return r.json(); })
-      .then(function (j) { return typeof j.count === "number" ? j.count : null; })
+    return fetch(API + (increment ? "hit/" : "get/") + NS + "/" + key, { cache: "no-store" })
+      .then(function (r) {
+        if (r.status === 404) return 0;   // 아직 한 번도 안 올라간 카운터
+        if (!r.ok) throw new Error(r.status);
+        return r.json().then(function (j) {
+          return typeof j.value === "number" ? j.value : null;
+        });
+      })
       .catch(function () { return null; });
   }
 

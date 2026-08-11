@@ -212,14 +212,24 @@
       } catch (e) {}
     }
     var vals = SRC.map(function () { return 0; });
+    var miss = 0;
     var sjobs = SRC.map(function (s, i) {
       return function () {
-        return fetchRetry("src_" + s[0]).then(function (v) { vals[i] = v || 0; });
+        return fetchRetry("src_" + s[0]).then(function (v) {
+          if (v === null) { miss++; } else { vals[i] = v; }
+        });
       };
     });
     runQueue(sjobs, function () {
       paintSources(vals);
-      lsSet(CACHE_PREFIX + "src", JSON.stringify({ at: Date.now(), v: vals }));
+      // 하나라도 못 받았으면 캐시하지 않는다. 실패해서 0이 된 값을 저장해버리면
+      // TTL 동안 계속 0만 보여준다(실제로 그 문제가 있었다).
+      if (!miss) {
+        lsSet(CACHE_PREFIX + "src", JSON.stringify({ at: Date.now(), v: vals }));
+      } else {
+        document.getElementById("sources").insertAdjacentHTML("beforeend",
+          '<p class="sub">' + miss + '개 항목을 못 불러왔습니다. 새로고침하면 다시 시도합니다.</p>');
+      }
     });
   }
 })();

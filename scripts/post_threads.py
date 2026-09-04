@@ -534,6 +534,21 @@ def linked(pool):
     return [(b, lead + "\n👉 " + SITE + page, None) for b, page, lead in pool]
 
 
+def choose_fortune(weekday):
+    """실제 반응이 컸던 질문형 운세를 우선하고, 중복이면 전체 후보로 폴백."""
+    live = live_fortune()
+    all_candidates = linked(live + FORTUNE)
+    # live_fortune 마지막 3개: 1위 띠 질문 / 1위 별자리 질문 / 1위·12위 대비 질문
+    strong = linked(live[-3:]) if len(live) >= 3 else []
+    if strong:
+        by_weekday = {0: 0, 2: 1, 4: 2}  # 월·수·금마다 훅을 바꿔 비교
+        preferred = strong[by_weekday.get(weekday, kst.tm_yday % len(strong))]
+        picked = choose([preferred], guard=all_candidates)
+        if picked or any(_norm(c[0]) in TODAY_TEXTS for c in all_candidates):
+            return picked
+    return choose(all_candidates)
+
+
 # 주제 태그. 반응 좋은 계정들은 전부 달고 있는데 우리만 없어서 주제 피드·검색
 # 노출 통로를 통째로 놓치고 있었다. (마침표·앰퍼샌드는 못 쓰고 50자 이내)
 TOPIC = {
@@ -564,15 +579,14 @@ def build_text():
         pool = wx if (wx and kst.tm_yday % 3 == 0) else base
         return choose(pool, guard=wx + base), TOPIC["daily"], "daily"
     if forced == "fortune" or (not forced and wd in (0, 2, 4)):
-        # 오늘 계산된 실제 순위를 쓴 티저를 앞에 두고, 일반 문구를 뒤에 붙인다
-        return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"], "fortune"
+        return choose_fortune(wd), TOPIC["fortune"], "fortune"
     if forced == "lotto" or (not forced and wd == 5):
         return choose(linked(live_lotto() + LOTTO)), TOPIC["lotto"], "lotto"
 
     # 화·목·일 (또는 forced == "deal") : 특가 페이지 홍보
     cands = deal_candidates()
     if not cands:
-        return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"], "fortune"
+        return choose_fortune(wd), TOPIC["fortune"], "fortune"
     return choose(cands), TOPIC["deal"], "deal"
 
 

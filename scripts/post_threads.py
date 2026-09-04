@@ -7,7 +7,7 @@
 말투는 계정 톤(짧고 건조한 반말 혼잣말)에 맞춤. 하루 1개만 게시.
 THREADS_ACCESS_TOKEN 없으면 조용히 건너뜀. USER_ID는 토큰으로 자동 조회.
 """
-import datetime, json, os, re, sys, time, urllib.request, urllib.parse
+import datetime, hashlib, json, os, re, sys, time, urllib.request, urllib.parse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import fortune_calc
@@ -64,6 +64,20 @@ def fetch_recent(limit=500):
 def _norm(s):
     """공백·줄바꿈 차이를 무시하고 같은 글인지 비교하기 위한 정규화"""
     return re.sub(r"\s+", "", s or "")
+
+
+def load_generated(kind):
+    """주 1회 생성되는 보충 문구를 읽는다. 파일/형식 오류는 기존 문구로 폴백."""
+    base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    path = os.path.join(base, "threads-generated.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            items = json.load(f).get("posts", [])
+        return [x["text"].strip() for x in items
+                if x.get("type") == kind and isinstance(x.get("text"), str)]
+    except Exception as e:
+        print("자동 생성 문구를 읽지 못해 기존 문구만 사용합니다:", e)
+        return []
 
 
 def _kst_date(ts):
@@ -532,39 +546,69 @@ TOPIC = {
 
 
 def build_text():
-    """((본문, 첫 댓글, 이미지), 주제태그) 를 돌려준다. 올릴 게 없으면 (None, None)."""
+    """((본문, 첫 댓글, 이미지), 주제태그, 추적용 종류) 를 돌려준다."""
     # 수동 실행 시 THREADS_FORCE_TYPE 로 콘텐츠 종류 지정 가능
     forced = os.environ.get("THREADS_FORCE_TYPE", "").strip().lower()
     wd = kst.tm_wday  # 0=월
 
     if forced == "tips":
         # 오후 정보글 (저장 유도용, 링크 없음)
-        return choose([(t, None, None) for t in TIPS]), TOPIC["tips"]
+        generated = load_generated("tips")
+        pool = [(t, None, None) for t in generated + TIPS]
+        return choose(pool), TOPIC["tips"], "tips"
     if forced == "daily":
         # 저녁 일상글 (도달 확보용, 링크 없음). 아침 슬롯은 여기로 오지 않는다.
         # 날씨 글은 사흘에 한 번꼴로만 — 매일 날씨 얘기면 그것도 결국 패턴이다.
         wx = [(t, None, None) for t in weather_daily()]
-        base = [(t, None, None) for t in DAILY]
+        base = [(t, None, None) for t in load_generated("daily") + DAILY]
         pool = wx if (wx and kst.tm_yday % 3 == 0) else base
-        return choose(pool, guard=wx + base), TOPIC["daily"]
+        return choose(pool, guard=wx + base), TOPIC["daily"], "daily"
     if forced == "fortune" or (not forced and wd in (0, 2, 4)):
         # 오늘 계산된 실제 순위를 쓴 티저를 앞에 두고, 일반 문구를 뒤에 붙인다
-        return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"]
+        return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"], "fortune"
     if forced == "lotto" or (not forced and wd == 5):
-        return choose(linked(live_lotto() + LOTTO)), TOPIC["lotto"]
+        return choose(linked(live_lotto() + LOTTO)), TOPIC["lotto"], "lotto"
 
     # 화·목·일 (또는 forced == "deal") : 특가 페이지 홍보
     cands = deal_candidates()
     if not cands:
-        return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"]
-    return choose(cands), TOPIC["deal"]
+        return choose(linked(live_fortune() + FORTUNE)), TOPIC["fortune"], "fortune"
+    return choose(cands), TOPIC["deal"], "deal"
 
 
-chosen, topic_tag = build_text()
+chosen, topic_tag, content_type = build_text()
 if not chosen:
     print("올릴 글이 없어 종료합니다.")
     sys.exit(0)
 text, reply_text, image_url = chosen
+
+
+def add_campaign_tracking(reply, kind, body):
+    """첫 댓글의 별별운세 링크에 게시 날짜·종류·문구 ID를 붙인다.
+
+    앱 안에서 링크를 누르면 referrer가 비어 '직접 방문'으로 잡힐 수 있으므로
+    명시적인 UTM을 쓴다. 본문 문구는 해시만 넣어 URL에 원문이 노출되지 않게 한다.
+    """
+    if not reply:
+        return reply
+    content_id = hashlib.sha1(_norm(body).encode("utf-8")).hexdigest()[:8]
+    campaign = "th_{}_{}".format(KST_TODAY.replace("-", ""), kind)
+
+    def repl(match):
+        url = match.group(0)
+        sep = "&" if "?" in url else "?"
+        params = urllib.parse.urlencode({
+            "utm_source": "threads",
+            "utm_medium": "social",
+            "utm_campaign": campaign,
+            "utm_content": content_id,
+        })
+        return url + sep + params
+
+    return re.sub(re.escape(SITE) + r"[^\s]+", repl, reply)
+
+
+reply_text = add_campaign_tracking(reply_text, content_type, text)
 
 def api(path, params):
     data = urllib.parse.urlencode(dict(params, access_token=TOKEN)).encode()

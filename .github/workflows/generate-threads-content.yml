@@ -1,0 +1,30 @@
+name: 스레드 새 문구 자동 보충
+
+on:
+  schedule:
+    - cron: "35 15 * * 0" # 매주 월요일 KST 00:35
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 검수 가능한 새 문구 생성
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+        run: python scripts/generate_threads_content.py
+      - name: 새 문구가 있을 때만 저장
+        run: |
+          git config user.name "threads-content-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add threads-generated.json
+          git diff --cached --quiet || git commit -m "스레드 문구 자동 보충 $(TZ=Asia/Seoul date +'%Y-%m-%d')"
+          git push

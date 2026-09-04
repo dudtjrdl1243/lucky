@@ -1,0 +1,30 @@
+name: 스레드 성과 자동 수집
+
+on:
+  schedule:
+    - cron: "10 14 * * *" # 매일 KST 23:10, 하루 게시가 끝난 뒤 수집
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 게시물별 조회·반응 수집
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: python scripts/update_threads_insights.py
+      - name: 새 통계가 있을 때만 저장
+        run: |
+          git config user.name "threads-insights-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add threads-insights.json
+          git diff --cached --quiet || git commit -m "스레드 성과 갱신 $(TZ=Asia/Seoul date +'%Y-%m-%d')"
+          git push

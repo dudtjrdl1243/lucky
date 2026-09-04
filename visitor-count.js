@@ -22,6 +22,14 @@
   var d = new Date();
   var dayKey = "d" + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
   var visitFlag = "bb_v_" + dayKey;
+  var params = new URLSearchParams(location.search);
+
+  function safeKey(v) {
+    return (v || "").toLowerCase().replace(/[^a-z0-9_-]/g, "").slice(0, 64);
+  }
+  var utmSource = safeKey(params.get("utm_source"));
+  var campaign = safeKey(params.get("utm_campaign"));
+  var contentId = safeKey(params.get("utm_content"));
 
   function ls(fn, dflt) { try { return fn(); } catch (e) { return dflt; } }
 
@@ -38,6 +46,14 @@
 
   // 유입원 분류: 어디서 들어왔는지 (검색/SNS/직접)
   function trafficSource() {
+    // Threads 같은 앱 안 브라우저는 referrer를 비우기도 하므로 UTM을 우선한다.
+    if (utmSource) {
+      if (/^(threads|instagram)$/.test(utmSource)) return "threads";
+      if (/^(naver|google|daum|kakao|telegram|twitter|blog)$/.test(utmSource)) {
+        return utmSource === "kakao" ? "daum" : utmSource;
+      }
+      return "etc";
+    }
     var r = document.referrer || "";
     if (!r) return "direct";                        // 직접 입력·즐겨찾기·앱
     var h = "";
@@ -63,6 +79,18 @@
         });
       })
       .catch(function () { return null; });
+  }
+
+  function pageKey() {
+    var name = location.pathname.split("/").pop() || "index.html";
+    return safeKey(name.replace(/\.html?$/i, "")) || "home";
+  }
+
+  // 화면 표시를 기다리게 하지 않고 부가 통계를 차례대로 기록한다.
+  function hitSeries(keys) {
+    return keys.reduce(function (p, key) {
+      return p.then(function () { return call(key, true); });
+    }, Promise.resolve());
   }
 
   function shouldShow() {
@@ -92,9 +120,23 @@
     .then(function (res) {
       if (firstVisitToday) {
         ls(function () { return localStorage.setItem(visitFlag, "1"); });
-        // 오늘 첫 방문일 때만 유입원 1 증가 (관리자 통계에서 합산해 봄)
+        // 오늘 첫 방문일 때 유입원·첫 페이지를 일별/누적으로 함께 남긴다.
         var src = trafficSource();
-        if (src) call("src_" + src, true);
+        var extra = ["page_" + pageKey(), "page_" + pageKey() + "_" + dayKey];
+        if (src) extra.push("src_" + src, "src_" + src + "_" + dayKey);
+        hitSeries(extra);
+      }
+      // 전체 방문 집계와 별개로 캠페인 링크는 캠페인당 브라우저 1회 기록한다.
+      // 같은 날 먼저 직접 방문한 사람이 나중에 Threads 링크를 눌러도 클릭을 놓치지 않는다.
+      if (campaign && !isAdmin) {
+        var campaignFlag = "bb_c_" + campaign;
+        var firstCampaign = !ls(function () { return localStorage.getItem(campaignFlag); }, "1");
+        if (firstCampaign) {
+          ls(function () { return localStorage.setItem(campaignFlag, "1"); });
+          var campaignKeys = ["camp_" + campaign];
+          if (contentId) campaignKeys.push("content_" + contentId);
+          hitSeries(campaignKeys);
+        }
       }
       render(res[0], res[1]);
     });

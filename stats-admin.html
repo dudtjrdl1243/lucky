@@ -21,6 +21,13 @@
   .note { color: var(--text-dim); font-size: .8rem; margin-top: 20px; line-height: 1.6; }
   h1 { color: var(--gold); font-size: 1.4rem; margin-bottom: 4px; }
   .sub { color: var(--text-dim); font-size: .85rem; }
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .82rem; }
+  .data-table th, .data-table td { padding: 9px 6px; border-bottom: 1px solid var(--card-border); text-align: right; }
+  .data-table th:first-child, .data-table td:first-child { text-align: left; }
+  .post-card { display:block; color:inherit; text-decoration:none; background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; padding:12px; margin:8px 0; }
+  .post-card .meta { color:var(--text-dim); font-size:.74rem; margin-bottom:6px; }
+  .post-card .txt { white-space:pre-line; line-height:1.45; }
+  .post-card .nums { color:var(--gold); font-size:.78rem; margin-top:8px; }
 </style>
 </head>
 <body>
@@ -36,9 +43,21 @@
 
   <div id="bars"></div>
 
+  <h1 style="font-size:1.1rem;margin-top:34px;">🧵 Threads 링크 유입</h1>
+  <p class="sub">게시 날짜·글 종류별 고유 클릭 (2026년 9월 5일 추적 시작)</p>
+  <div id="campaigns"></div>
+
+  <h1 style="font-size:1.1rem;margin-top:34px;">🔥 Threads 게시물 성과</h1>
+  <p class="sub">조회와 반응이 큰 글 순서 · 매일 밤 갱신</p>
+  <div id="threadPosts"><p class="sub">아직 수집된 게시물 성과가 없습니다.</p></div>
+
   <h1 style="font-size:1.1rem;margin-top:34px;">🔎 유입 경로 (누적)</h1>
   <p class="sub">방문자가 어디서 들어왔는지</p>
   <div id="sources" style="margin-top:12px;"></div>
+
+  <h1 style="font-size:1.1rem;margin-top:34px;">📄 첫 방문 페이지 (누적)</h1>
+  <p class="sub">방문자가 처음 도착한 별별운세 페이지</p>
+  <div id="pages" style="margin-top:12px;"></div>
 
   <p class="note" id="note">불러오는 중…</p>
 </div>
@@ -57,7 +76,7 @@
 
   var API = "https://abacus.jasoncameron.dev/get/byeolbyeol-unse/";
   var DAYS = 30;
-  var CONCURRENCY = 3;
+  var CONCURRENCY = 1;
   var CACHE_PREFIX = "bb_stat_";
   var SRC_TTL = 10 * 60 * 1000; // 유입경로는 10분간 재사용
 
@@ -110,7 +129,7 @@
         active++;
         job().then(function () {
           active--; finished++;
-          if (finished === jobs.length) { done(); } else { next(); }
+          if (finished === jobs.length) { done(); } else { setTimeout(next, 120); }
         });
       }
     }
@@ -175,7 +194,87 @@
   });
 
   renderBars(); renderKpi();
-  runQueue(jobs, function () { setNote(); loadSources(); });
+  runQueue(jobs, function () {
+    setNote();
+    loadCampaigns(function () { loadSources(function () { loadPages(); }); });
+  });
+  loadThreadInsights();
+
+  // ── 게시 날짜·종류별 Threads 링크 유입 ──
+  function dateStamp(d) {
+    return "" + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
+  }
+  function campaignType(d) {
+    var wd = d.getDay(); // 일=0
+    if (wd === 1 || wd === 3 || wd === 5) return "fortune";
+    if (wd === 6) return "lotto";
+    return "deal";
+  }
+  var TYPE_LABEL = { fortune: "운세", lotto: "로또", deal: "특가", tips: "정보", daily: "일상" };
+  var officialClicks = {};
+  var campaignRows = [];
+  var TRACKING_START = new Date(2026, 8, 5); // 월은 0부터 시작
+
+  function paintCampaigns() {
+    if (!campaignRows.length) return;
+    var html = '<table class="data-table"><thead><tr><th>게시일</th><th>종류</th><th>Threads 클릭</th><th>사이트 도착</th></tr></thead><tbody>';
+    campaignRows.forEach(function (row) {
+      var official = officialClicks[row.key];
+      html += '<tr><td>' + label(row.date) + '</td><td>' + TYPE_LABEL[row.type] + '</td><td>' +
+        (typeof official === "number" ? official + '회' : '·') + '</td><td>' +
+        (row.value === "pre" ? '추적 전' : row.value === null ? '·' : row.value + '명') + '</td></tr>';
+    });
+    document.getElementById("campaigns").innerHTML = html + '</tbody></table>';
+  }
+
+  function loadCampaigns(done) {
+    var recent = days.slice(-14).reverse();
+    var vals = recent.map(function () { return null; });
+    var cjobs = recent.map(function (d, i) {
+      return function () {
+        var type = campaignType(d);
+        var key = "camp_th_" + dateStamp(d) + "_" + type;
+        if (d < TRACKING_START) { vals[i] = "pre"; return Promise.resolve(); }
+        var cached = d.toDateString() === today.toDateString() ? null : lsGet(CACHE_PREFIX + key);
+        if (cached !== null) { vals[i] = parseInt(cached, 10); return Promise.resolve(); }
+        return fetchRetry(key).then(function (v) {
+          vals[i] = v;
+          if (v !== null && d.toDateString() !== today.toDateString()) lsSet(CACHE_PREFIX + key, v);
+        });
+      };
+    });
+    runQueue(cjobs, function () {
+      campaignRows = recent.map(function (d, i) {
+        var type = campaignType(d);
+        return { date:d, type:type, key:"th_" + dateStamp(d) + "_" + type, value:vals[i] };
+      });
+      paintCampaigns();
+      if (done) done();
+    });
+  }
+
+  // ── 공식 Threads 인사이트 JSON ──
+  function loadThreadInsights() {
+    fetch("threads-insights.json?ts=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) {
+        officialClicks = data.campaign_clicks || {};
+        paintCampaigns();
+        var posts = (data.posts || []).slice().sort(function (a, b) {
+          return (b.views - a.views) || (b.score - a.score);
+        }).slice(0, 12);
+        if (!posts.length) return;
+        document.getElementById("threadPosts").innerHTML = posts.map(function (p) {
+          var dt = p.timestamp ? new Date(p.timestamp).toLocaleDateString("ko-KR") : "";
+          var text = (p.text || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          var tag = TYPE_LABEL[p.type] || p.type || "글";
+          var body = '<div class="meta">' + dt + ' · ' + tag + '</div><div class="txt">' + text + '</div>' +
+            '<div class="nums">조회 ' + (p.views || 0) + ' · 좋아요 ' + (p.likes || 0) + ' · 답글 ' + (p.replies || 0) +
+            ' · 재게시/공유 ' + ((p.reposts || 0) + (p.quotes || 0) + (p.shares || 0)) + '</div>';
+          return p.permalink ? '<a class="post-card" target="_blank" rel="noopener" href="' + p.permalink + '">' + body + '</a>' : '<div class="post-card">' + body + '</div>';
+        }).join("");
+      }).catch(function () {});
+  }
 
   // ── 유입 경로 (누적) ──
   var SRC = [
@@ -203,12 +302,12 @@
     }).join("");
   }
 
-  function loadSources() {
+  function loadSources(done) {
     var cached = lsGet(CACHE_PREFIX + "src");
     if (cached) {
       try {
         var o = JSON.parse(cached);
-        if (Date.now() - o.at < SRC_TTL) { paintSources(o.v); return; }
+        if (Date.now() - o.at < SRC_TTL) { paintSources(o.v); if (done) done(); return; }
       } catch (e) {}
     }
     var vals = SRC.map(function () { return 0; });
@@ -230,6 +329,32 @@
         document.getElementById("sources").insertAdjacentHTML("beforeend",
           '<p class="sub">' + miss + '개 항목을 못 불러왔습니다. 새로고침하면 다시 시도합니다.</p>');
       }
+      if (done) done();
+    });
+  }
+
+  // ── 첫 방문 페이지 (누적) ──
+  var PAGES = [
+    ["index", "홈"], ["today", "오늘의 운세"], ["tti", "띠별 순위"],
+    ["zodiac", "별자리 순위"], ["lotto", "로또"], ["deals", "오늘의 특가"]
+  ];
+  function loadPages() {
+    var vals = PAGES.map(function () { return 0; });
+    var pjobs = PAGES.map(function (p, i) {
+      return function () { return fetchRetry("page_" + p[0]).then(function (v) { vals[i] = v || 0; }); };
+    });
+    runQueue(pjobs, function () {
+      var rows = PAGES.map(function (p, i) { return { label:p[1], v:vals[i] }; })
+        .filter(function (r) { return r.v > 0; }).sort(function (a, b) { return b.v - a.v; });
+      if (!rows.length) {
+        document.getElementById("pages").innerHTML = '<p class="sub">새 추적 방문이 쌓이면 표시됩니다.</p>';
+        return;
+      }
+      var max = rows[0].v;
+      document.getElementById("pages").innerHTML = rows.map(function (r) {
+        return '<div class="bar-row"><span class="day">' + r.label + '</span><span class="track"><span class="fill" style="width:' +
+          (r.v / max * 100) + '%"></span></span><span class="v">' + r.v + '</span></div>';
+      }).join("");
     });
   }
 })();

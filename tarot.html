@@ -30,15 +30,21 @@
     <a href="today.html">오늘의 운세</a>
     <a href="tarot.html" class="on">타로</a>
     <a href="saju.html">사주</a>
-    <a href="tti.html">띠별 운세</a>
-    <a href="zodiac.html">별자리</a>
-    <a href="gunghap.html">궁합</a>
+    <a href="tti.html">띠·별자리</a>
+<a href="gunghap.html">궁합</a>
+    <a href="relation.html">연애유형</a>
     <a href="lotto.html">로또</a>
-  <a href="deals.html">특가</a>
-  </nav>
+</nav>
 
   <div class="card">
     <h2>🃏 타로 카드 뽑기</h2>
+    <p class="desc">먼저 지금 마음에 걸리는 주제를 골라주세요.</p>
+    <div class="topic-row" id="topicRow">
+      <button class="sel" onclick="setTopic('love', this)">💗 연애</button>
+      <button onclick="setTopic('work', this)">📚 일·공부</button>
+      <button onclick="setTopic('money', this)">💰 돈</button>
+      <button onclick="setTopic('choice', this)">🧭 선택</button>
+    </div>
     <p class="desc">어떤 방식으로 볼까요?</p>
     <div class="mode-row">
       <button id="mode1" class="sel" onclick="setMode(1)">🌟 오늘의 카드 (1장)</button>
@@ -51,6 +57,8 @@
   <div class="card result" id="res">
     <h2>🔮 카드가 전하는 이야기</h2>
     <div class="reading" id="reading"></div>
+    <div class="topic-advice" id="topicAdvice"></div>
+    <button class="primary" onclick="shareResult()">카드 결과 공유하기</button>
     <button class="ghost" onclick="reset()">카드 다시 섞기</button>
   </div>
 
@@ -66,6 +74,7 @@
 
 </div>
 
+<script src="share.js"></script>
 <script>
 // 메이저 아르카나 22장: [이름, 이모지, 정방향 의미, 역방향 의미]
 const ARCANA = [
@@ -94,7 +103,20 @@ const ARCANA = [
 ];
 
 const POS3 = ["🕰️ 과거", "🌟 현재", "🔭 미래"];
-let mode = 1, deck = [], picked = 0;
+const TOPICS = {
+  love: { label:"연애", question:"이 관계에서 내가 지금 알아야 할 것은?", guides:["상대의 반응을 예측하기보다 내가 원하는 관계의 모습을 한 문장으로 정리해 보세요.","마음의 크기와 표현 속도는 다를 수 있어요. 확인하고 싶은 것은 추측보다 차분한 질문으로 꺼내보세요.","오늘은 관계의 결론보다 다음 대화를 편하게 만드는 작은 행동 하나에 집중해 보세요."] },
+  work: { label:"일·공부", question:"지금 막힌 흐름을 어떻게 풀어야 할까?", guides:["해야 할 일을 가장 작은 단위로 나누고 10분만 시작해 보세요.","혼자 오래 고민한 문제라면 이미 해본 것과 막힌 지점을 적어서 도움을 요청해 보세요.","속도보다 방향을 확인할 때예요. 오늘 끝낼 한 가지와 미룰 한 가지를 구분해 보세요."] },
+  money: { label:"돈", question:"지금 내 소비와 계획에서 살필 것은?", guides:["오늘 바로 결정하기보다 가격과 필요 이유를 적고 하루 뒤 다시 보세요.","큰 행운을 기대하기보다 반복해서 새는 작은 지출 하나를 찾아보세요.","수익을 약속하는 말보다 비용·기간·최악의 경우를 먼저 확인해 보세요."] },
+  choice: { label:"선택", question:"두 갈래 앞에서 내가 놓친 기준은?", guides:["어느 쪽이 더 좋아 보이는지보다 어느 불편을 감수할 수 있는지 생각해 보세요.","지금 가진 정보로 되돌릴 수 있는 작은 선택부터 시험해 보세요.","남의 기대를 잠시 빼고, 한 달 뒤의 내가 후회할 쪽을 적어보세요."] }
+};
+let mode = 1, topic = "love", deck = [], picked = 0, selectedCards = [];
+
+function setTopic(value, btn) {
+  topic = value;
+  document.querySelectorAll("#topicRow button").forEach(function (b) { b.classList.remove("sel"); });
+  btn.classList.add("sel");
+  reset();
+}
 
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -113,18 +135,20 @@ function setMode(m) {
 
 function reset() {
   picked = 0;
+  selectedCards = [];
   deck = shuffle(ARCANA.map((c, i) => ({ card: c, rev: Math.random() < 0.3 })));
-  document.getElementById("guide").textContent =
-    mode === 1
-      ? "질문을 떠올리며 가장 끌리는 카드 한 장을 골라주세요."
-      : "세 장을 차례로 골라주세요. 과거 → 현재 → 미래 순서로 읽어드립니다.";
+  document.getElementById("guide").textContent = TOPICS[topic].question + " " +
+    (mode === 1 ? "가장 끌리는 카드 한 장을 골라주세요." : "세 장을 과거 → 현재 → 미래 순서로 골라주세요.");
   document.getElementById("reading").innerHTML = "";
+  document.getElementById("topicAdvice").innerHTML = "";
   document.getElementById("res").classList.remove("show");
 
   const el = document.getElementById("deck");
   el.innerHTML = "";
   deck.forEach((d, i) => {
-    const div = document.createElement("div");
+    const div = document.createElement("button");
+    div.type = "button";
+    div.setAttribute("aria-label", "타로 카드 " + (i + 1) + " 뽑기");
     div.className = "tcard";
     div.innerHTML =
       '<div class="inner">' +
@@ -145,6 +169,7 @@ function pick(div, i) {
   picked++;
 
   const d = deck[i];
+  selectedCards.push(d);
   const posLabel = mode === 3 ? POS3[picked - 1] : "🌟 오늘의 카드";
   const dirLabel = d.rev ? "역방향" : "정방향";
   const meaning = d.rev ? d.card[3] : d.card[2];
@@ -160,6 +185,10 @@ function pick(div, i) {
   if (picked === mode) {
     document.querySelectorAll(".tcard:not(.flipped)").forEach(c => c.classList.add("dimmed"));
     setTimeout(() => {
+      const guide = TOPICS[topic].guides[(i + picked + (d.rev ? 1 : 0)) % TOPICS[topic].guides.length];
+      document.getElementById("topicAdvice").innerHTML = '<b>🪄 ' + TOPICS[topic].label + ' 질문을 위한 현실 한 걸음</b><p>' + guide + '</p>';
+      const names = selectedCards.map(function (item) { return item.card[0].replace(/^\d+\.\s*/, ""); }).join(" · ");
+      window.SHARE_TEXT = "🃏 " + TOPICS[topic].label + " 타로에서 '" + names + "' 카드가 나왔어. 너도 지금 고민을 떠올리고 뽑아봐";
       const res = document.getElementById("res");
       res.classList.add("show");
       res.scrollIntoView({ behavior: "smooth", block: "start" });

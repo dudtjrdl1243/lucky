@@ -35,6 +35,9 @@ def content_type(text, dt):
         return "deal"
     if "로또" in text or "당첨번호" in text or "회차" in text:
         return "lotto"
+    relation_words = ("연락", "답장", "서운", "다툼", "싸우", "상대", "좋아한다", "연애", "대화 유형")
+    if any(word in text for word in relation_words):
+        return "relation"
     if "띠" in text or "별자리" in text or "운세" in text:
         return "fortune"
     # 자동 게시 슬롯을 기준으로 링크 없는 글을 구분한다.

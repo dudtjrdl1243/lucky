@@ -10,6 +10,7 @@ on:
         type: choice
         options:
           - fortune
+          - relation
           - deal
           - lotto
           - daily

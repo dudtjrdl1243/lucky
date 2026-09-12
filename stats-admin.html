@@ -206,11 +206,17 @@
   }
   function campaignType(d) {
     var wd = d.getDay(); // 일=0
+    var relationStart = new Date(2026, 8, 13);
+    if (d >= relationStart) {
+      if (wd === 1 || wd === 3 || wd === 5) return "fortune";
+      if (wd === 6) return "lotto";
+      return "relation";
+    }
     if (wd === 1 || wd === 3 || wd === 5) return "fortune";
     if (wd === 6) return "lotto";
     return "deal";
   }
-  var TYPE_LABEL = { fortune: "운세", lotto: "로또", deal: "특가", tips: "정보", daily: "일상" };
+  var TYPE_LABEL = { fortune: "운세", relation: "관계", lotto: "로또", deal: "특가", tips: "정보", daily: "일상" };
   var officialClicks = {};
   var campaignRows = [];
   var TRACKING_START = new Date(2026, 8, 5); // 월은 0부터 시작
@@ -336,7 +342,9 @@
   // ── 첫 방문 페이지 (누적) ──
   var PAGES = [
     ["index", "홈"], ["today", "오늘의 운세"], ["tti", "띠별 순위"],
-    ["zodiac", "별자리 순위"], ["lotto", "로또"], ["deals", "오늘의 특가"]
+    ["zodiac", "별자리 순위"], ["tarot", "타로"], ["saju", "사주"],
+    ["gunghap", "궁합"], ["relation", "연애유형"], ["lotto", "로또"],
+    ["deals", "오늘의 특가(기존)"]
   ];
   function loadPages() {
     var vals = PAGES.map(function () { return 0; });

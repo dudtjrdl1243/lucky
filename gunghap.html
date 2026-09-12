@@ -30,12 +30,11 @@
     <a href="today.html">오늘의 운세</a>
     <a href="tarot.html">타로</a>
     <a href="saju.html">사주</a>
-    <a href="tti.html">띠별 운세</a>
-    <a href="zodiac.html">별자리</a>
-    <a href="gunghap.html" class="on">궁합</a>
+    <a href="tti.html">띠·별자리</a>
+<a href="gunghap.html" class="on">궁합</a>
+    <a href="relation.html">연애유형</a>
     <a href="lotto.html">로또</a>
-  <a href="deals.html">특가</a>
-  </nav>
+</nav>
 
   <div class="card">
     <h2>💞 궁합 보기</h2>
@@ -75,6 +74,8 @@
     <p class="section-label">💌 두 사람을 위한 조언</p>
     <p id="advice"></p>
 
+    <button class="primary" onclick="shareResult()">궁합 결과 공유하기</button>
+    <a class="inline-cta center" href="relation.html">생년월일 말고, 내 연애 대화 유형도 보기 →</a>
     <button class="ghost" onclick="location.reload()">다른 궁합 보기</button>
   </div>
 
@@ -91,6 +92,7 @@
 </div>
 
 <script src="birth-input.js"></script>
+<script src="share.js"></script>
 <script>
 function hashSeed(str) {
   let h = 1779033703 ^ str.length;
@@ -222,6 +224,7 @@ function tell() {
   document.getElementById("starStars").textContent = "★".repeat(starStars) + "☆".repeat(5 - starStars);
   document.getElementById("starMsg").textContent = starMsg;
   document.getElementById("advice").textContent = ADVICE[Math.floor(rng() * ADVICE.length)];
+  window.SHARE_TEXT = "💞 " + nmA + "와(과) " + nmB + "의 궁합은 " + score + "점! " + band + " 너도 궁합 확인해봐";
 
   const res = document.getElementById("res");
   res.classList.add("show");

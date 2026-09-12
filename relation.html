@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연애 대화 유형 테스트 | 서운할 때 나는 어떤 타입? — 별별운세</title>
+<meta name="description" content="연애할 때 연락하고 표현하고 서운함을 푸는 나의 방식을 8가지 상황 질문으로 알아보는 무료 관계 테스트입니다.">
+<link rel="canonical" href="https://dudtjrdl1243.github.io/lucky/relation.html">
+<meta property="og:type" content="website"><meta property="og:title" content="연애 대화 유형 테스트 | 별별운세">
+<meta property="og:description" content="서운할 때 바로 말할까, 혼자 정리할까? 8문항으로 보는 나의 연애 대화 유형">
+<meta property="og:url" content="https://dudtjrdl1243.github.io/lucky/relation.html"><meta property="og:image" content="https://dudtjrdl1243.github.io/lucky/og-image.svg"><meta property="og:locale" content="ko_KR">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
+</head>
+<body><div class="wrap">
+  <header class="site"><a class="logo" href="index.html">🔮 별별운세</a><p class="tagline">사랑의 크기보다 표현 방식이 다를 때가 더 많으니까</p></header>
+  <nav class="menu"><a href="index.html">홈</a><a href="today.html">오늘</a><a href="tarot.html">타로</a><a href="saju.html">사주</a><a href="tti.html">띠·별자리</a><a href="gunghap.html">궁합</a><a href="relation.html" class="on">연애유형</a><a href="lotto.html">로또</a></nav>
+  <main>
+    <section class="card test-intro" id="intro"><span class="test-hero">💬</span><p class="eyebrow">8가지 상황 · 약 1분</p><h1>연애할 때<br>나는 어떻게 말할까?</h1><p class="desc">정답을 찾는 검사가 아니에요. 가장 나다운 답을 고르면 관계에서 자주 쓰는 대화 방식을 보여드려요.</p><button class="primary" type="button" id="startBtn">테스트 시작하기</button></section>
+    <section class="card test-stage" id="stage" hidden><div class="test-progress"><span id="progressText">1 / 8</span><div><i id="progressBar"></i></div></div><p class="eyebrow" id="questionTag"></p><h2 class="question-title" id="questionText"></h2><div class="choice-list" id="choices"></div><button class="test-back" type="button" id="backBtn">← 이전 질문</button></section>
+    <section class="card result relation-result" id="res"><p class="eyebrow">나의 연애 대화 유형</p><div class="relation-emoji" id="resultEmoji"></div><h1 id="resultTitle"></h1><p class="relation-tagline" id="resultTagline"></p><p class="relation-desc" id="resultDesc"></p><div class="relation-detail good"><b>이런 점이 좋아요</b><p id="resultGood"></p></div><div class="relation-detail careful"><b>이럴 때 엇갈려요</b><p id="resultCareful"></p></div><div class="relation-detail phrase"><b>오늘 써볼 한마디</b><p id="resultPhrase"></p></div><p class="match-line" id="resultMatch"></p><div class="result-actions"><button class="primary" type="button" onclick="shareResult()">친구에게 결과 보내기</button><button class="ghost" type="button" id="restartBtn">다시 해보기</button></div><p class="test-note">이 결과는 전문 심리검사가 아닌 오락·자기 이해용 콘텐츠예요.</p></section>
+    <section class="card after-test"><h2>둘의 생년월일 궁합도 궁금하다면</h2><p class="desc">띠와 별자리 조합으로 두 사람의 다른 점을 가볍게 비교해보세요.</p><a class="inline-cta" href="gunghap.html">두 사람 궁합 보기 →</a></section>
+  </main>
+  <div style="margin-top:28px;display:flex;justify-content:center;"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-7Y8i4O6wwHmSqg0j" data-ad-width="300" data-ad-height="250"></ins></div><script src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
+  <footer class="site"><p>✨ 서로의 답이 다르다고 마음의 크기가 다른 건 아니에요.</p><p style="margin-top:6px;font-size:12px"><a href="privacy.html" style="color:inherit;opacity:.7">개인정보처리방침</a></p></footer>
+</div>
+<script src="share.js"></script>
+<script>
+const QUESTIONS=[
+{tag:"연락",text:"답장이 평소보다 늦게 올 때 나는?",choices:[["무슨 일 있는지 가볍게 먼저 물어본다","direct"],["바쁠 수 있으니 조금 더 기다린다","pause"]]},
+{tag:"표현",text:"좋아한다는 마음을 더 자주 보여주는 쪽은?",choices:[["말과 메시지로 확실히 표현하는 편","words"],["챙겨주고 행동으로 보여주는 편","action"]]},
+{tag:"갈등",text:"서운한 일이 생기면 가장 먼저 하는 것은?",choices:[["쌓이기 전에 어떤 점이 서운했는지 말한다","direct"],["내 감정을 먼저 정리할 시간이 필요하다","pause"]]},
+{tag:"확인",text:"상대가 나를 좋아하는지 느껴지는 순간은?",choices:[["다정한 말로 마음을 자주 확인해줄 때","words"],["약속을 지키고 필요한 걸 기억해줄 때","action"]]},
+{tag:"화해",text:"다툰 뒤 더 편하게 느껴지는 화해 방식은?",choices:[["그날 대화로 풀고 넘어가는 것","direct"],["잠시 쉬었다가 차분할 때 얘기하는 것","pause"]]},
+{tag:"데이트",text:"갑자기 약속이 취소됐을 때 더 듣고 싶은 말은?",choices:[["미안하고 보고 싶었다는 솔직한 설명","words"],["바로 다음 약속을 잡는 구체적인 행동","action"]]},
+{tag:"고민",text:"상대가 힘든 일을 털어놓으면 나는?",choices:[["질문하면서 함께 해결책을 찾아본다","direct"],["필요한 만큼 말할 때까지 곁에서 기다린다","pause"]]},
+{tag:"애정",text:"기념일이 아닌 평범한 날, 더 설레는 것은?",choices:[["갑자기 도착한 다정한 한마디","words"],["말없이 챙겨둔 작은 배려","action"]]}
+];
+const TYPES={
+direct:{emoji:"🎯",title:"마음 직진 대화형",tagline:"애매하게 두기보다 말로 길을 만드는 사람",desc:"좋으면 좋다, 서운하면 서운하다고 비교적 빠르게 표현해요. 관계의 답답함을 오래 두지 않고 서로의 생각을 확인할 때 안정감을 느끼는 편이에요.",good:"오해가 커지기 전에 대화를 시작하고, 상대도 내 마음을 추측하느라 지치지 않게 해요.",careful:"상대가 생각을 정리하는 중일 때 답을 재촉하면 대화가 압박처럼 느껴질 수 있어요.",phrase:"지금 바로 답하지 않아도 괜찮아. 다만 준비되면 우리 얘기해보고 싶어.",match:"천천히 정리형에게 시간을 주고 다시 이야기할 약속을 잡으면 균형이 좋아요."},
+pause:{emoji:"🌙",title:"천천히 정리형",tagline:"감정을 가라앉힌 뒤 진심을 꺼내는 사람",desc:"감정이 클수록 바로 말하기보다 혼자 생각을 정리할 시간이 필요해요. 순간의 말로 상처 주지 않으려 조심하고, 편안한 분위기에서 깊은 대화를 나누는 편이에요.",good:"상황을 여러 방향에서 생각하고 감정에 휩쓸리지 않은 말을 고를 수 있어요.",careful:"아무 설명 없이 오래 조용해지면 상대는 무시당하거나 마음이 식었다고 오해할 수 있어요.",phrase:"마음이 없는 게 아니라 정리할 시간이 조금 필요해. 오늘 저녁에 다시 얘기할게.",match:"마음 직진 대화형에게 침묵의 이유와 다시 이야기할 시간을 알려주면 편해져요."},
+words:{emoji:"💌",title:"다정한 말 확인형",tagline:"마음을 표현하고 확인할 때 사랑이 선명해지는 사람",desc:"좋아한다는 말, 안부 메시지, 구체적인 칭찬처럼 들을 수 있는 표현에서 애정을 크게 느껴요. 나도 마음을 말로 잘 전하고 관계의 온도를 자주 확인하는 편이에요.",good:"상대가 사랑받고 있다는 사실을 분명히 느끼게 하고 평범한 날도 특별하게 만들어요.",careful:"표현이 적은 상대의 마음을 실제보다 작게 해석하거나 반복 확인이 부담으로 느껴질 수 있어요.",phrase:"해결해달라는 건 아니고, 오늘은 네가 내 편이라는 말을 듣고 싶어.",match:"조용한 행동 신뢰형이 해준 일을 마음의 표현으로 번역해보면 놓치던 애정이 보여요."},
+action:{emoji:"🧩",title:"조용한 행동 신뢰형",tagline:"말보다 꾸준한 행동에서 마음을 읽는 사람",desc:"약속을 지키고, 필요한 것을 기억하고, 곁을 지키는 행동이 가장 믿음직한 애정 표현이라고 느껴요. 거창한 말보다 생활 속에서 차곡차곡 신뢰를 쌓는 편이에요.",good:"말에 그치지 않고 실제 도움과 꾸준함으로 상대에게 든든함을 줘요.",careful:"마음은 충분해도 말이 생략되면 상대는 그 행동의 의미를 알아차리지 못할 수 있어요.",phrase:"내가 말로는 자주 못 해도, 너를 생각해서 한 일이야. 고맙고 좋아해.",match:"다정한 말 확인형에게 행동의 의미를 한 문장만 덧붙여도 마음이 훨씬 잘 전달돼요."}
+};
+let step=0,answers=[];const intro=document.getElementById("intro"),stage=document.getElementById("stage"),result=document.getElementById("res");
+function renderQuestion(){const q=QUESTIONS[step];document.getElementById("progressText").textContent=(step+1)+" / "+QUESTIONS.length;document.getElementById("progressBar").style.width=((step+1)/QUESTIONS.length*100)+"%";document.getElementById("questionTag").textContent=q.tag;document.getElementById("questionText").textContent=q.text;const box=document.getElementById("choices");box.innerHTML="";q.choices.forEach(function(choice,i){const btn=document.createElement("button");btn.type="button";btn.innerHTML='<span>'+String.fromCharCode(65+i)+'</span><b>'+choice[0]+'</b>';btn.addEventListener("click",function(){choose(choice[1]);});box.appendChild(btn);});document.getElementById("backBtn").style.visibility=step?"visible":"hidden";}
+function choose(type){answers[step]=type;if(step<QUESTIONS.length-1){step++;renderQuestion();return;}showResult();}
+function showResult(){const scores={direct:0,pause:0,words:0,action:0};answers.forEach(function(a){scores[a]++;});const order=["direct","pause","words","action"];const type=order.reduce(function(best,key){return scores[key]>scores[best]?key:best;},order[0]);const data=TYPES[type];["Emoji","Title","Tagline","Desc","Good","Careful","Phrase"].forEach(function(suffix){document.getElementById("result"+suffix).textContent=data[suffix.toLowerCase()];});document.getElementById("resultMatch").textContent="💞 다른 유형과 만났을 때 · "+data.match;window.SHARE_TEXT="💬 내 연애 대화 유형은 '"+data.title+"'!\n나는 "+data.tagline+"이래. 너는 어떤 타입?";stage.hidden=true;result.classList.add("show");result.scrollIntoView({behavior:"smooth",block:"start"});}
+document.getElementById("startBtn").addEventListener("click",function(){intro.hidden=true;stage.hidden=false;renderQuestion();});document.getElementById("backBtn").addEventListener("click",function(){if(step>0){step--;answers.length=step;renderQuestion();}});document.getElementById("restartBtn").addEventListener("click",function(){step=0;answers=[];result.classList.remove("show");intro.hidden=false;intro.scrollIntoView({behavior:"smooth",block:"start"});});
+</script>
+<script src="visitor-count.js"></script></body></html>

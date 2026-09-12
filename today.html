@@ -30,12 +30,11 @@
     <a href="today.html" class="on">오늘의 운세</a>
     <a href="tarot.html">타로</a>
     <a href="saju.html">사주</a>
-    <a href="tti.html">띠별 운세</a>
-    <a href="zodiac.html">별자리</a>
-    <a href="gunghap.html">궁합</a>
+    <a href="tti.html">띠·별자리</a>
+<a href="gunghap.html">궁합</a>
+    <a href="relation.html">연애유형</a>
     <a href="lotto.html">로또</a>
-  <a href="deals.html">특가</a>
-  </nav>
+</nav>
 
   <div class="card">
     <h2>🌞 오늘의 운세</h2>
@@ -44,6 +43,7 @@
     <input type="text" id="nm" placeholder="예) 홍길동" maxlength="20">
     <label class="field" for="bd">생년월일 (숫자만 쭉 입력하세요)</label>
     <input type="text" inputmode="numeric" id="bd" data-birth placeholder="예) 19950412" maxlength="10" autocomplete="bday">
+    <label class="remember-line"><input type="checkbox" id="rememberMe"> 이 기기에 입력값 기억하기</label>
     <button class="primary" onclick="tell()">오늘의 운세 보기 ✨</button>
   </div>
 
@@ -59,6 +59,10 @@
     <div id="adInResult" style="margin:18px 0 22px; display:flex; justify-content:center;"></div>
 
     <div id="rows"></div>
+
+    <p class="section-label">🧭 오늘 이렇게 보내세요</p>
+    <p class="trend-note" id="trendText"></p>
+    <div class="today-plan" id="todayPlan"></div>
 
     <div id="mgBox" style="display:none;">
       <p class="section-label">📜 오늘 이 운세가 나온 이유</p>
@@ -204,6 +208,27 @@ const ITEMS  = ["손수건", "텀블러", "동전", "볼펜", "이어폰", "립�
 const TIMES  = ["아침 7~9시", "오전 10~12시", "낮 1~3시", "오후 3~5시", "저녁 5~7시", "밤 7~9시", "밤 9~11시"];
 const DIRS   = ["동쪽", "서쪽", "남쪽", "북쪽", "남동쪽", "남서쪽", "북동쪽", "북서쪽"];
 const PLACES = ["창가 자리", "동네 카페", "서점", "공원 벤치", "물가 근처", "높은 곳", "익숙한 골목", "새로 생긴 가게"];
+const ACTIONS = {
+  "총운": ["미뤄둔 일 하나를 10분만 시작해 보세요.", "결정할 일은 기준을 세 개만 적고 골라보세요."],
+  "애정운": ["생각나는 사람에게 짧은 안부를 먼저 건네요.", "고마웠던 일을 하나 구체적으로 말해보세요."],
+  "금전운": ["오늘 쓸 돈의 상한선을 먼저 정해두세요.", "결제 전 장바구니를 한 번만 다시 확인해 보세요."],
+  "직장·학업운": ["가장 어려운 일을 집중되는 시간에 먼저 잡아보세요.", "해야 할 일을 세 줄로 적고 첫 줄부터 끝내세요."],
+  "건강운": ["한 시간에 한 번 자리에서 일어나 몸을 가볍게 풀어주세요.", "오늘은 무리한 계획보다 충분히 쉬는 시간을 챙겨보세요."]
+};
+const CAUTIONS = {
+  "총운": "한 번에 너무 많은 일을 벌이는 것",
+  "애정운": "상대의 마음을 혼자 미리 단정하는 것",
+  "금전운": "기분에 따라 바로 결제하는 것",
+  "직장·학업운": "완벽하게 하려다 시작을 늦추는 것",
+  "건강운": "피곤한데도 무리해서 일정을 채우는 것"
+};
+const ONE_LINES = [
+  "지금 답하지 않아도 괜찮아. 편할 때 얘기해줘.",
+  "오늘 네 생각이 나서 그냥 안부가 궁금했어.",
+  "내가 도울 일이 있으면 편하게 말해줘.",
+  "아까 고마웠어. 덕분에 마음이 한결 가벼웠어.",
+  "내 생각은 이렇지만 네 이야기도 끝까지 들어보고 싶어."
+];
 
 function tell() {
   const name = document.getElementById("nm").value.trim();
@@ -218,6 +243,14 @@ function tell() {
   // 생년월일이 있으면 명리(일진×일간) 기반으로 계산, 없으면 기존 방식
   const mg = bd ? MG.compute(+bd.slice(0, 4), +bd.slice(5, 7), +bd.slice(8, 10), today) : null;
 
+  try {
+    if (document.getElementById("rememberMe").checked) {
+      localStorage.setItem("bb_today_input", JSON.stringify({ name:name, bd:bd }));
+    } else {
+      localStorage.removeItem("bb_today_input");
+    }
+  } catch (e) {}
+
   const CAT_EMOJI = { "총운": "🌟", "애정운": "💗", "금전운": "💰", "직장·학업운": "📚", "건강운": "🌿" };
   const score = mg
     ? Math.round(MG.CATS.reduce((s, c) => s + mg.scores[c], 0) / MG.CATS.length)
@@ -229,7 +262,10 @@ function tell() {
     "🌙 " + (name || "당신") + "님의 " + (today.getMonth() + 1) + "월 " + today.getDate() + "일 운세";
 
   let html = "";
+  let topCat = "총운", lowCat = "총운";
   if (mg) {
+    topCat = MG.CATS.reduce(function (a, b) { return mg.scores[a] >= mg.scores[b] ? a : b; });
+    lowCat = MG.CATS.reduce(function (a, b) { return mg.scores[a] <= mg.scores[b] ? a : b; });
     MG.CATS.forEach(function (cat) {
       const v = mg.scores[cat];
       const stars = v >= 90 ? 5 : v >= 78 ? 4 : v >= 66 ? 3 : v >= 54 ? 2 : 1;
@@ -243,6 +279,9 @@ function tell() {
       '<p class="mg-note">일주(日柱) 간지와 오행 상생·상극, 지지 합충(合沖)으로 계산한 결과입니다. 정통 사주는 태어난 시각과 절기까지 보지만, 이곳은 일주 중심의 간이 풀이예요.</p>';
     document.getElementById("mgBox").style.display = "";
   } else {
+    const cats = ["총운", "애정운", "금전운", "직장·학업운", "건강운"];
+    topCat = cats[Math.floor(rng() * cats.length)];
+    lowCat = cats.filter(function (c) { return c !== topCat; })[Math.floor(rng() * 4)];
     for (const cat in POOLS) {
       const stars = 2 + Math.floor(rng() * 4); // 2~5
       const msg = POOLS[cat][Math.floor(rng() * POOLS[cat].length)];
@@ -254,6 +293,25 @@ function tell() {
   }
   document.getElementById("rows").innerHTML = html;
 
+  if (mg) {
+    const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
+    const prev = MG.compute(+bd.slice(0, 4), +bd.slice(5, 7), +bd.slice(8, 10), yesterday);
+    const changeCat = MG.CATS.reduce(function (a, b) {
+      return Math.abs(mg.scores[a] - prev.scores[a]) >= Math.abs(mg.scores[b] - prev.scores[b]) ? a : b;
+    });
+    const delta = mg.scores[changeCat] - prev.scores[changeCat];
+    document.getElementById("trendText").textContent = delta === 0
+      ? "어제와 비교하면 " + changeCat + "의 흐름이 가장 안정적이에요."
+      : "어제보다 " + changeCat + " 점수가 " + Math.abs(delta) + "점 " + (delta > 0 ? "올라왔어요." : "낮아졌어요. 중요한 일은 한 번 더 확인해 보세요.");
+  } else {
+    document.getElementById("trendText").textContent = "생년월일을 입력하면 어제와 달라진 흐름도 함께 볼 수 있어요.";
+  }
+  const action = ACTIONS[topCat][Math.floor(rng() * ACTIONS[topCat].length)];
+  document.getElementById("todayPlan").innerHTML =
+    '<div class="plan-row"><b>먼저 할 일</b><span>' + action + '</span></div>' +
+    '<div class="plan-row"><b>천천히 할 일</b><span>' + CAUTIONS[lowCat] + '</span></div>' +
+    '<div class="plan-row"><b>건넬 한마디</b><span>“' + ONE_LINES[Math.floor(rng() * ONE_LINES.length)] + '”</span></div>';
+
   document.getElementById("lkColor").textContent = mg ? mg.luckyColor : COLORS[Math.floor(rng() * COLORS.length)];
   document.getElementById("lkNum").textContent = 1 + Math.floor(rng() * 45);
   const luckyItem = ITEMS[Math.floor(rng() * ITEMS.length)];
@@ -263,13 +321,23 @@ function tell() {
   document.getElementById("lkPlace").textContent = PLACES[Math.floor(rng() * PLACES.length)];
   renderLuckyShop("luckyShop", LUCKY_PRODUCTS[luckyItem]);
 
-  window.SHARE_TEXT = "🔮 " + (name || "나") + "의 오늘 운세 " + score + "점! 행운의 아이템은 '" + luckyItem + "' — 너도 무료로 확인해봐";
+  window.SHARE_TEXT = "🔮 " + (name || "나") + "의 오늘 운세 " + score + "점! 오늘 가장 좋은 흐름은 " + topCat + "이래. 너도 무료로 확인해봐";
 
   const res = document.getElementById("res");
   res.classList.add("show");
   mountResultAd();
   res.scrollIntoView({ behavior: "smooth", block: "start" });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  try {
+    const saved = JSON.parse(localStorage.getItem("bb_today_input") || "null");
+    if (!saved) return;
+    document.getElementById("nm").value = saved.name || "";
+    document.getElementById("bd").value = saved.bd || "";
+    document.getElementById("rememberMe").checked = true;
+  } catch (e) {}
+});
 
 /* 결과 카드가 보이게 된 뒤에 광고를 붙인다.
    애드핏 스크립트는 로드 시점에 아직 처리하지 않은 .kakao_ad_area 를 찾아 채우므로,

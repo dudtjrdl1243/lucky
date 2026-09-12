@@ -604,7 +604,9 @@ def build_text():
         return choose(linked(live_lotto() + LOTTO)), TOPIC["lotto"], "lotto"
 
     if forced == "relation" or (not forced and wd in (1, 3, 6)):
-        return choose(linked(RELATION)), TOPIC["relation"], "relation"
+        generated = [(t, "relation.html", "내 연애 대화 유형은 여기")
+                     for t in load_generated("relation")]
+        return choose(linked(generated + RELATION)), TOPIC["relation"], "relation"
 
     # 특가 홍보는 수동 실행에서만 남긴다. 사이트의 핵심 콘텐츠 흐름을 끊고 실제
     # 도달도 가장 낮았기 때문에 자동 요일 편성에서는 제외한다.

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Threads 정보글/일상글 보충 문구를 주 1회 만든다.
+"""Threads 관계글/정보글/공감글 보충 문구를 주 1회 만든다.
 
 OPENAI_API_KEY가 없거나 호출이 실패하면 기존 큐를 건드리지 않고 종료한다.
 게시 여부는 post_threads.py가 실제 Threads 최근 글을 보고 결정하므로 별도 사용 상태는 없다.
@@ -26,7 +26,7 @@ def norm(text):
 
 
 def static_texts():
-    """post_threads.py를 실행하지 않고 TIPS/DAILY 리터럴만 안전하게 읽는다."""
+    """post_threads.py를 실행하지 않고 정적 문구 리터럴만 안전하게 읽는다."""
     with open(POST_SCRIPT, encoding="utf-8") as f:
         tree = ast.parse(f.read())
     found = {}
@@ -34,9 +34,11 @@ def static_texts():
         if isinstance(node, (ast.Assign, ast.AnnAssign)):
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
             for target in targets:
-                if isinstance(target, ast.Name) and target.id in ("TIPS", "DAILY"):
+                if isinstance(target, ast.Name) and target.id in ("TIPS", "DAILY", "RELATION"):
                     found[target.id] = ast.literal_eval(node.value)
-    return list(found.get("TIPS", [])) + list(found.get("DAILY", []))
+    texts = list(found.get("TIPS", [])) + list(found.get("DAILY", []))
+    texts += [item[0] for item in found.get("RELATION", []) if isinstance(item, tuple) and item]
+    return texts
 
 
 def load_current():
@@ -60,7 +62,8 @@ def output_text(response):
 
 def request_posts(existing):
     examples = "\n---\n".join(existing[-60:])
-    prompt = """별별운세 Threads 계정에 앞으로 올릴 새 문구 14개를 만들어줘.
+    prompt = """별별운세 Threads 계정에 앞으로 올릴 새 문구 21개를 만들어줘.
+- relation 7개: 연락, 표현 방식, 화해, 데이트, 친구 관계처럼 누구나 답하기 쉬운 구체적인 상황 질문. 두 선택지를 자연스럽게 제시하고 댓글로 자기 경험을 말하고 싶게 써줘.
 - tips 7개: 연애·친구·직장 관계에서 써볼 수 있는 짧은 대화법이나 생각거리. 심리학적 사실처럼 단정하지 말고, 구체적인 상황과 바로 써볼 한 문장을 중심으로.
 - daily 7개: 운, 선택, 관계를 소재로 한 한국어 반말 혼잣말/공감글. 둘 중 하나를 답하기 쉬운 질문형과 담백한 관찰형을 섞고, 억지 질문과 과장 없이 사람이 쓴 듯 짧게.
 - 각 2~4줄, 20~180자. URL, 해시태그, 이모지, 광고, 운세 홍보는 넣지 마.
@@ -75,11 +78,11 @@ def request_posts(existing):
         "additionalProperties": False,
         "properties": {
             "posts": {
-                "type": "array", "minItems": 14, "maxItems": 14,
+                "type": "array", "minItems": 21, "maxItems": 21,
                 "items": {
                     "type": "object", "additionalProperties": False,
                     "properties": {
-                        "type": {"type": "string", "enum": ["tips", "daily"]},
+                        "type": {"type": "string", "enum": ["relation", "tips", "daily"]},
                         "text": {"type": "string"},
                     },
                     "required": ["type", "text"],
@@ -110,7 +113,7 @@ def valid(item, seen):
     kind = item.get("type")
     text = item.get("text", "").strip()
     banned = re.compile(r"https?://|#|의사|약|질병|대출|투자|주식|지원금|법률|표백제.*식초|락스.*(?:식초|세제)")
-    return (kind in ("tips", "daily") and 20 <= len(text) <= 180
+    return (kind in ("relation", "tips", "daily") and 20 <= len(text) <= 180
             and not banned.search(text) and norm(text) not in seen)
 
 
@@ -140,15 +143,15 @@ def main():
             "type": item["type"], "text": text, "created_at": now,
         })
 
-    kinds = {k: sum(1 for p in accepted if p["type"] == k) for k in ("tips", "daily")}
-    if kinds["tips"] < 4 or kinds["daily"] < 4:
+    kinds = {k: sum(1 for p in accepted if p["type"] == k) for k in ("relation", "tips", "daily")}
+    if any(kinds[k] < 4 for k in kinds):
         print("검수 통과 문구가 부족해 파일을 바꾸지 않습니다:", kinds)
         return
 
     # 너무 커지지 않게 종류별 최신 90개까지만 보관(약 3개월치 여유분).
     merged = current + accepted
     kept = []
-    for kind in ("tips", "daily"):
+    for kind in ("relation", "tips", "daily"):
         kept.extend([p for p in merged if p.get("type") == kind][-90:])
     payload = {"updated_at": now, "posts": kept}
     tmp = OUT + ".tmp"

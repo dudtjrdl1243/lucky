@@ -241,12 +241,17 @@ a.feature .go {
 .relation-result { text-align: center; }
 .relation-tagline { color: var(--gold); font-weight: 800; }
 .relation-desc { margin: 15px auto 22px; max-width: 540px; color: var(--text-dim); }
+.relation-axes { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 16px 0; }
+.relation-axes div { padding: 12px; border-radius: 12px; background: rgba(139,111,216,.1); border: 1px solid rgba(139,111,216,.22); }
+.relation-axes span { display: block; color: var(--text-dim); font-size: .75rem; margin-bottom: 5px; }
+.relation-axes b { color: var(--gold); font-size: .82rem; line-height: 1.45; }
 .relation-detail { margin-top: 10px; padding: 16px 18px; border-radius: 13px; text-align: left; }
 .relation-detail b { display: block; margin-bottom: 5px; color: var(--gold); font-size: .84rem; }
 .relation-detail p { font-size: .92rem; }
 .relation-detail.good { background: rgba(92,170,143,.10); border: 1px solid rgba(92,170,143,.25); }
 .relation-detail.careful { background: rgba(211,142,98,.10); border: 1px solid rgba(211,142,98,.25); }
 .relation-detail.phrase { background: rgba(139,111,216,.13); border: 1px solid var(--card-border); }
+.relation-detail.need { background: rgba(139,111,216,.09); border: 1px solid rgba(139,111,216,.35); }
 .match-line { margin-top: 18px; color: var(--purple-soft); font-size: .88rem; }
 .result-actions { max-width: 420px; margin: 0 auto; }
 .test-note { margin-top: 20px; color: var(--text-dim); font-size: .72rem; }
@@ -744,6 +749,7 @@ footer.site {
   .deck { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 7px; }
   .home-hero { padding: 32px 22px 26px; }
   .spotlight-grid, .trust-grid { grid-template-columns: 1fr; }
+  .relation-axes { grid-template-columns: 1fr; }
   .spotlight { min-height: auto; }
   .plan-row { grid-template-columns: 74px 1fr; }
 }

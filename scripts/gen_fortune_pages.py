@@ -77,6 +77,7 @@ PAGE = """<!DOCTYPE html>
     <a href="gunghap.html">궁합</a>
     <a href="relation.html">연애유형</a>
     <a href="lotto.html">로또</a>
+    <a href="deals.html">특가</a>
   </nav>
 
   <div class="card">

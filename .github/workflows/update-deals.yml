@@ -25,6 +25,9 @@ jobs:
           python-version: "3.12"
 
       - name: 골드박스 데이터 갱신
+        # 토요일 밤 로또 결과 재시도 4회에서는 쿠팡 API를 다시 호출하지 않는다.
+        # 같은 시간대 반복 호출은 사용량 초과와 파트너스 제한 위험이 있다.
+        if: github.event.schedule == '10 22 * * *' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         env:
           COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}

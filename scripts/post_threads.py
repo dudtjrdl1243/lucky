@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """스레드(Threads) 자동 포스팅 — 요일별 콘텐츠 로테이션
   월·수·금 : 운세 티저 (사이트 링크)
-  화·목·일 : 관계 질문/연애 대화 유형 (사이트 링크)
+  화·일    : 관계 질문/연애 대화 유형 (사이트 링크)
+  목       : 선별 특가 (사이트 링크, 당일 데이터가 있을 때만)
   토       : 로또 (사이트 링크)
 말투는 계정 톤(짧고 건조한 반말 혼잣말)에 맞춤. 하루 1개만 게시.
 THREADS_ACCESS_TOKEN 없으면 조용히 건너뜀. USER_ID는 토큰으로 자동 조회.
@@ -479,31 +480,53 @@ def choose(cands, guard=None):
     return None
 
 def load_deals():
-    """deals-data.js 의 상품 목록 전체"""
+    """오늘 정상 갱신된 deals-data.js 의 상품 목록 전체.
+
+    가격·재고가 오래된 날에는 홍보글을 만들지 않는다. 쿠팡 API가 실패해 기존
+    파일이 남아 있더라도 아래 날짜와 상태 검사에서 걸러지고, 관계글로 대체된다.
+    """
     base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     path = os.path.join(base, "deals-data.js")
     if not os.path.exists(path):
         return []
-    m = re.search(r"const DEALS = (\[.*?\]);", open(path, encoding="utf-8").read(), re.S)
+    src = open(path, encoding="utf-8").read()
+    m = re.search(r"const DEALS = (\[.*?\]);", src, re.S)
     if not m:
+        return []
+    updated_match = re.search(r'const DEALS_UPDATED = "([^"]+)";', src)
+    status_match = re.search(r"const DEALS_STATUS = (\".*?\");", src)
+    updated = updated_match.group(1) if updated_match else ""
+    try:
+        status = json.loads(status_match.group(1)) if status_match else ""
+    except ValueError:
+        status = ""
+    if updated != KST_TODAY or status != "ok":
+        print("오늘 특가 데이터가 정상 갱신되지 않아 홍보글을 건너뜁니다:", updated, status)
         return []
     return [d for d in json.loads(m.group(1)) if d.get("url")]
 
 
 def deal_candidates():
-    """오늘 특가 데이터로 만든 홍보글 후보. 본문에 쓰는 숫자·상품명은 전부 실제 값."""
+    """오늘 특가 데이터로 만든 주 1회 홍보 후보.
+
+    과거 실적에서 단일 상품 소개보다 저가 상품 목록·카테고리 묶음의 조회가 높았다.
+    확인할 수 없는 할인율이나 최저가 주장은 하지 않고, 실제 현재 가격만 쓴다.
+    """
     deals = load_deals()
     if not deals:
         return []
     rockets = [d for d in deals if d.get("rocket")] or deals
     by_price = sorted(rockets, key=lambda d: d["price"])
+    if len(by_price) < 3:
+        return []
     cheap3 = by_price[:3]
     under20 = [d for d in by_price if d["price"] < 20000]
 
     # 문구에 맞는 가격대에서만 뽑는다. 아무거나 뽑으면
     # "장바구니 채우기 좋은" 자리에 63만원짜리 TV가 들어가는 식으로 어긋난다.
-    budget = under20 or by_price                                        # 부담 없이 담는 가격
-    mid = [d for d in by_price if 10000 <= d["price"] <= 80000] or by_price  # 하나만 짚어 말할 가격
+    budget = under20                                                    # 부담 없이 담는 가격
+    essential_categories = {"식품", "로켓프레시", "생활용품", "주방용품", "뷰티", "출산/유아"}
+    essentials = [d for d in under20 if d.get("category") in essential_categories]
 
     seed = week + kst.tm_yday  # 주차로 회전시켜 같은 상품이 매주 반복되지 않게
 
@@ -522,31 +545,27 @@ def deal_candidates():
     # 오늘 올라온 골드박스 묶음 중 일부를 고른 거라는 게 드러나게 한다.
     total = len(deals)
     out = []
-    out.append(("오늘 쿠팡 골드박스 {}개 올라왔는데\n제일 싼 게 {}\n\n{}".format(
-        total, _won(by_price[0]["price"]),
-        "\n".join(_line(d) for d in cheap3)), cheap3[0]))
+    disclosure = "[광고] 쿠팡 파트너스 활동으로 수수료를 받을 수 있어요."
+    out.append(("오늘 골드박스 {}개 중\n가격 낮은 상품 3개만 적어봄\n\n{}\n\n이 중에 원래 사려던 거 있음?".format(
+        total, "\n".join(_line(d) for d in cheap3)), cheap3[0]))
     cart = rot(budget, 3, 2)  # 위 '제일 싼 것' 목록과 겹치지 않게 시작점을 밀어둔다
     if len(cart) == 3:
-        out.append(("오늘 골드박스 {}개 중에\n장바구니 채우기 좋은 것만 추려봄\n\n{}".format(
+        out.append(("오늘 골드박스 {}개 중\n2만원 아래 상품만 골라봄\n\n{}\n\n뭐가 제일 쓸모 있어 보임?".format(
             total, "\n".join(_line(d) for d in cart)), cart[0]))
-    one = rot(mid, 1)
-    if one:
-        out.append(("오늘 올라온 골드박스 {}개 훑다가\n제일 눈에 밟힌 거\n\n{} {}\n로켓배송이라 금방 옴".format(
-            total, _short(one[0]["name"], 30), _won(one[0]["price"])), one[0]))
-    if len(under20) >= 3:
-        u = rot(under20, 3, 5)
-        out.append(("골드박스 {}개 중에 2만원 아래만 {}개\n그중 세 개만 적어둠\n\n{}\n\n장 볼 때 같이 담으면 됨".format(
-            total, len(under20), "\n".join(_line(d) for d in u)), u[0]))
+    if len(essentials) >= 3:
+        u = rot(essentials, 3, 5)
+        out.append(("오늘 골드박스에서\n2만원 아래 생필품만 세 개 골라봄\n\n{}\n\n집에 마침 떨어진 거 있음?".format(
+            "\n".join(_line(d) for d in u)), u[0]))
     if multi:
         cat = multi[seed % len(multi)]
         cl = sorted(cats[cat], key=lambda d: d["price"])[:3]
-        out.append(("오늘 골드박스 {}개 중에\n{} 쪽만 {}개 있길래\n\n{}".format(
-            total, cat, len(cats[cat]), "\n".join(_line(d) for d in cl)), cl[0]))
+        out.append(("오늘 골드박스 {}개 중\n{} 쪽만 모아봄\n\n{}\n\n이 중에 가격 괜찮아 보이는 거 있음?".format(
+            total, cat, "\n".join(_line(d) for d in cl)), cl[0]))
 
     reply = ("전체 목록은 여기\n👉 " + SITE + "deals.html\n\n"
              "쿠팡 파트너스 활동의 일환으로 수수료를 제공받습니다.")
     # 사진 속 상품은 본문에 이름이 나온 것으로 맞춘다
-    return [(body + "\n\n#광고", reply, (d.get("image") or None)) for body, d in out]
+    return [(disclosure + "\n\n" + body, reply, (d.get("image") or None)) for body, d in out]
 
 def linked(pool):
     """(본문, 페이지, 댓글 앞머리) 목록 → 후보 형식으로"""
@@ -603,17 +622,22 @@ def build_text():
     if forced == "lotto" or (not forced and wd == 5):
         return choose(linked(live_lotto() + LOTTO)), TOPIC["lotto"], "lotto"
 
-    if forced == "relation" or (not forced and wd in (1, 3, 6)):
+    if forced == "relation" or (not forced and wd in (1, 6)):
         generated = [(t, "relation.html", "내 연애 대화 유형은 여기")
                      for t in load_generated("relation")]
         return choose(linked(generated + RELATION)), TOPIC["relation"], "relation"
 
-    # 특가 홍보는 수동 실행에서만 남긴다. 사이트의 핵심 콘텐츠 흐름을 끊고 실제
-    # 도달도 가장 낮았기 때문에 자동 요일 편성에서는 제외한다.
-    cands = deal_candidates()
-    if not cands:
-        return choose_fortune(wd), TOPIC["fortune"], "fortune"
-    return choose(cands), TOPIC["deal"], "deal"
+    if forced == "deal" or (not forced and wd == 3):
+        # 특가는 목요일 주 1회만. 당일 데이터가 없으면 오래된 가격을 홍보하지 않고
+        # 원래 목요일에 나가던 관계글로 안전하게 대체한다.
+        cands = deal_candidates()
+        if cands:
+            return choose(cands), TOPIC["deal"], "deal"
+        generated = [(t, "relation.html", "내 연애 대화 유형은 여기")
+                     for t in load_generated("relation")]
+        return choose(linked(generated + RELATION)), TOPIC["relation"], "relation"
+
+    return choose_fortune(wd), TOPIC["fortune"], "fortune"
 
 
 chosen, topic_tag, content_type = build_text()

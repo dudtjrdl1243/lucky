@@ -31,7 +31,7 @@ def metric_value(item):
 
 
 def content_type(text, dt):
-    if "#광고" in text or "골드박스" in text:
+    if "#광고" in text or "[광고]" in text or "골드박스" in text:
         return "deal"
     if "로또" in text or "당첨번호" in text or "회차" in text:
         return "lotto"

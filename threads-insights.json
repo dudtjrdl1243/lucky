@@ -1,6 +1,21 @@
 {
-  "updated_at": "2026-09-16T03:07:50+09:00",
+  "updated_at": "2026-09-17T03:08:48+09:00",
   "posts": [
+    {
+      "id": "18075705812414976",
+      "content_id": "a1e569ec",
+      "timestamp": "2026-09-16T00:13:19+0000",
+      "type": "fortune",
+      "text": "달은 지금 초승달 단계\n오늘 별자리 1위는 황소자리로 나옴",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdU-K-oI5L4",
+      "views": 161,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2
+    },
     {
       "id": "18129982873707676",
       "content_id": "b33c6fcb",
@@ -8,7 +23,7 @@
       "type": "daily",
       "text": "우산은 젖은 채 접어두지 말고 집에 오자마자 펼치기\n다 마른 뒤 접어야 냄새가 덜 남음\n\n현관 구석에 세워두면 그대로 잊음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdTY-83myXn",
-      "views": 143,
+      "views": 144,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -38,7 +53,7 @@
       "type": "fortune",
       "text": "오늘 띠 순위 1위가 개띠라는데\n여기 개띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdPz7mjGTpK",
-      "views": 3218,
+      "views": 3220,
       "likes": 31,
       "replies": 8,
       "reposts": 0,
@@ -368,7 +383,7 @@
       "type": "fortune",
       "text": "오늘 띠 순위 1위가 뱀띠라는데\n여기 뱀띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
-      "views": 27589,
+      "views": 27591,
       "likes": 302,
       "replies": 98,
       "reposts": 1,
@@ -1485,24 +1500,10 @@
       "quotes": 0,
       "shares": 0,
       "score": 2
-    },
-    {
-      "id": "18015856679927446",
-      "content_id": "6cea3d4e",
-      "timestamp": "2026-08-13T09:47:01+0000",
-      "type": "daily",
-      "text": "행주 삶기 귀찮으면\n젖은 채로 전자레인지 2분\n웬만한 세균 잡힘",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Db-czWnm9Rp",
-      "views": 92,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0
     }
   ],
   "campaign_clicks": {
+    "th_20260916_fortune": 0,
     "th_20260915_relation": 0,
     "th_20260914_fortune": 37,
     "th_20260913_relation": 0,

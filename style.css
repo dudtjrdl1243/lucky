@@ -98,6 +98,21 @@ nav.menu a.on {
 }
 .card p.desc { color: var(--text-dim); font-size: .95rem; }
 
+/* 로또 성적표: 최근 회차 요약만 노출하고 상세 기록은 펼쳐보기 */
+.hit-week { border-bottom: 1px dashed rgba(139,111,216,.25); }
+.hit-week summary, .hit-more {
+  cursor: pointer;
+  padding: 12px 0;
+  color: var(--purple-soft);
+  font-size: .9rem;
+}
+.hit-week summary { display: flex; justify-content: space-between; gap: 10px; }
+.hit-week summary::marker { content: ""; }
+.hit-week summary b { color: var(--gold); white-space: nowrap; }
+.hit-week-body { padding: 0 0 12px; line-height: 1.8; }
+.hit-week-body p { color: var(--purple-soft); font-size: .82rem; margin-bottom: 4px; }
+.hit-more { color: var(--gold); font-weight: 700; }
+
 /* ── 메인 페이지 메뉴 카드 (2열 그리드) ── */
 .feature-grid {
   display: grid;

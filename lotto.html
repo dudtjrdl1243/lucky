@@ -92,8 +92,16 @@
 
   <div class="card" id="hitCard" style="display:none;">
     <h2>🎯 지난 추천번호 성적표</h2>
-    <p class="desc">좋은 결과만 고르지 않고 <b>전 회차를 그대로</b> 기록합니다.</p>
+    <p class="desc">최근 3주만 먼저 보여드려요. 지난 기록과 게임별 번호도 눌러서 볼 수 있습니다.</p>
+    <p class="desc" id="hitSummary" style="margin-top:8px;"></p>
     <div id="hitBody"></div>
+    <details id="olderHits" style="display:none; margin-top:12px;">
+      <summary id="olderHitsLabel" class="hit-more"></summary>
+      <div id="olderHitBody"></div>
+    </details>
+    <p class="ls-notice" style="text-align:left; margin-top:14px;">
+      지난 성적이나 자주 나온 번호는 다음 회차의 당첨 확률을 높이지 않습니다.
+    </p>
   </div>
 
   <div style="margin-top:28px;display:flex;justify-content:center;">
@@ -195,21 +203,32 @@ function drawSix() {
   }
 
   if (P.results && P.results.length) {
-    let h = "";
-    P.results.forEach(function (r) {
+    function resultHtml(r) {
       const best = Math.max.apply(null, r.games.map(function (g) { return g.hit; }));
-      h += '<div style="padding:12px 0;border-bottom:1px dashed rgba(139,111,216,.25);">' +
-        '<div style="color:var(--purple-soft);font-size:.9rem;margin-bottom:6px;">' +
-        r.round + '회 (' + r.date + ') · 당첨 ' + r.win.join(", ") + ' + ' + r.bonus +
-        ' — <b style="color:var(--gold)">최고 ' + best + '개 적중</b></div>';
+      let h = '<details class="hit-week"><summary><span>' + r.round + '회 · ' + r.date +
+        '</span><b>최고 ' + best + '개 적중' +
+        (r.games.some(function (g) { return g.rank > 0; }) ? ' · 당첨' : '') + ' · 상세 ▾</b></summary>' +
+        '<div class="hit-week-body"><p>당첨번호 ' + r.win.join(', ') + ' + 보너스 ' + r.bonus + '</p>';
       r.games.forEach(function (g) {
         const badge = g.rank ? ' <span style="color:var(--gold)">' + g.rank + '등</span>' : '';
         h += '<div style="font-size:.85rem;color:var(--text-dim);">· ' + g.label + ' — ' +
              g.numbers.join(", ") + ' → ' + g.hit + '개' + badge + '</div>';
       });
-      h += '</div>';
-    });
-    document.getElementById("hitBody").innerHTML = h;
+      return h + '</div></details>';
+    }
+    const recent = P.results.slice(0, 3), older = P.results.slice(3);
+    const allGames = P.results.reduce(function (sum, r) { return sum + r.games.length; }, 0);
+    const wins = P.results.reduce(function (sum, r) {
+      return sum + r.games.filter(function (g) { return g.rank > 0; }).length;
+    }, 0);
+    document.getElementById("hitSummary").textContent =
+      '기록 전체 ' + P.results.length + '주 · ' + allGames + '게임 중 당첨 ' + wins + '게임';
+    document.getElementById("hitBody").innerHTML = recent.map(resultHtml).join("");
+    if (older.length) {
+      document.getElementById("olderHitsLabel").textContent = '이전 ' + older.length + '주 기록 보기';
+      document.getElementById("olderHitBody").innerHTML = older.map(resultHtml).join("");
+      document.getElementById("olderHits").style.display = "";
+    }
     document.getElementById("hitCard").style.display = "";
   }
 })();

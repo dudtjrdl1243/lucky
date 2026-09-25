@@ -48,7 +48,8 @@
   <div id="campaigns"></div>
 
   <h1 style="font-size:1.1rem;margin-top:34px;">🔥 Threads 게시물 성과</h1>
-  <p class="sub">조회와 반응이 큰 글 순서 · 매일 밤 갱신</p>
+  <p class="sub">문구 형식별 평균과 게시물별 조회·반응·링크 클릭 · 매일 밤 갱신</p>
+  <div id="threadFormats"></div>
   <div id="threadPosts"><p class="sub">아직 수집된 게시물 성과가 없습니다.</p></div>
 
   <h1 style="font-size:1.1rem;margin-top:34px;">🔎 유입 경로 (누적)</h1>
@@ -217,6 +218,13 @@
     return "deal";
   }
   var TYPE_LABEL = { fortune: "운세", relation: "관계", lotto: "로또", deal: "특가", tips: "정보", daily: "일상" };
+  var FORMAT_LABEL = {
+    rank_rollcall: "1위 출석 질문", rank_contrast: "1위·12위 대비", rank_top3: "상위 3개 공개",
+    zodiac_rank: "별자리 순위", astro_context: "달·태양 맥락", fortune_question: "운세 선택 질문",
+    fortune_reflection: "운세 해석", easy_question: "쉬운 선택 질문", deal_list: "특가 목록",
+    lotto_result: "로또 결과", lotto_teaser: "로또 예고", short_observation: "짧은 관찰",
+    useful_note: "실용 정보"
+  };
   var officialClicks = {};
   var campaignRows = [];
   var TRACKING_START = new Date(2026, 8, 5); // 월은 0부터 시작
@@ -266,7 +274,29 @@
       .then(function (data) {
         officialClicks = data.campaign_clicks || {};
         paintCampaigns();
-        var posts = (data.posts || []).slice().sort(function (a, b) {
+        var allPosts = data.posts || [];
+        var groups = {};
+        allPosts.forEach(function (p) {
+          var key = p.format || "unclassified";
+          if (!groups[key]) groups[key] = { count:0, views:0, replies:0, clicks:0 };
+          groups[key].count += 1;
+          groups[key].views += p.views || 0;
+          groups[key].replies += p.replies || 0;
+          groups[key].clicks += p.link_clicks || 0;
+        });
+        var formatRows = Object.keys(groups).map(function (key) {
+          var g = groups[key];
+          return { key:key, count:g.count, avg:Math.round(g.views / g.count), replies:g.replies, clicks:g.clicks };
+        }).sort(function (a, b) { return b.avg - a.avg; });
+        if (formatRows.length) {
+          var fh = '<table class="data-table"><thead><tr><th>문구 형식</th><th>글 수</th><th>평균 조회</th><th>댓글</th><th>클릭</th></tr></thead><tbody>';
+          formatRows.forEach(function (r) {
+            fh += '<tr><td>' + (FORMAT_LABEL[r.key] || r.key) + '</td><td>' + r.count + '</td><td>' +
+              r.avg + '</td><td>' + r.replies + '</td><td>' + r.clicks + '</td></tr>';
+          });
+          document.getElementById("threadFormats").innerHTML = fh + '</tbody></table>';
+        }
+        var posts = allPosts.slice().sort(function (a, b) {
           return (b.views - a.views) || (b.score - a.score);
         }).slice(0, 12);
         if (!posts.length) return;
@@ -274,9 +304,11 @@
           var dt = p.timestamp ? new Date(p.timestamp).toLocaleDateString("ko-KR") : "";
           var text = (p.text || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
           var tag = TYPE_LABEL[p.type] || p.type || "글";
-          var body = '<div class="meta">' + dt + ' · ' + tag + '</div><div class="txt">' + text + '</div>' +
+          var format = FORMAT_LABEL[p.format] || p.format || "미분류";
+          var body = '<div class="meta">' + dt + ' · ' + tag + ' · ' + format + '</div><div class="txt">' + text + '</div>' +
             '<div class="nums">조회 ' + (p.views || 0) + ' · 좋아요 ' + (p.likes || 0) + ' · 답글 ' + (p.replies || 0) +
-            ' · 재게시/공유 ' + ((p.reposts || 0) + (p.quotes || 0) + (p.shares || 0)) + '</div>';
+            ' · 재게시/공유 ' + ((p.reposts || 0) + (p.quotes || 0) + (p.shares || 0)) +
+            ' · 링크 클릭 ' + (p.link_clicks || 0) + (p.click_rate ? ' (' + p.click_rate + '%)' : '') + '</div>';
           return p.permalink ? '<a class="post-card" target="_blank" rel="noopener" href="' + p.permalink + '">' + body + '</a>' : '<div class="post-card">' + body + '</div>';
         }).join("");
       }).catch(function () {});

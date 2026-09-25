@@ -17,8 +17,8 @@ USER_ID = os.environ.get("THREADS_USER_ID", "").strip()
 SITE = "https://dudtjrdl1243.github.io/lucky/"
 
 if not TOKEN:
-    print("스레드 토큰 없음 - 건너뜁니다.")
-    sys.exit(0)
+    print("스레드 토큰 없음 - 게시할 수 없습니다.")
+    sys.exit(1)
 
 if not USER_ID:
     try:
@@ -28,7 +28,7 @@ if not USER_ID:
         print("스레드 사용자 ID 자동 조회:", USER_ID)
     except Exception as e:
         print("스레드 사용자 ID 조회 실패:", e)
-        sys.exit(0)
+        sys.exit(1)
 
 kst = time.gmtime(time.time() + 9 * 3600)
 week = int(time.strftime("%W", kst))  # 주차 → 같은 요일이라도 매주 다른 문구
@@ -128,27 +128,58 @@ def live_fortune():
     tti, zod = f["tti"], f["zodiac"]
     t1, t2, t3, tlast = tti[0][0], tti[1][0], tti[2][0], tti[-1][0]
     z1, z2, z3 = zod[0][0], zod[1][0], zod[2][0]
-    return [
-        ("오늘 띠별 운세 1위 {}띠\n2위 {}띠, 3위 {}띠\n내 띠는 몇 위인지 보고 옴".format(t1, t2, t3),
-         "tti.html", "12띠 순위 여기서 봄"),
-        ("오늘 별자리 1위 {}\n2위 {}, 3위 {}\n내 자리는 어디쯤인지 확인함".format(z1, z2, z3),
-         "zodiac.html", "12별자리 순위 여기"),
-        ("오늘은 {}일 — {} 기운이 도는 날\n띠 순위 1위는 {}띠라는데".format(f["day_name"], f["day_elem"], t1),
-         "tti.html", "계산 근거까지 여기 있음"),
-        ("오늘 {}띠가 1위\n{}띠가 12위\n같은 날인데 이렇게 갈리네".format(t1, tlast),
-         "tti.html", "전체 순위 여기"),
-        ("달은 지금 {} 단계\n오늘 별자리 1위는 {}로 나옴".format(f["moon"], z1),
-         "zodiac.html", "내 별자리 순위 여기"),
-        ("태양이 지금 {}에 있어서\n오늘은 {} 흐름이 제일 좋다고".format(f["sun_sign"], z1),
-         "zodiac.html", "순위 확인은 여기"),
-        # 물어보는 글이 반응이 훨씬 크더라 (계정 실적·타 계정 상위글 둘 다 같은 방향)
-        ("오늘 띠 순위 1위가 {}띠라는데\n여기 {}띠 있음?".format(t1, t1),
+    # 한 번 크게 반응한 "1위 띠 출석" 문구만 계속 반복하면 조회는 나와도
+    # 사람 입장에서는 금방 피로해진다. 순위 공개·행동 제안·솔직한 반응·선택 질문을
+    # 섞어, 운세를 본 뒤 무엇을 할지까지 한 줄 남게 만든다.
+    curated = [
+        ("오늘 상위권은 {}·{}·{}띠\n이 셋 중 하나 있음?".format(t1, t2, t3),
+         "tti.html", "나머지 9띠 순위도 여기"),
+        ("오늘 {}띠가 1위래\n1위면 뭐 어쩌냐고?\n미뤄둔 거 하나 시작할 핑계로 쓰면 됨".format(t1),
+         "tti.html", "오늘 내 띠 흐름도 보기"),
+        ("1위 {}띠보다 더 궁금한 거\n내 띠가 상위권인지 하위권인지".format(t1),
          "tti.html", "12띠 전체 순위 여기"),
-        ("오늘 별자리 1위 {}\n{} 있으면 손 들어봐".format(z1, z1),
-         "zodiac.html", "내 자리 몇 위인지 여기서 봄"),
-        ("{}띠가 1위, {}띠가 12위래\n다들 무슨 띠임?".format(t1, tlast),
-         "tti.html", "순위 나온 곳"),
+        ("오늘 {}띠 1위, {}띠 12위\n좋은 건 움직일 핑계로\n아쉬운 건 천천히 갈 핑계로".format(t1, tlast),
+         "tti.html", "내 띠는 몇 위인지 보기"),
+        ("오늘 {}띠가 12위래\n꼴찌라고 겁줄 생각은 없고\n큰 결정 하나만 다시 보는 날로 쓰자".format(tlast),
+         "tti.html", "오늘 띠별 흐름 보기"),
+        ("오늘 운세 좋게 나와도\n아무것도 안 하면 좋은 문장으로 끝남\n{}띠는 뭐 하나 해볼 거 있음?".format(t1),
+         "tti.html", "오늘 12띠 순위 보기"),
+        ("오늘은 {}일, {} 기운이 도는 날\n순위보다 내 금전운이 더 궁금함".format(f["day_name"], f["day_elem"]),
+         "today.html", "생년월일로 오늘 운세 보기"),
+        ("운세에서 제일 먼저 보는 거\n금전운 vs 연애운 vs 일운\n나는 금전운부터 봄",
+         "today.html", "오늘 세부 운세 여기"),
+        ("오늘 별자리 상위권은\n{}·{}·{}\n셋 중 하나 있음?".format(z1, z2, z3),
+         "zodiac.html", "12별자리 전체 순위"),
+        ("오늘 {}가 1위래\n좋게 나온 운세는 믿는 게 이득이라는 쪽".format(z1),
+         "zodiac.html", "내 별자리 순위 보기"),
+        ("달은 지금 {}\n오늘 별자리 순위가 평소랑 좀 다르게 나옴".format(f["moon"]),
+         "zodiac.html", "내 별자리 위치 확인"),
+        ("태양은 지금 {} 쪽\n오늘은 {} 흐름이 앞에 나왔네".format(f["sun_sign"], z1),
+         "zodiac.html", "12별자리 순위 보기"),
+        ("별자리 운세에서 순위보다 궁금한 거\n연애운 vs 금전운\n하나만 보면 뭐부터 봄?",
+         "zodiac.html", "오늘 별자리 흐름 여기"),
     ]
+
+    # OPENAI_API_KEY가 설정되면 매주 추가되는 문구도 오늘 값으로 렌더링한다.
+    # 허용되지 않은 플레이스홀더가 섞인 문구는 건너뛰어 게시 오류를 막는다.
+    values = {
+        "t1": t1, "t2": t2, "t3": t3, "tlast": tlast,
+        "z1": z1, "z2": z2, "z3": z3,
+        "day_name": f["day_name"], "day_elem": f["day_elem"],
+        "moon": f["moon"], "sun_sign": f["sun_sign"],
+    }
+    generated = []
+    for kind, page, lead in (
+        ("fortune_tti", "tti.html", "오늘 띠별 흐름 자세히 보기"),
+        ("fortune_zodiac", "zodiac.html", "오늘 별자리 흐름 자세히 보기"),
+    ):
+        for template in load_generated(kind):
+            try:
+                rendered = template.format(**values)
+            except (KeyError, ValueError):
+                continue
+            generated.append((rendered, page, lead))
+    return curated + generated
 
 
 # 인천 기준. Open-Meteo는 API 키가 필요 없고 무료라 등록·토큰 관리가 없다.
@@ -231,12 +262,12 @@ def live_lotto():
 
 
 FORTUNE = [
-    ("오늘 12간지 중에 1위인 띠가 있다는데\n내 띠는 몇 위려나", "tti.html", "여기서 확인함"),
-    ("출근길에 오늘 운세 한 번 보고 가는 사람\n나만 그런 거 아니지", "today.html", "보는 곳 남겨둠"),
-    ("행운의 시간이랑 방향까지 알려주더라\n오늘은 좀 믿어보려고", "today.html", "여기"),
-    ("별자리 운세 오늘 순위 나왔는데\n1위 아니면 안 보는 걸로", "zodiac.html", "순위 여기서 봄"),
-    ("이름이랑 생년월일만 넣으면 30초컷\n금전운만 보고 나올 예정", "today.html", "링크 두고 감"),
-    ("띠별 순위 매일 바뀌는 거 알고 있었나\n어제 꼴찌였는데 오늘은 좀", "tti.html", "여기"),
+    ("운세 안 좋으면 안 믿고\n좋으면 슬쩍 믿는 편\n다들 솔직히 그렇지 않음?", "today.html", "오늘 운세 확인하기"),
+    ("오늘 운세에서 딱 하나만 볼 수 있다면\n돈·연애·일 중에 뭐 고름?", "today.html", "나는 세 개 다 보고 옴"),
+    ("좋은 운은 기다리는 것보다\n오늘 할 일 하나 정하는 데 쓰는 게 낫더라", "today.html", "오늘 흐름 한 번 보기"),
+    ("운세는 정답보다 핑계에 가까운 듯\n미뤄둔 연락 보내는 핑계 같은 거", "today.html", "오늘 운세 보기"),
+    ("순위가 낮다고 하루가 망하는 건 아니고\n한 번 더 확인하고 가라는 날 정도로 봄", "tti.html", "내 띠 오늘 흐름 보기"),
+    ("생년월일 넣고 보는 운세에서\n나는 전체운보다 금전운부터 누름", "today.html", "내 오늘 운세 보기"),
 ]
 
 # ── 로또 (토) ────────────────────────────────────────
@@ -573,18 +604,8 @@ def linked(pool):
 
 
 def choose_fortune(weekday):
-    """실제 반응이 컸던 질문형 운세를 우선하고, 중복이면 전체 후보로 폴백."""
-    live = live_fortune()
-    all_candidates = linked(live + FORTUNE)
-    # live_fortune 마지막 3개: 1위 띠 질문 / 1위 별자리 질문 / 1위·12위 대비 질문
-    strong = linked(live[-3:]) if len(live) >= 3 else []
-    if strong:
-        by_weekday = {0: 0, 2: 1, 4: 2}  # 월·수·금마다 훅을 바꿔 비교
-        preferred = strong[by_weekday.get(weekday, kst.tm_yday % len(strong))]
-        picked = choose([preferred], guard=all_candidates)
-        if picked or any(_norm(c[0]) in TODAY_TEXTS for c in all_candidates):
-            return picked
-    return choose(all_candidates)
+    """순위 출석형 하나에 몰지 않고 여러 훅을 날짜별로 고르게 회전한다."""
+    return choose(linked(live_fortune() + FORTUNE))
 
 
 # 주제 태그. 반응 좋은 계정들은 전부 달고 있는데 우리만 없어서 주제 피드·검색
@@ -741,4 +762,6 @@ try:
             print("첫 댓글을 끝내 못 달았습니다 (본문은 정상 게시됨).")
 except Exception as e:
     print("스레드 포스팅 실패:", e)
-    sys.exit(0)
+    # 실패를 성공(초록 체크)으로 숨기지 않는다. 예약 워크플로도 이 상태를 보고
+    # 토큰 만료나 API 오류를 바로 알아차릴 수 있어야 한다.
+    sys.exit(1)

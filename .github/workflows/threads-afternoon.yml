@@ -23,7 +23,6 @@ jobs:
         with:
           python-version: "3.12"
       - name: 스레드 정보글 포스팅
-        continue-on-error: true
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}

@@ -45,6 +45,36 @@ def content_type(text, dt):
     return "tips" if hour < 17 else "daily"
 
 
+def content_format(text, kind):
+    """문구의 큰 틀을 붙여 같은 훅을 반복했을 때 성과 하락을 볼 수 있게 한다."""
+    compact = "".join(text.split())
+    if kind == "fortune":
+        if "1위" in text and ("있음?" in text or "손 들어" in text):
+            return "rank_rollcall"
+        if "1위" in text and "12위" in text:
+            return "rank_contrast"
+        if "1위" in text and ("2위" in text or "3위" in text):
+            return "rank_top3"
+        if "별자리" in text and "1위" in text:
+            return "zodiac_rank"
+        if "달" in text or "태양" in text:
+            return "astro_context"
+        if "뭐" in text or "?" in text:
+            return "fortune_question"
+        return "fortune_reflection"
+    if " vs " in text or "어느 쪽" in text or "뭐임" in text or "?" in text:
+        return "easy_question"
+    if kind == "deal":
+        return "deal_list"
+    if kind == "lotto" and "당첨번호" in text:
+        return "lotto_result"
+    if kind == "lotto":
+        return "lotto_teaser"
+    if len(compact) <= 45:
+        return "short_observation"
+    return "useful_note"
+
+
 def main():
     global USER_ID
     if not TOKEN:
@@ -58,6 +88,7 @@ def main():
     }).get("data", [])
     posts = []
     campaign_clicks = {}
+    content_clicks = {}
     denied = None
     for i, item in enumerate(media):
         text = (item.get("text") or "").strip()
@@ -79,11 +110,13 @@ def main():
         interactions = (metrics.get("likes", 0) + metrics.get("replies", 0) * 2
                         + metrics.get("reposts", 0) * 3 + metrics.get("quotes", 0) * 3
                         + metrics.get("shares", 0) * 3)
+        kind = content_type(text, dt)
         posts.append({
             "id": str(item["id"]),
             "content_id": hashlib.sha1("".join(text.split()).encode("utf-8")).hexdigest()[:8],
             "timestamp": item.get("timestamp"),
-            "type": content_type(text, dt),
+            "type": kind,
+            "format": content_format(text, kind),
             "text": text,
             "permalink": item.get("permalink", ""),
             "views": int(metrics.get("views", 0)),
@@ -117,15 +150,25 @@ def main():
             for link in metric.get("link_total_values", []) or []:
                 query = urllib.parse.parse_qs(urllib.parse.urlparse(link.get("link_url", "")).query)
                 campaign = (query.get("utm_campaign") or [""])[0]
+                content_id = (query.get("utm_content") or [""])[0]
+                clicks = int(link.get("value", 0) or 0)
                 if campaign.startswith("th_"):
-                    campaign_clicks[campaign] = campaign_clicks.get(campaign, 0) + int(link.get("value", 0) or 0)
+                    campaign_clicks[campaign] = campaign_clicks.get(campaign, 0) + clicks
+                if content_id:
+                    content_clicks[content_id] = content_clicks.get(content_id, 0) + clicks
     except Exception as e:
         print("Threads 공식 링크 클릭 수는 이번에 읽지 못했습니다:", e)
+
+    for post in posts:
+        clicks = int(content_clicks.get(post["content_id"], 0))
+        post["link_clicks"] = clicks
+        post["click_rate"] = round(clicks * 100.0 / post["views"], 2) if post["views"] else 0
 
     payload = {
         "updated_at": datetime.datetime.now(KST).isoformat(timespec="seconds"),
         "posts": posts,
         "campaign_clicks": campaign_clicks,
+        "content_clicks": content_clicks,
     }
     tmp = OUT + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:

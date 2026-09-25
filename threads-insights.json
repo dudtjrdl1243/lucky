@@ -1,41 +1,48 @@
 {
-  "updated_at": "2026-09-25T23:41:16+09:00",
+  "updated_at": "2026-09-26T03:30:18+09:00",
   "posts": [
     {
       "id": "18216275047358075",
       "content_id": "bd304b00",
       "timestamp": "2026-09-19T00:14:17+0000",
       "type": "lotto",
+      "format": "lotto_result",
       "text": "당첨번호에 연속된 두 수가 들어간 회차가 52%\n절반이 넘네",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Ddcsq30GVHf",
-      "views": 242,
+      "views": 244,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18083097050501874",
       "content_id": "0b4a0b72",
       "timestamp": "2026-09-18T00:10:29+0000",
       "type": "fortune",
+      "format": "rank_contrast",
       "text": "말띠가 1위, 소띠가 12위래\n다들 무슨 띠임?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdaHcEzme36",
-      "views": 2487,
+      "views": 2488,
       "likes": 9,
       "replies": 5,
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 19
+      "score": 19,
+      "link_clicks": 29,
+      "click_rate": 1.17
     },
     {
       "id": "18127719745806473",
       "content_id": "58b780a9",
       "timestamp": "2026-09-17T09:28:58+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "회의가 끝나면 내용 요약보다\n누가 무엇을 언제까지 할지만 먼저 적기\n\n좋은 얘기 많이 해도 다음 행동이 없으면 그대로임",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdYijxjFUdQ",
       "views": 47,
@@ -44,13 +51,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17880917865526045",
       "content_id": "feda0138",
       "timestamp": "2026-09-17T00:24:25+0000",
       "type": "deal",
+      "format": "easy_question",
       "text": "[광고] 쿠팡 파트너스 활동으로 수수료를 받을 수 있어요.\n\n오늘 골드박스 27개 중\n가격 낮은 상품 3개만 적어봄\n\n· 두발로 여성용 국산 에센셜 프리미엄 무지 중… 8,990원\n· 쏘픽 일회용 마스크 대형 9,340원\n· 서가 C타입 초고속 충전기 25W PD PP… 10,490원\n\n이 중에 원래 사려던 거 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdXkO88lKKC",
       "views": 7,
@@ -59,13 +69,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18075705812414976",
       "content_id": "a1e569ec",
       "timestamp": "2026-09-16T00:13:19+0000",
       "type": "fortune",
+      "format": "zodiac_rank",
       "text": "달은 지금 초승달 단계\n오늘 별자리 1위는 황소자리로 나옴",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdU-K-oI5L4",
       "views": 161,
@@ -74,13 +87,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18129982873707676",
       "content_id": "b33c6fcb",
       "timestamp": "2026-09-15T09:29:06+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "우산은 젖은 채 접어두지 말고 집에 오자마자 펼치기\n다 마른 뒤 접어야 냄새가 덜 남음\n\n현관 구석에 세워두면 그대로 잊음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdTY-83myXn",
       "views": 144,
@@ -89,13 +105,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18115336456958154",
       "content_id": "14a0c2dc",
       "timestamp": "2026-09-15T00:32:33+0000",
       "type": "relation",
+      "format": "easy_question",
       "text": "서운한 일이 생기면\n말로 풀어야 끝나는 사람 vs 혼자 정리돼야 말하는 사람\n다들 어느 쪽임?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdSblOuCXwS",
       "views": 235,
@@ -104,13 +123,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18020140904706971",
       "content_id": "faa151f5",
       "timestamp": "2026-09-14T00:07:37+0000",
       "type": "fortune",
+      "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 개띠라는데\n여기 개띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdPz7mjGTpK",
       "views": 3229,
@@ -119,13 +141,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 47
+      "score": 47,
+      "link_clicks": 37,
+      "click_rate": 1.15
     },
     {
       "id": "18625199140055765",
       "content_id": "e48c7ebf",
       "timestamp": "2026-09-13T15:01:46+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "라면 끓일 때 계란 넣는 타이밍으로\n싸울 수 있는 사이\n나는 마지막에 톡 파임",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdO1dsrG2I4",
       "views": 320,
@@ -134,13 +159,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18127512892699687",
       "content_id": "b58fb5ce",
       "timestamp": "2026-09-13T13:28:45+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "칼 잘 안 들 때\n도자기 컵 바닥(유약 없는 부분)에 몇 번 갈면 살아남\n숫돌 없어도 됨",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdOq0fEmzQk",
       "views": 421,
@@ -149,13 +177,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18049724165654977",
       "content_id": "ddbbcb69",
       "timestamp": "2026-09-12T23:58:04+0000",
       "type": "relation",
+      "format": "short_observation",
       "text": "답장 쓰다가 지우는 편\n생각나는 대로 바로 보내는 편\n나는 전자라 한 문장에 오래 걸림",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdNOC3vD6ef",
       "views": 219,
@@ -164,13 +195,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18427165366151584",
       "content_id": "8b05d338",
       "timestamp": "2026-09-12T15:21:46+0000",
       "type": "lotto",
+      "format": "lotto_result",
       "text": "1241회 당첨번호 나왔다\n\n7 · 13 · 16 · 23 · 24 · 43 +  9\n\n1등 18명 · 1인당 16.3억원\n\n별별운세 추천번호는 최고 2개 적중 (전 구간 균형)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdMS9HLkeBS",
       "views": 1212,
@@ -179,13 +213,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 5
+      "score": 5,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17921767707426055",
       "content_id": "e705bbce",
       "timestamp": "2026-09-12T08:40:33+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "온라인으로 생필품 살 때 총가격보다\n100g·1개당 가격을 같이 보기\n\n대용량이라고 항상 싼 건 아니더라",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdLlCvyG19L",
       "views": 186,
@@ -194,13 +231,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17945659236324847",
       "content_id": "7fe41754",
       "timestamp": "2026-09-12T00:12:52+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "이번 주도 조용히 번호 하나 뽑고 감\n되면 좋고 아니면 말고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdKq8WNGRQV",
       "views": 412,
@@ -209,13 +249,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 4
+      "score": 4,
+      "link_clicks": 1,
+      "click_rate": 0.24
     },
     {
       "id": "18353422108175588",
       "content_id": "2878504c",
       "timestamp": "2026-09-11T15:12:13+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "분명 어제 충전했는데\n아침에 보면 20%인 폰\n대체 밤에 뭐 하는 거임",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdJtEhdG8Ok",
       "views": 870,
@@ -224,13 +267,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18115562846058252",
       "content_id": "1a925f87",
       "timestamp": "2026-09-11T08:57:18+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "가구 사기 전에 놓을 자리를 사진 찍고\n사진 위에 가로·세로 치수 적어두기\n\n매장에서 줄자 찾을 일이 없어짐",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdJCKjmmyNx",
       "views": 106,
@@ -239,13 +285,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18115194824080921",
       "content_id": "db4ef487",
       "timestamp": "2026-09-11T00:04:28+0000",
       "type": "fortune",
+      "format": "rank_contrast",
       "text": "원숭이띠가 1위, 말띠가 12위래\n다들 무슨 띠임?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdIFL4KmSMD",
       "views": 5525,
@@ -254,13 +303,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 41
+      "score": 41,
+      "link_clicks": 47,
+      "click_rate": 0.85
     },
     {
       "id": "18110330491853924",
       "content_id": "ce891547",
       "timestamp": "2026-09-10T15:09:11+0000",
       "type": "tips",
+      "format": "easy_question",
       "text": "방 정리하다가 안 쓰는 물건 나오면\n왜 산 건지 기억도 안 남\n\n나만 그런 거 아니지?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdHH7W2HH8u",
       "views": 86,
@@ -269,13 +321,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18120854536901269",
       "content_id": "04a64325",
       "timestamp": "2026-09-10T08:59:23+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "청소용품을 장소마다 흩어두기보다\n작은 바구니 하나에 기본 도구만 모아두기\n\n청소 시작 전 준비부터 지치는 걸 막아줌",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdGdmyZkUa2",
       "views": 72,
@@ -284,13 +339,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17936409651378519",
       "content_id": "e6118391",
       "timestamp": "2026-09-10T00:09:08+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "골드박스 25개 중에 2만원 아래만 12개\n그중 세 개만 적어둠\n\n· 삭피엔스 여성용 발목이 가늘어 보이는 골지 … 12,900원\n· [비건뷰티] 라온느 블랙 아르간 헤어오일 12,900원\n· LG생활건강 월드트레블 G호 선물세트 + 쇼… 14,180원\n\n장 볼 때 같이 담으면 됨\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdFg6wiDS_N",
       "views": 34,
@@ -299,13 +357,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 2,
+      "click_rate": 5.88
     },
     {
       "id": "18406279501090079",
       "content_id": "c2db3166",
       "timestamp": "2026-09-09T15:17:34+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "자기 전에 제일 하기 싫은 일 1위\n1. 설거지\n2. 빨래 개기\n3. 내일 생각하기\n\n난 3번",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdEkF7sFo5e",
       "views": 162,
@@ -314,13 +375,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 1
+      "score": 1,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18108107243336427",
       "content_id": "c9a4bf07",
       "timestamp": "2026-09-09T09:00:00+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "보증서와 중요한 영수증은 한 봉투에 모으고\n봉투 겉에 품목만 적어두기\n\n고장 났을 때 집 전체를 뒤질 필요가 없음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdD44qtm3Cp",
       "views": 157,
@@ -329,13 +393,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18108047735173835",
       "content_id": "4b3f0a61",
       "timestamp": "2026-09-09T00:07:58+0000",
       "type": "fortune",
+      "format": "rank_top3",
       "text": "오늘 띠별 운세 1위 토끼띠\n2위 호랑이띠, 3위 개띠\n내 띠는 몇 위인지 보고 옴",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdC7_3GjiYF",
       "views": 2121,
@@ -344,13 +411,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 25
+      "score": 25,
+      "link_clicks": 29,
+      "click_rate": 1.37
     },
     {
       "id": "18147941281558126",
       "content_id": "5e1bdcd2",
       "timestamp": "2026-09-08T15:18:29+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "배달 시킬 때 최소주문금액 맞추려고\n괜히 하나 더 담는 사람\n나만 그런 거 아니지",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdB_ZylHEcb",
       "views": 8,
@@ -359,13 +429,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18409433065083314",
       "content_id": "d2de2426",
       "timestamp": "2026-09-08T08:54:37+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "유통기한을 자주 놓치는 물건은\n포장에 적힌 날짜를 달력에 미리 등록\n\n서랍 안에 넣는 순간 존재도 같이 잊어버림",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdBTeU2FTLO",
       "views": 184,
@@ -374,13 +447,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17951661879038944",
       "content_id": "50ae8ec1",
       "timestamp": "2026-09-08T00:17:20+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 골드박스 27개 중에\n장바구니 채우기 좋은 것만 추려봄\n\n· 솔리몬 스퀴즈드 레몬즙 11,550원\n· [로켓프레시] 목우촌 국내산 소고기 등심 구… 12,940원\n· 하늘보리 유기농 차 13,800원\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdAYRRYDYlZ",
       "views": 34,
@@ -389,13 +465,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18086337050305644",
       "content_id": "1083733f",
       "timestamp": "2026-09-07T15:55:07+0000",
       "type": "tips",
+      "format": "easy_question",
       "text": "요즘 국룰 살림템 뭐 있음?\n나만 모르는 거 있을까봐 불안함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc_ezVylVaN",
       "views": 298,
@@ -404,13 +483,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18112107536018228",
       "content_id": "150a62ac",
       "timestamp": "2026-09-07T14:28:03+0000",
       "type": "daily",
+      "format": "easy_question",
       "text": "이사할 때 제일 버리기 아까운 거 1위\n난 안 읽은 책들인데\n다들 뭐 못 버림?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc_U1eZkXVn",
       "views": 233,
@@ -419,13 +501,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18377772145209378",
       "content_id": "5d8d05db",
       "timestamp": "2026-09-07T09:25:48+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "케이블 정리는 예쁘게 숨기는 것보다\n어느 기기 선인지 표시하는 게 먼저\n\n뽑아도 되는 선 찾다가 결국 다 뽑게 됨",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc-yP06lme_",
       "views": 287,
@@ -434,28 +519,34 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18115576754057908",
       "content_id": "8c72ddd1",
       "timestamp": "2026-09-06T23:48:52+0000",
       "type": "fortune",
+      "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 뱀띠라는데\n여기 뱀띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
-      "views": 27599,
+      "views": 27601,
       "likes": 302,
       "replies": 98,
       "reposts": 1,
       "quotes": 0,
       "shares": 0,
-      "score": 501
+      "score": 501,
+      "link_clicks": 71,
+      "click_rate": 0.26
     },
     {
       "id": "17987347742862627",
       "content_id": "6b0ed6dc",
       "timestamp": "2026-09-06T12:20:15+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "만원으로 하루 행복해질 수 있는 방법\n하나씩만 알려줘\n내껀 편의점 신상 털기",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc8haB3ApTh",
       "views": 177,
@@ -464,13 +555,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18027358457684470",
       "content_id": "a9032a31",
       "timestamp": "2026-09-06T08:42:18+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "여행 짐 목록은 여행 끝나고 수정하기\n안 쓴 건 빼고 놓고 간 건 추가\n\n다음 여행 준비가 점점 빨라짐",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc8IebBlXkm",
       "views": 92,
@@ -479,13 +573,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17867626962644757",
       "content_id": "85eaddec",
       "timestamp": "2026-09-05T23:50:00+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 골드박스 23개 중에\n로켓프레시 쪽만 2개 있길래\n\n· 곰곰 햄야채 볶음밥 (냉동) 9,890원\n· 소와나무 화이트 체다 슬라이스 치즈 20,880원\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc7LjAfmVmF",
       "views": 58,
@@ -494,13 +591,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17951382519252151",
       "content_id": "a1d02162",
       "timestamp": "2026-09-05T14:56:39+0000",
       "type": "lotto",
+      "format": "lotto_result",
       "text": "1240회 당첨번호 나왔다\n\n11 · 13 · 19 · 20 · 31 · 44 +  27\n\n1등 16명 · 1인당 17.9억원\n\n별별운세 추천번호는 최고 1개 적중 (핫·콜드 반반)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc6Og_zkQeB",
       "views": 600,
@@ -509,13 +609,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17878920219534998",
       "content_id": "6aa0b672",
       "timestamp": "2026-09-05T08:23:45+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "침구 세트는 베갯잇 안에 같이 넣어두기\n시트랑 이불 커버가 흩어지지 않음\n\n호텔식 정리보다 이게 현실적으로 편함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc5hjl3G3Tp",
       "views": 237,
@@ -524,13 +627,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18111119486025831",
       "content_id": "fb3711fa",
       "timestamp": "2026-09-04T23:59:07+0000",
       "type": "lotto",
+      "format": "lotto_teaser",
       "text": "로또는 사는 게 아니라 일주일치 상상을 사는 거라던데\n오늘도 상상 결제 완료",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc4nzp2lUUp",
       "views": 295,
@@ -539,13 +645,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 3
+      "score": 3,
+      "link_clicks": 1,
+      "click_rate": 0.34
     },
     {
       "id": "17904468966325788",
       "content_id": "2c3ceff7",
       "timestamp": "2026-09-04T15:05:44+0000",
       "type": "tips",
+      "format": "easy_question",
       "text": "방구석에서 제일 자주 하는 말\n\"이거 진작 살걸\"\n\n다들 진작 살걸 1위는 뭐임",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc3qw_mG2bg",
       "views": 136,
@@ -554,13 +663,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17940111978349649",
       "content_id": "0f6669ab",
       "timestamp": "2026-09-04T08:53:14+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "무료 폰트 쓸 때\n'눈누(noonnu.cc)'에서 상업용 무료만 모아서 다운\n아무거나 쓰면 저작권 문제 생김",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc3AIm-Dm3Y",
       "views": 328,
@@ -569,13 +681,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18122533096892794",
       "content_id": "aa21a81b",
       "timestamp": "2026-09-04T00:00:26+0000",
       "type": "fortune",
+      "format": "rank_rollcall",
       "text": "오늘 별자리 1위 황소자리\n황소자리 있으면 손 들어봐",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc2DKWulH9w",
       "views": 178,
@@ -584,13 +699,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18115318396751252",
       "content_id": "146b4bbe",
       "timestamp": "2026-09-03T15:10:16+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "가스레인지 위에 냄비 올려두고\n다른 방에서 딴짓하다 태울 뻔했다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc1GfQzmzPZ",
       "views": 86,
@@ -599,13 +717,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18101063132269419",
       "content_id": "3d136788",
       "timestamp": "2026-09-03T08:58:35+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "인터넷 최저가 진짜 찾기\n네이버쇼핑 말고 '다나와'에서 검색 → 카드할인가까지 비교\n같은 물건 몇천 원씩 차이 남\n\n나중에 더 싼 거 보면 좀 억울하잖아",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc0b86_jvLi",
       "views": 18,
@@ -614,13 +735,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18102775796611933",
       "content_id": "f84b7495",
       "timestamp": "2026-09-03T00:08:44+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 골드박스 27개 중에\n장바구니 채우기 좋은 것만 추려봄\n\n· 닥터노아 미세플라스틱 안심 대나무 유아 아기… 19,800원\n· 퍼실 딥클린 초미세세탁 라벤더젤 맥스 드럼용… 19,900원\n· 아웃도어프로덕츠 여성용 릴랙스 이지 팬츠 19,900원\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DczfTkpjgp9",
       "views": 18,
@@ -629,13 +753,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18102287123338999",
       "content_id": "b76e6799",
       "timestamp": "2026-09-02T15:17:15+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "오늘 30도\n선풍기 앞에서 안 움직이는 중",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcyifTGoHya",
       "views": 188,
@@ -644,13 +771,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17957731413206847",
       "content_id": "894f2bd0",
       "timestamp": "2026-09-02T08:49:19+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "택배 파손·분실\n택배사 말고 물건 산 '쇼핑몰 고객센터'로\n판매자 책임이라 이쪽이 훨씬 빠름\n\n택배사에 전화 돌리다 하루 날린 적 있음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcx2GQ2lv4_",
       "views": 164,
@@ -659,13 +789,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18122688961803942",
       "content_id": "f3df1bb7",
       "timestamp": "2026-09-02T00:04:21+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "태양이 지금 처녀자리에 있어서\n오늘은 황소자리 흐름이 제일 좋다고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcw6BRBG6AG",
       "views": 227,
@@ -674,13 +807,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18245894362309074",
       "content_id": "aa5e22a4",
       "timestamp": "2026-09-01T15:32:30+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "밤에 물 마시러 나왔다가\n불 켜기 귀찮아서 더듬어서 갔다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcv_cUQm_D8",
       "views": 160,
@@ -689,13 +825,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17917190955437699",
       "content_id": "ca840fad",
       "timestamp": "2026-09-01T01:15:04+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 골드박스 25개 중에\n패션잡화 쪽만 2개 있길래\n\n· 뉴발란스 스탠다드 중목 양말 5팩 NBDSD… 17,900원\n· 나이키 여성용 에어 포스 1 07 운동화 D… 129,000원\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcudTvlG9Vk",
       "views": 11,
@@ -704,13 +843,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18373370149227115",
       "content_id": "5c19940b",
       "timestamp": "2026-08-31T16:23:38+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "책상 정리하다 영수증 뭉치가 나와서\n버리는 데만 십 분 걸렸다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dctgf8emjoq",
       "views": 148,
@@ -719,13 +861,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17883452178485609",
       "content_id": "79345ff5",
       "timestamp": "2026-08-31T15:14:36+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "통신비 미환급\n번호이동·해지 때 남은 요금 환급 안 받은 거\n통신사 고객센터에서 '미환급액' 조회하면 나옴\n\n번호이동 해본 적 있으면 한 번 확인해보길",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DctYmXuET8v",
       "views": 240,
@@ -734,13 +879,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17957301281999834",
       "content_id": "d7b23ef3",
       "timestamp": "2026-08-31T10:55:57+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "카드 연회비 아끼기\n안 쓰는 카드는 '해지' 말고 '단순 정지'\n연회비 안 나가고 실적·등급은 유지됨\n\n해지하면 실적 날아가는 거 모르는 사람 많더라",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcs7ACtG4_b",
       "views": 1,
@@ -749,13 +897,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18132197224653192",
       "content_id": "f27e7fe6",
       "timestamp": "2026-08-31T00:29:20+0000",
       "type": "fortune",
+      "format": "rank_contrast",
       "text": "오늘 쥐띠가 1위\n양띠가 12위\n같은 날인데 이렇게 갈리네",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcrzSeWIG2b",
       "views": 420,
@@ -764,13 +915,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 6
+      "score": 6,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18131509069656468",
       "content_id": "818e32c6",
       "timestamp": "2026-08-30T15:27:55+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "종일 비 오네\n나가려던 거 그냥 다 미뤘다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcq1VBTG7pw",
       "views": 188,
@@ -779,13 +933,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 1
+      "score": 1,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18146631841543999",
       "content_id": "aa3ec013",
       "timestamp": "2026-08-30T09:58:44+0000",
       "type": "daily",
+      "format": "useful_note",
       "text": "청년 지원금 한눈에\n'온통청년(youthcenter.go.kr)'에서 내 나이·지역 맞는 지원사업 검색\n주거·취업·금융 지원 생각보다 많음\n\n해당 나이면 한 번 훑어볼 만함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcqPp_km2DW",
       "views": 215,
@@ -794,13 +951,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18147692461495254",
       "content_id": "b07fef4f",
       "timestamp": "2026-08-30T00:14:09+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 올라온 골드박스 27개 훑다가\n제일 눈에 밟힌 거\n\n조지아 크래프트 아메리카노 22,490원\n로켓배송이라 금방 옴\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcpMvyoHNAp",
       "views": 4,
@@ -809,13 +969,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17963148588171319",
       "content_id": "ca6857bb",
       "timestamp": "2026-08-29T16:33:25+0000",
       "type": "lotto",
+      "format": "lotto_result",
       "text": "1239회 당첨번호 나왔다\n\n11 · 13 · 22 · 32 · 33 · 36 +  8\n\n1등 13명 · 1인당 22.1억원\n\n별별운세 추천번호는 최고 3개 적중 (콜드넘버 중심)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcoYBhdoCNB",
       "views": 246,
@@ -824,13 +987,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17939026245091303",
       "content_id": "63c8fa1b",
       "timestamp": "2026-08-29T15:06:51+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "이불 빨래를 돌렸는데\n건조대에 자리가 없다\n생각이 짧았다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcoOH2QG0Hc",
       "views": 20,
@@ -839,13 +1005,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18103258691264307",
       "content_id": "b050aaf8",
       "timestamp": "2026-08-29T03:41:24+0000",
       "type": "lotto",
+      "format": "lotto_teaser",
       "text": "직전 회차 번호가 다음 주에 또 나온 경우가 61%더라\n생각보다 높지 않나",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcm_rdZG5yG",
       "views": 324,
@@ -854,13 +1023,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18118338607943289",
       "content_id": "2e3b16fa",
       "timestamp": "2026-08-28T20:25:19+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "장 보러 나가려다 비 오는 거 보고\n그냥 들어왔다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcmNxd-E0eK",
       "views": 159,
@@ -869,13 +1041,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18103483613211049",
       "content_id": "9dd8ff82",
       "timestamp": "2026-08-28T16:41:59+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "자동차세 연납\n1월에 한 번에 내면 약 5% 할인 (위택스 또는 이택스에서 신청)\n어차피 낼 돈, 미리 내고 깎는 방식\n\n1월에 알림 오면 그냥 넘기지 말길",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcl0N2ZlBDD",
       "views": 387,
@@ -884,13 +1059,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17967105777173451",
       "content_id": "31d89636",
       "timestamp": "2026-08-28T06:04:50+0000",
       "type": "fortune",
+      "format": "rank_top3",
       "text": "오늘 띠별 운세 1위 말띠\n2위 토끼띠, 3위 호랑이띠\n내 띠는 몇 위인지 보고 옴",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DckrTOhFk2L",
       "views": 53,
@@ -899,13 +1077,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17884254243478981",
       "content_id": "0c90db16",
       "timestamp": "2026-08-27T19:16:06+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "설거지 미뤄뒀다가 자기 전에 다 했다\n개운하긴 하다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcjhDWro8Mq",
       "views": 102,
@@ -914,13 +1095,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18072053372713438",
       "content_id": "1c88c93c",
       "timestamp": "2026-08-27T15:18:27+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "실비보험 청구, 병원 안 가도 됨\n'실손24' 앱이나 보험사 앱에서 진료비 영수증 사진으로 청구\n소액이라 귀찮아서 안 하는 돈이 제일 아까움\n\n귀찮아서 그냥 넘긴 거 다들 있지",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcjF3EeIGc-",
       "views": 291,
@@ -929,13 +1113,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18017871371723215",
       "content_id": "702f0a48",
       "timestamp": "2026-08-27T03:06:38+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 골드박스 26개 중에\n식품 쪽만 5개 있길래\n\n· 카누 마일드 로스트 아메리카노 미니 원두커피… 20,840원\n· 코카콜라 오리지널 무라벨 22,660원\n· 담터 제주 액상차 3종 선물세트 24,900원\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DchyGlMEXbe",
       "views": 6,
@@ -944,13 +1131,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18024330671692123",
       "content_id": "26801562",
       "timestamp": "2026-08-26T09:24:52+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "라면에 계란 넣으려다\n마지막 하나라 그냥 뒀다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcf4makm8Tc",
       "views": 9,
@@ -959,13 +1149,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18018376778707074",
       "content_id": "fe0a4ac7",
       "timestamp": "2026-08-26T04:58:35+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "국민연금·건강보험 과오납\n'내 곁에 국민연금' 앱 또는 건강보험공단(1577-1000)에서 조회\n더 낸 돈 돌려받는 거라 눈치 볼 필요 없음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcfaIGTESHX",
       "views": 242,
@@ -974,13 +1167,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18067142042771988",
       "content_id": "ce0b5bae",
       "timestamp": "2026-08-25T22:40:01+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "이름이랑 생년월일만 넣으면 30초컷\n금전운만 보고 나올 예정",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DceuzX3oJN4",
       "views": 86,
@@ -989,13 +1185,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 3
+      "score": 3,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18069025079485172",
       "content_id": "23717f44",
       "timestamp": "2026-08-25T09:19:44+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "밤인데 25도\n창문 열어놔도 소용이 없다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcdTN4AFpms",
       "views": 175,
@@ -1004,13 +1203,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18037261337820992",
       "content_id": "73ae94c4",
       "timestamp": "2026-08-25T04:56:49+0000",
       "type": "tips",
+      "format": "easy_question",
       "text": "미환급금 조회\n'정부24' 앱 → '숨은 환급금 찾기' 검색\n지방세·보험료·통신비 미환급 한 번에 뜸, 신청 버튼까지 그 자리에서\n\n이런 거 찾아본 사람 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcc1IX0ET7d",
       "views": 190,
@@ -1019,13 +1221,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 1
+      "score": 1,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18130817929645519",
       "content_id": "ec52afeb",
       "timestamp": "2026-08-24T22:39:29+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 올라온 골드박스 27개 훑다가\n제일 눈에 밟힌 거\n\n오로나민씨 탄산 드링크 32,030원\n로켓배송이라 금방 옴\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DccJ8MAD5Ys",
       "views": 4,
@@ -1034,13 +1239,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18346039012220000",
       "content_id": "95219ae4",
       "timestamp": "2026-08-24T09:30:14+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "빨래 개면서 예능 틀어놨는데\n빨래는 그대로고 예능만 다 봤다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcavn8zFtkG",
       "views": 14,
@@ -1049,13 +1257,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18144384124555895",
       "content_id": "188cab7e",
       "timestamp": "2026-08-24T05:04:44+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "전기요금 복지할인\n다자녀·출산·장애·기초수급이면 한전 고객센터(123) 또는 한전ON에서 신청\n매달 요금 감면\n\n해당되는데 모르고 안 받는 집이 꽤 됨\n주변에 있으면 알려주면 좋을 듯",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcaRPgyFZxl",
       "views": 564,
@@ -1064,13 +1275,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17925604773406920",
       "content_id": "dbda2abd",
       "timestamp": "2026-08-23T22:34:04+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "행운의 시간이랑 방향까지 알려주더라\n오늘은 좀 믿어보려고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcZkiLFoOEu",
       "views": 67,
@@ -1079,13 +1293,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18101726030627271",
       "content_id": "c9a82f97",
       "timestamp": "2026-08-23T09:04:02+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "청소기 돌리다 콘센트가 뽑혀서\n두 번 꽂았다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcYH1LkG-2f",
       "views": 218,
@@ -1094,13 +1311,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18206125579365212",
       "content_id": "4531e701",
       "timestamp": "2026-08-23T04:54:28+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "안경 김서림\n렌즈 안쪽에 주방세제 한 방울 문지르고 닦기\n마스크 쓸 때 효과 좋음\n\n안경 쓰는 사람만 아는 고통 있잖아",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcXrRSUGYuD",
       "views": 174,
@@ -1109,13 +1329,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18125514424772423",
       "content_id": "13927455",
       "timestamp": "2026-08-22T22:34:24+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 쿠팡 골드박스 28개 올라왔는데\n제일 싼 게 9,100원\n\n· 더페이스샵 신선한 제주 알로에 수딩젤 9,100원\n· 맑은물에 특등급 국산콩 콩물 9,900원\n· 사조 참치액 10,400원\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcW_xBmHA9o",
       "views": 33,
@@ -1124,13 +1347,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18094014725421420",
       "content_id": "de89be8e",
       "timestamp": "2026-08-22T12:49:54+0000",
       "type": "lotto",
+      "format": "lotto_result",
       "text": "1238회 당첨번호 나왔다\n\n2 · 13 · 18 · 32 · 38 · 42 +  22\n\n1등 23명 · 1인당 12억원\n\n별별운세 추천번호는 최고 1개 적중 (전 구간 균형)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcV84aumyfv",
       "views": 866,
@@ -1139,13 +1365,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 4
+      "score": 4,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18012458852944829",
       "content_id": "818e32c6",
       "timestamp": "2026-08-22T09:04:00+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "종일 비 오네\n나가려던 거 그냥 다 미뤘다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcVjCGLoIv3",
       "views": 207,
@@ -1154,13 +1383,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18094007228100275",
       "content_id": "95ee74a8",
       "timestamp": "2026-08-22T04:52:35+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "배수구 냄새\n식초 붓고 5분 뒤 뜨거운 물\n뚫어뻥 사기 전에 이것부터\n\n여름엔 이거 안 하면 답이 없더라",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcVGQmpEd_u",
       "views": 378,
@@ -1169,13 +1401,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18079306001507907",
       "content_id": "beb18113",
       "timestamp": "2026-08-21T22:36:35+0000",
       "type": "tips",
+      "format": "short_observation",
       "text": "토요일이다\n번호는 뽑았고 이제 기다리면 된다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcUbOveEq4V",
       "views": 1079,
@@ -1184,13 +1419,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 3
+      "score": 3,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18136766668719671",
       "content_id": "3bcc3c77",
       "timestamp": "2026-08-21T09:19:45+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "택배가 문 앞에 와 있는데\n뭘 시켰는지 기억이 안 난다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcTACmHIM0g",
       "views": 140,
@@ -1199,13 +1437,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17871253155581803",
       "content_id": "67c36cb8",
       "timestamp": "2026-08-21T04:56:43+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "가전 살 때 '으뜸효율 환급'\n에너지효율 1등급 사면 최대 10% 돌려받음 (예산 소진 전까지)\n영수증 챙겨두기\n\n큰 거 살 때 이거 안 챙기면 좀 아깝잖아",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcSh8IQDhVk",
       "views": 164,
@@ -1214,13 +1455,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18331026850285458",
       "content_id": "6525d6ac",
       "timestamp": "2026-08-20T22:39:25+0000",
       "type": "fortune",
+      "format": "rank_contrast",
       "text": "개띠가 1위, 닭띠가 12위래\n다들 무슨 띠임?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcR2wuzEVts",
       "views": 1310,
@@ -1229,13 +1473,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 4
+      "score": 4,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18113805310756255",
       "content_id": "f183c20a",
       "timestamp": "2026-08-20T09:17:41+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "베란다에 널어둔 빨래가 아직 안 말랐다\n오늘 안에는 글렀네",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcQbAQwGAMg",
       "views": 92,
@@ -1244,13 +1491,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17892881949669093",
       "content_id": "42b9415c",
       "timestamp": "2026-08-20T04:56:31+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "옷에 볼펜 자국\n손소독제(알코올) 살짝 묻혀 두드리면 빠짐\n문지르지 말고 두드리기\n\n문지르면 더 번짐\n이거 모르고 옷 한 벌 버렸음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcP9H0DlTSI",
       "views": 217,
@@ -1259,13 +1509,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17960664480077154",
       "content_id": "50d65453",
       "timestamp": "2026-08-19T22:36:32+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 올라온 골드박스 28개 훑다가\n제일 눈에 밟힌 거\n\n미에로화이바 10,500원\n로켓배송이라 금방 옴\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcPRoSxFH7i",
       "views": 8,
@@ -1274,13 +1527,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18112338986062679",
       "content_id": "95ab1a66",
       "timestamp": "2026-08-19T09:16:22+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "몰아서 쉬려고 했는데\n누워있다 보니 하루가 다 갔다\n시간 도둑맞음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcN2EIcG_uk",
       "views": 3,
@@ -1289,13 +1545,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18387346129161258",
       "content_id": "7e3b8fe1",
       "timestamp": "2026-08-19T04:54:47+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "정부24에서 '숨은 환급금' 조회\n미환급 세금·보험료 한 번에 확인됨\n안 찾아가면 그냥 사라지는 돈\n\n0원 나와도 손해는 아니니까 한 번씩 해보길",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcNYIMSDhs4",
       "views": 103,
@@ -1304,13 +1563,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18041307095815685",
       "content_id": "15fc0eeb",
       "timestamp": "2026-08-18T22:36:56+0000",
       "type": "fortune",
+      "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 쥐띠라는데\n여기 쥐띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcMs4tIFLwa",
       "views": 1971,
@@ -1319,13 +1581,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 18
+      "score": 18,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18480584899101716",
       "content_id": "abade0aa",
       "timestamp": "2026-08-18T09:15:19+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "배달 앱 켜서 30분 고민하다\n결국 어제 먹은 거 또 시킴\n선택지가 많으면 못 고르는 인간",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcLRJfKILBL",
       "views": 8,
@@ -1334,13 +1599,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18080933027692235",
       "content_id": "cb9445b4",
       "timestamp": "2026-08-18T04:54:48+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "가스레인지 기름때 굳은 거\n베이킹소다+물 반죽 발라 10분 뒤 닦기\n박박 문질러도 안 되던 게 그냥 밀림\n\n손목 나가기 전에 알았으면 좋았을 것",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcKzVcqkQlt",
       "views": 210,
@@ -1349,13 +1617,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18117238814478950",
       "content_id": "139b1fb6",
       "timestamp": "2026-08-17T22:36:37+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "오늘 쿠팡 골드박스 26개 올라왔는데\n제일 싼 게 5,800원\n\n· [로켓프레시] 피그인더가든 신선함이 오래가는… 5,800원\n· 요플레 플레인 화이트 6,510원\n· [로켓프레시] 친정엄마꾸러미 뚝딱 대파 (냉… 8,980원\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcKIC-HGyRp",
       "views": 79,
@@ -1364,13 +1635,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17867967270602317",
       "content_id": "abb61332",
       "timestamp": "2026-08-17T09:23:58+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "이불 밖은 위험하다는 말\n겨울에만 맞는 줄 알았는데\n에어컨 튼 여름에도 맞음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcItWD5jCJ4",
       "views": 406,
@@ -1379,13 +1653,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17974495086092814",
       "content_id": "691de590",
       "timestamp": "2026-08-17T05:00:59+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "안 쓰는 앱 구독 정리\n아이폰: 설정→내 이름→구독 / 안드로이드: 플레이스토어→결제\n생각보다 새고 있는 돈 많음\n\n지금 열어보면 하나쯤 나올걸\n난 두 개 나왔음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcIPP29lczQ",
       "views": 181,
@@ -1394,13 +1671,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18093398126396769",
       "content_id": "bf014e78",
       "timestamp": "2026-08-16T22:32:54+0000",
       "type": "fortune",
+      "format": "zodiac_rank",
       "text": "달은 지금 신월(삭) 단계\n오늘 별자리 1위는 양자리로 나옴",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcHi1eXoBwO",
       "views": 674,
@@ -1409,13 +1689,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 4
+      "score": 4,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18089039093169365",
       "content_id": "019a758c",
       "timestamp": "2026-08-16T09:03:43+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "비 와서 널어둔 빨래 다시 들여놨다\n오늘은 글렀네",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcGGOtBoFOW",
       "views": 191,
@@ -1424,13 +1707,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18104257274137123",
       "content_id": "1e3d6d1d",
       "timestamp": "2026-08-16T04:52:27+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "실리콘 주방용품 기름때\n식용유 살짝 묻혀 닦고 세척하면 미끌거림 사라짐\n기름은 기름으로\n\n알기 전엔 세제로만 박박 문질렀음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcFpef9AI3Q",
       "views": 365,
@@ -1439,13 +1725,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17928587595142230",
       "content_id": "aca28101",
       "timestamp": "2026-08-15T22:33:57+0000",
       "type": "deal",
+      "format": "deal_list",
       "text": "골드박스 28개 중에 2만원 아래만 23개\n그중 세 개만 적어둠\n\n· 풀무원샘물 워터루틴 먹는샘물 무라벨 12,800원\n· 초록매실 스파클링 제로 12,870원\n· 에너자이저 알카라인 AA 건전지 12,900원\n\n장 볼 때 같이 담으면 됨\n\n#광고",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcE-J0wFQG6",
       "views": 26,
@@ -1454,13 +1743,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 2
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18577049503071137",
       "content_id": "97a84712",
       "timestamp": "2026-08-15T12:48:59+0000",
       "type": "lotto",
+      "format": "lotto_result",
       "text": "1237회 당첨번호 나왔다\n\n10 · 20 · 23 · 34 · 37 · 40 +  36\n\n1등 23명 · 1인당 12.1억원\n\n별별운세 추천번호는 최고 1개 적중 (핫·콜드 반반)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcD7NnLoGjk",
       "views": 1254,
@@ -1469,13 +1761,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 3
+      "score": 3,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18093878228321702",
       "content_id": "db04fdf7",
       "timestamp": "2026-08-15T09:02:36+0000",
       "type": "daily",
+      "format": "short_observation",
       "text": "오늘 목표: 아무것도 안 하기\n달성률 100%\n뿌듯함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcDhTw9Fs0e",
       "views": 9,
@@ -1484,13 +1779,16 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18007104470817784",
       "content_id": "4661ddca",
       "timestamp": "2026-08-15T04:50:03+0000",
       "type": "tips",
+      "format": "useful_note",
       "text": "핸드폰 약정 끝났는데 그대로 쓰는 사람\n'선택약정 25% 할인' 신청하면 매달 요금 깎임\n통신사가 먼저 안 알려줌\n\n이거 모르고 몇 년 그냥 낸 사람 손\n나임",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcDEaEYDXKc",
       "views": 14,
@@ -1499,10 +1797,13 @@
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20260925_fortune": 0,
     "th_20260919_lotto": 0,
     "th_20260918_fortune": 29,
     "th_20260917_deal": 0,
@@ -1518,5 +1819,23 @@
     "th_20260907_fortune": 71,
     "th_20260906_deal": 0,
     "th_20260905_lotto": 1
+  },
+  "content_clicks": {
+    "a908f789": 0,
+    "bd304b00": 0,
+    "0b4a0b72": 29,
+    "feda0138": 0,
+    "a1e569ec": 0,
+    "14a0c2dc": 0,
+    "faa151f5": 37,
+    "ddbbcb69": 0,
+    "7fe41754": 1,
+    "db4ef487": 47,
+    "e6118391": 2,
+    "4b3f0a61": 29,
+    "50ae8ec1": 0,
+    "8c72ddd1": 71,
+    "85eaddec": 0,
+    "fb3711fa": 1
   }
 }

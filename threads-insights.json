@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-09-30T04:20:13+09:00",
+  "updated_at": "2026-10-01T04:08:55+09:00",
   "posts": [
+    {
+      "id": "17896465578655602",
+      "content_id": "86baa78c",
+      "timestamp": "2026-09-30T01:15:35+0000",
+      "type": "relation",
+      "format": "easy_question",
+      "text": "운세에서 제일 먼저 보는 거\n금전운 vs 연애운 vs 일운\n나는 금전운부터 봄",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dd5IbjYGO-9",
+      "views": 620,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17897093952397278",
       "content_id": "57111bd1",
@@ -279,7 +297,7 @@
       "format": "easy_question",
       "text": "서운한 일이 생기면\n말로 풀어야 끝나는 사람 vs 혼자 정리돼야 말하는 사람\n다들 어느 쪽임?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdSblOuCXwS",
-      "views": 244,
+      "views": 245,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -567,7 +585,7 @@
       "format": "rank_top3",
       "text": "오늘 띠별 운세 1위 토끼띠\n2위 호랑이띠, 3위 개띠\n내 띠는 몇 위인지 보고 옴",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdC7_3GjiYF",
-      "views": 2122,
+      "views": 2123,
       "likes": 23,
       "replies": 1,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18117238814478950",
-      "content_id": "139b1fb6",
-      "timestamp": "2026-08-17T22:36:37+0000",
-      "type": "deal",
-      "format": "deal_list",
-      "text": "오늘 쿠팡 골드박스 26개 올라왔는데\n제일 싼 게 5,800원\n\n· [로켓프레시] 피그인더가든 신선함이 오래가는… 5,800원\n· 요플레 플레인 화이트 6,510원\n· [로켓프레시] 친정엄마꾸러미 뚝딱 대파 (냉… 8,980원\n\n#광고",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcKIC-HGyRp",
-      "views": 79,
-      "likes": 0,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 2,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20260930_fortune": 0,
     "th_20260929_relation": 0,
     "th_20260928_fortune": 0,
     "th_20260927_relation": 0,
@@ -1825,6 +1826,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "86baa78c": 0,
     "8eba631c": 0,
     "d1e81436": 0,
     "c5d1edeb": 0,

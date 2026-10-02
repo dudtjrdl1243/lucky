@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-02T04:28:21+09:00",
+  "updated_at": "2026-10-03T04:11:27+09:00",
   "posts": [
+    {
+      "id": "18131313781739985",
+      "content_id": "be0ce01c",
+      "timestamp": "2026-10-02T01:38:07+0000",
+      "type": "fortune",
+      "format": "fortune_reflection",
+      "text": "오늘 쌍둥이자리가 1위래\n좋게 나온 운세는 믿는 게 이득이라는 쪽",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dd-UmSTkU5Q",
+      "views": 103,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17901991875598283",
       "content_id": "88b200c6",
@@ -495,7 +513,7 @@
       "format": "short_observation",
       "text": "가구 사기 전에 놓을 자리를 사진 찍고\n사진 위에 가로·세로 치수 적어두기\n\n매장에서 줄자 찾을 일이 없어짐",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdJCKjmmyNx",
-      "views": 108,
+      "views": 109,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18041307095815685",
-      "content_id": "15fc0eeb",
-      "timestamp": "2026-08-18T22:36:56+0000",
-      "type": "fortune",
-      "format": "rank_rollcall",
-      "text": "오늘 띠 순위 1위가 쥐띠라는데\n여기 쥐띠 있음?",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcMs4tIFLwa",
-      "views": 1971,
-      "likes": 16,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 18,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261002_fortune": 0,
     "th_20261001_deal": 0,
     "th_20260930_fortune": 0,
     "th_20260929_relation": 0,
@@ -1827,6 +1828,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "be0ce01c": 0,
     "4d7bb18e": 0,
     "86baa78c": 0,
     "8eba631c": 0,

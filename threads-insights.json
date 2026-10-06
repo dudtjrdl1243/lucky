@@ -1,6 +1,42 @@
 {
-  "updated_at": "2026-10-06T06:27:44+09:00",
+  "updated_at": "2026-10-07T04:28:22+09:00",
   "posts": [
+    {
+      "id": "18176403958441745",
+      "content_id": "af473322",
+      "timestamp": "2026-10-06T11:18:27+0000",
+      "type": "daily",
+      "format": "useful_note",
+      "text": "청소 시작 전에 타이머 10분만 맞추기\n끝까지 다 하려 하면 시작도 못 하는 날이 있음\n\n열 분 지나면 생각보다 많이 치워져 있음",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeJqMLIm5Dw",
+      "views": 54,
+      "likes": 0,
+      "replies": 0,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 0,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
+    {
+      "id": "17950637127314745",
+      "content_id": "e041da7b",
+      "timestamp": "2026-10-06T02:14:33+0000",
+      "type": "relation",
+      "format": "easy_question",
+      "text": "서운한 얘기\n메시지로 정리해서 말하기 vs 얼굴 보고 바로 말하기\n나는 글이 편한데 상대 반응 기다리는 게 힘듦",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeIr8kcGymH",
+      "views": 132,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18112712081146605",
       "content_id": "5ca7a3eb",
@@ -9,7 +45,7 @@
       "format": "easy_question",
       "text": "별자리 운세에서 순위보다 궁금한 거\n연애운 vs 금전운\n하나만 보면 뭐부터 봄?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeF9gWXmfo7",
-      "views": 347,
+      "views": 351,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -17,7 +53,7 @@
       "shares": 0,
       "score": 2,
       "link_clicks": 2,
-      "click_rate": 0.58
+      "click_rate": 0.57
     },
     {
       "id": "18151882843525886",
@@ -873,7 +909,7 @@
       "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 뱀띠라는데\n여기 뱀띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
-      "views": 27611,
+      "views": 27612,
       "likes": 302,
       "replies": 98,
       "reposts": 1,
@@ -1764,45 +1800,10 @@
       "score": 3,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18136766668719671",
-      "content_id": "3bcc3c77",
-      "timestamp": "2026-08-21T09:19:45+0000",
-      "type": "daily",
-      "format": "short_observation",
-      "text": "택배가 문 앞에 와 있는데\n뭘 시켰는지 기억이 안 난다",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcTACmHIM0g",
-      "views": 140,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
-    },
-    {
-      "id": "17871253155581803",
-      "content_id": "67c36cb8",
-      "timestamp": "2026-08-21T04:56:43+0000",
-      "type": "tips",
-      "format": "useful_note",
-      "text": "가전 살 때 '으뜸효율 환급'\n에너지효율 1등급 사면 최대 10% 돌려받음 (예산 소진 전까지)\n영수증 챙겨두기\n\n큰 거 살 때 이거 안 챙기면 좀 아깝잖아",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcSh8IQDhVk",
-      "views": 164,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261006_relation": 0,
     "th_20261005_fortune": 2,
     "th_20261004_relation": 1,
     "th_20261003_lotto": 2,
@@ -1831,6 +1832,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "e041da7b": 0,
     "5ca7a3eb": 2,
     "4cccad7b": 1,
     "668277d1": 2,

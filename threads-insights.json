@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-07T04:28:22+09:00",
+  "updated_at": "2026-10-08T04:54:55+09:00",
   "posts": [
+    {
+      "id": "17874077676636864",
+      "content_id": "21630e37",
+      "timestamp": "2026-10-07T01:28:43+0000",
+      "type": "relation",
+      "format": "easy_question",
+      "text": "오늘 운세에서 딱 하나만 볼 수 있다면\n돈·연애·일 중에 뭐 고름?",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeLLf2TCeXO",
+      "views": 138,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18176403958441745",
       "content_id": "af473322",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "청소 시작 전에 타이머 10분만 맞추기\n끝까지 다 하려 하면 시작도 못 하는 날이 있음\n\n열 분 지나면 생각보다 많이 치워져 있음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeJqMLIm5Dw",
-      "views": 54,
+      "views": 55,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -81,7 +99,7 @@
       "format": "short_observation",
       "text": "형광등 하나가 나갔는데 아직 안 갈았다\n어두운 채로 이틀째",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeE2AItnER6",
-      "views": 325,
+      "views": 326,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18079306001507907",
-      "content_id": "beb18113",
-      "timestamp": "2026-08-21T22:36:35+0000",
-      "type": "tips",
-      "format": "short_observation",
-      "text": "토요일이다\n번호는 뽑았고 이제 기다리면 된다",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcUbOveEq4V",
-      "views": 1079,
-      "likes": 1,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 3,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261007_fortune": 0,
     "th_20261006_relation": 0,
     "th_20261005_fortune": 2,
     "th_20261004_relation": 1,
@@ -1832,6 +1833,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "21630e37": 0,
     "e041da7b": 0,
     "5ca7a3eb": 2,
     "4cccad7b": 1,

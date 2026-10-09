@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-09T04:51:09+09:00",
+  "updated_at": "2026-10-10T04:28:43+09:00",
   "posts": [
+    {
+      "id": "17908295067558597",
+      "content_id": "a4f20677",
+      "timestamp": "2026-10-09T02:04:39+0000",
+      "type": "relation",
+      "format": "short_observation",
+      "text": "운세는 정답보다 핑계에 가까운 듯\n미뤄둔 연락 보내는 핑계 같은 거",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeQZMx9FFGZ",
+      "views": 55,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18025085864877193",
       "content_id": "2b6c755e",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "냉장고 문에 붙인 메모가 너무 많아지면\n이번 주에 필요한 것만 남기고 사진으로 보관\n\n메모도 많아지면 배경처럼 안 보이기 시작함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeO0Z7iGyhp",
-      "views": 40,
+      "views": 42,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -801,7 +819,7 @@
       "format": "short_observation",
       "text": "자기 전에 제일 하기 싫은 일 1위\n1. 설거지\n2. 빨래 개기\n3. 내일 생각하기\n\n난 3번",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdEkF7sFo5e",
-      "views": 163,
+      "views": 164,
       "likes": 1,
       "replies": 0,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 2,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18094014725421420",
-      "content_id": "de89be8e",
-      "timestamp": "2026-08-22T12:49:54+0000",
-      "type": "lotto",
-      "format": "lotto_result",
-      "text": "1238회 당첨번호 나왔다\n\n2 · 13 · 18 · 32 · 38 · 42 +  22\n\n1등 23명 · 1인당 12억원\n\n별별운세 추천번호는 최고 1개 적중 (전 구간 균형)",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcV84aumyfv",
-      "views": 866,
-      "likes": 2,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 4,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261009_fortune": 0,
     "th_20261008_deal": 0,
     "th_20261007_fortune": 0,
     "th_20261006_relation": 0,
@@ -1834,6 +1835,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "a4f20677": 0,
     "84e2a98f": 0,
     "21630e37": 0,
     "e041da7b": 0,

@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-12T03:48:00+09:00",
+  "updated_at": "2026-10-13T07:05:07+09:00",
   "posts": [
+    {
+      "id": "18018946157941658",
+      "content_id": "559eb640",
+      "timestamp": "2026-10-12T01:15:44+0000",
+      "type": "fortune",
+      "format": "fortune_question",
+      "text": "오늘 상위권은 말·토끼·돼지띠\n이 셋 중 하나 있음?",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeYB-28mOj2",
+      "views": 743,
+      "likes": 6,
+      "replies": 3,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 12,
+      "link_clicks": 8,
+      "click_rate": 1.08
+    },
     {
       "id": "18214064137362708",
       "content_id": "ad792b4e",
@@ -9,13 +27,13 @@
       "format": "short_observation",
       "text": "화분에 물 주는 걸 사흘 잊었는데\n아직 살아있다",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeW8X4UkQay",
-      "views": 243,
-      "likes": 0,
-      "replies": 0,
+      "views": 250,
+      "likes": 1,
+      "replies": 1,
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0,
+      "score": 3,
       "link_clicks": 0,
       "click_rate": 0.0
     },
@@ -45,7 +63,7 @@
       "format": "lotto_result",
       "text": "1245회 당첨번호 나왔다\n\n4 · 5 · 25 · 28 · 32 · 42 +  12\n\n1등 10명 · 1인당 30.1억원\n\n별별운세 추천번호는 최고 2개 적중 (출현 평균대)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeUl4IZlVdi",
-      "views": 586,
+      "views": 588,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -1055,11 +1073,11 @@
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
       "views": 27615,
       "likes": 302,
-      "replies": 96,
+      "replies": 95,
       "reposts": 1,
       "quotes": 0,
       "shares": 0,
-      "score": 497,
+      "score": 495,
       "link_clicks": 71,
       "click_rate": 0.26
     },
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18144384124555895",
-      "content_id": "188cab7e",
-      "timestamp": "2026-08-24T05:04:44+0000",
-      "type": "tips",
-      "format": "useful_note",
-      "text": "전기요금 복지할인\n다자녀·출산·장애·기초수급이면 한전 고객센터(123) 또는 한전ON에서 신청\n매달 요금 감면\n\n해당되는데 모르고 안 받는 집이 꽤 됨\n주변에 있으면 알려주면 좋을 듯",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcaRPgyFZxl",
-      "views": 564,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261012_fortune": 8,
     "th_20261011_relation": 0,
     "th_20261010_lotto": 1,
     "th_20261009_fortune": 0,
@@ -1837,6 +1838,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "559eb640": 8,
     "14ebf5f6": 0,
     "21b35f78": 1,
     "a4f20677": 0,

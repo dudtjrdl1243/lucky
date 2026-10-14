@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-14T05:12:26+09:00",
+  "updated_at": "2026-10-15T03:31:21+09:00",
   "posts": [
+    {
+      "id": "17907293415571860",
+      "content_id": "8ab420d5",
+      "timestamp": "2026-10-14T01:10:13+0000",
+      "type": "fortune",
+      "format": "fortune_reflection",
+      "text": "1위 용띠보다 더 궁금한 거\n내 띠가 상위권인지 하위권인지",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DedK8YPmLfU",
+      "views": 174,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 1,
+      "click_rate": 0.57
+    },
     {
       "id": "17912225271538747",
       "content_id": "36e352d6",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "고맙다는 말은 구체적일수록 오래 남음\n고마워보다 아까 내 말 끝까지 들어줘서 고마워\n상대도 어떤 행동이 좋았는지 알 수 있음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DecGafoG7Vb",
-      "views": 179,
+      "views": 181,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -27,7 +45,7 @@
       "format": "easy_question",
       "text": "고민을 들었을 때 바로 해결책부터 말하기 전에\n지금은 들어주는 게 좋아, 같이 방법 찾는 게 좋아?\n한 번 물으면 엇갈림이 많이 줄어듦",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DebvfnKm9VQ",
-      "views": 96,
+      "views": 98,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -45,7 +63,7 @@
       "format": "easy_question",
       "text": "연인 친구들 모임에 같이 가는 거 좋아함?\n새로운 면을 봐서 좋다 vs 신경 쓸 게 많아 피곤하다\n난 모임 성격 따라 다름",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Deayvmgmx5x",
-      "views": 33,
+      "views": 34,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 3,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18069025079485172",
-      "content_id": "23717f44",
-      "timestamp": "2026-08-25T09:19:44+0000",
-      "type": "daily",
-      "format": "short_observation",
-      "text": "밤인데 25도\n창문 열어놔도 소용이 없다",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcdTN4AFpms",
-      "views": 175,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261014_fortune": 1,
     "th_20261013_relation": 0,
     "th_20261012_fortune": 8,
     "th_20261011_relation": 0,
@@ -1839,6 +1840,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "8ab420d5": 1,
     "f1486290": 0,
     "559eb640": 8,
     "14ebf5f6": 0,

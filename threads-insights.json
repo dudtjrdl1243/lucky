@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-16T03:13:02+09:00",
+  "updated_at": "2026-10-17T02:58:16+09:00",
   "posts": [
+    {
+      "id": "18080793365443165",
+      "content_id": "af21a747",
+      "timestamp": "2026-10-16T00:19:47+0000",
+      "type": "fortune",
+      "format": "fortune_reflection",
+      "text": "오늘 뱀띠가 12위래\n꼴찌라고 겁줄 생각은 없고\n큰 결정 하나만 다시 보는 날로 쓰자",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeiOwueEQQ6",
+      "views": 25,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18076499972460828",
       "content_id": "f17664b2",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "약속을 취소해야 한다면 미안하다는 말에서 끝내지 말고\n다음 가능한 날짜 하나를 같이 제안하기\n관계를 미루는 게 아니라는 신호가 됨",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DegmwGQkXKc",
-      "views": 214,
+      "views": 215,
       "likes": 1,
       "replies": 0,
       "reposts": 0,
@@ -117,7 +135,7 @@
       "format": "fortune_question",
       "text": "오늘 상위권은 말·토끼·돼지띠\n이 셋 중 하나 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeYB-28mOj2",
-      "views": 749,
+      "views": 750,
       "likes": 6,
       "replies": 3,
       "reposts": 0,
@@ -783,7 +801,7 @@
       "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 개띠라는데\n여기 개띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdPz7mjGTpK",
-      "views": 3238,
+      "views": 3239,
       "likes": 31,
       "replies": 7,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 2,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18024330671692123",
-      "content_id": "26801562",
-      "timestamp": "2026-08-26T09:24:52+0000",
-      "type": "daily",
-      "format": "short_observation",
-      "text": "라면에 계란 넣으려다\n마지막 하나라 그냥 뒀다",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcf4makm8Tc",
-      "views": 9,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261016_fortune": 0,
     "th_20261015_deal": 0,
     "th_20261014_fortune": 1,
     "th_20261013_relation": 0,
@@ -1841,6 +1842,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "af21a747": 0,
     "c2ccca3f": 0,
     "8ab420d5": 1,
     "f1486290": 0,

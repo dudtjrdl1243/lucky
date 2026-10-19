@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-19T02:16:25+09:00",
+  "updated_at": "2026-10-20T04:48:45+09:00",
   "posts": [
+    {
+      "id": "17912193708478893",
+      "content_id": "9cd92568",
+      "timestamp": "2026-10-19T00:10:39+0000",
+      "type": "fortune",
+      "format": "fortune_question",
+      "text": "오늘 별자리 상위권은\n쌍둥이자리·물병자리·천칭자리\n셋 중 하나 있음?",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dep8Ghxj2iG",
+      "views": 6,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18122830091291857",
       "content_id": "80f9d4a2",
@@ -27,7 +45,7 @@
       "format": "lotto_result",
       "text": "1246회 당첨번호 나왔다\n\n16 · 22 · 23 · 24 · 27 · 28 +  6\n\n1등 16명 · 1인당 18.8억원\n\n별별운세 추천번호는 최고 2개 적중 (전 구간 균형)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Demajq4m4Ua",
-      "views": 379,
+      "views": 380,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -171,7 +189,7 @@
       "format": "easy_question",
       "text": "연인 친구들 모임에 같이 가는 거 좋아함?\n새로운 면을 봐서 좋다 vs 신경 쓸 게 많아 피곤하다\n난 모임 성격 따라 다름",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Deayvmgmx5x",
-      "views": 38,
+      "views": 39,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "17967105777173451",
-      "content_id": "31d89636",
-      "timestamp": "2026-08-28T06:04:50+0000",
-      "type": "fortune",
-      "format": "rank_top3",
-      "text": "오늘 띠별 운세 1위 말띠\n2위 토끼띠, 3위 호랑이띠\n내 띠는 몇 위인지 보고 옴",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DckrTOhFk2L",
-      "views": 53,
-      "likes": 0,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 2,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261019_fortune": 0,
     "th_20261018_relation": 0,
     "th_20261017_lotto": 24,
     "th_20261016_fortune": 0,
@@ -1844,6 +1845,7 @@
     "th_20260905_lotto": 1
   },
   "content_clicks": {
+    "9cd92568": 0,
     "80f9d4a2": 0,
     "af6309ec": 24,
     "af21a747": 0,

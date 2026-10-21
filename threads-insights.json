@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-21T03:26:18+09:00",
+  "updated_at": "2026-10-22T03:33:38+09:00",
   "posts": [
+    {
+      "id": "18108341555259910",
+      "content_id": "67890144",
+      "timestamp": "2026-10-21T00:34:11+0000",
+      "type": "fortune",
+      "format": "astro_context",
+      "text": "달은 지금 상현달\n오늘 별자리 순위가 평소랑 좀 다르게 나옴",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DevIYpvoE9H",
+      "views": 248,
+      "likes": 1,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 3,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18147791551560648",
       "content_id": "5c5bd7f4",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "감정이 커졌을 때 대화 중단 규칙을 미리 정해두기\n쉬자는 말이 끝내자는 뜻은 아니고\n언제 다시 이야기할지도 같이 정하기",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DetgoR5G8ZZ",
-      "views": 256,
+      "views": 260,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -27,7 +45,7 @@
       "format": "easy_question",
       "text": "약속 잡을 때\n날짜부터 딱 정하는 사람 vs 분위기 보고 천천히 정하는 사람\n너무 다르면 시작부터 힘듦",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Desm_Dnjg3a",
-      "views": 4,
+      "views": 5,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -171,7 +189,7 @@
       "format": "fortune_reflection",
       "text": "1위 용띠보다 더 궁금한 거\n내 띠가 상위권인지 하위권인지",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DedK8YPmLfU",
-      "views": 179,
+      "views": 182,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -179,7 +197,7 @@
       "shares": 0,
       "score": 2,
       "link_clicks": 1,
-      "click_rate": 0.56
+      "click_rate": 0.55
     },
     {
       "id": "17912225271538747",
@@ -1306,12 +1324,12 @@
       "text": "오늘 띠 순위 1위가 뱀띠라는데\n여기 뱀띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
       "views": 27617,
-      "likes": 300,
+      "likes": 299,
       "replies": 95,
       "reposts": 1,
       "quotes": 0,
       "shares": 0,
-      "score": 493,
+      "score": 492,
       "link_clicks": 71,
       "click_rate": 0.26
     },
@@ -1420,8 +1438,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 3,
-      "link_clicks": 1,
-      "click_rate": 0.34
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17904468966325788",
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18103258691264307",
-      "content_id": "b050aaf8",
-      "timestamp": "2026-08-29T03:41:24+0000",
-      "type": "lotto",
-      "format": "lotto_teaser",
-      "text": "직전 회차 번호가 다음 주에 또 나온 경우가 61%더라\n생각보다 높지 않나",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcm_rdZG5yG",
-      "views": 324,
-      "likes": 0,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 2,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261021_fortune": 0,
     "th_20261020_relation": 0,
     "th_20261019_fortune": 0,
     "th_20261018_relation": 0,
@@ -1843,9 +1844,10 @@
     "th_20260908_deal": 0,
     "th_20260907_fortune": 71,
     "th_20260906_deal": 0,
-    "th_20260905_lotto": 1
+    "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "67890144": 0,
     "6f20a022": 0,
     "9cd92568": 0,
     "80f9d4a2": 0,
@@ -1886,6 +1888,6 @@
     "50ae8ec1": 0,
     "8c72ddd1": 71,
     "85eaddec": 0,
-    "fb3711fa": 1
+    "fb3711fa": 0
   }
 }

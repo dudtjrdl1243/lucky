@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-23T03:29:19+09:00",
+  "updated_at": "2026-10-24T03:15:54+09:00",
   "posts": [
+    {
+      "id": "18337427827274414",
+      "content_id": "f205ebbc",
+      "timestamp": "2026-10-23T00:36:32+0000",
+      "type": "tips",
+      "format": "short_observation",
+      "text": "태양은 지금 전갈자리 쪽\n오늘은 게자리 흐름이 앞에 나왔네",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/De0SPmJEXU5",
+      "views": 200,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17885454306652522",
       "content_id": "6206bf16",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "사과는 미안해 뒤가 더 중요함\n내 행동 때문에 네가 기다리게 된 게 미안해\n무엇을 이해했는지 보여주면 같은 말도 다르게 들림",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeyqEbcFcyS",
-      "views": 135,
+      "views": 153,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -857,11 +875,11 @@
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdaHcEzme36",
       "views": 2536,
       "likes": 9,
-      "replies": 5,
+      "replies": 4,
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 19,
+      "score": 17,
       "link_clicks": 31,
       "click_rate": 1.22
     },
@@ -1366,8 +1384,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 490,
-      "link_clicks": 17,
-      "click_rate": 0.06
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "17987347742862627",
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18147692461495254",
-      "content_id": "b07fef4f",
-      "timestamp": "2026-08-30T00:14:09+0000",
-      "type": "deal",
-      "format": "deal_list",
-      "text": "오늘 올라온 골드박스 27개 훑다가\n제일 눈에 밟힌 거\n\n조지아 크래프트 아메리카노 22,490원\n로켓배송이라 금방 옴\n\n#광고",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcpMvyoHNAp",
-      "views": 4,
-      "likes": 0,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 2,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261023_fortune": 0,
     "th_20261022_deal": 0,
     "th_20261021_fortune": 0,
     "th_20261020_relation": 0,
@@ -1843,11 +1844,12 @@
     "th_20260910_deal": 2,
     "th_20260909_fortune": 29,
     "th_20260908_deal": 0,
-    "th_20260907_fortune": 17,
+    "th_20260907_fortune": 0,
     "th_20260906_deal": 0,
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "f205ebbc": 0,
     "f6b509c5": 0,
     "67890144": 0,
     "6f20a022": 0,
@@ -1888,7 +1890,7 @@
     "e6118391": 2,
     "4b3f0a61": 29,
     "50ae8ec1": 0,
-    "8c72ddd1": 17,
+    "8c72ddd1": 0,
     "85eaddec": 0,
     "fb3711fa": 0
   }

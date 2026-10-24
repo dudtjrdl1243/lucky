@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-24T03:15:54+09:00",
+  "updated_at": "2026-10-25T02:22:47+09:00",
   "posts": [
+    {
+      "id": "18131569825856506",
+      "content_id": "e56918b0",
+      "timestamp": "2026-10-24T15:42:45+0000",
+      "type": "lotto",
+      "format": "lotto_result",
+      "text": "1247회 당첨번호 나왔다\n\n8 · 14 · 21 · 22 · 42 · 45 +  24\n\n1등 8명 · 1인당 36.4억원\n\n별별운세 추천번호는 최고 2개 적중 (핫·콜드 반반)",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/De4eviKlKEc",
+      "views": 250,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18337427827274414",
       "content_id": "f205ebbc",
@@ -9,7 +27,7 @@
       "format": "short_observation",
       "text": "태양은 지금 전갈자리 쪽\n오늘은 게자리 흐름이 앞에 나왔네",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/De0SPmJEXU5",
-      "views": 200,
+      "views": 202,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -27,7 +45,7 @@
       "format": "useful_note",
       "text": "사과는 미안해 뒤가 더 중요함\n내 행동 때문에 네가 기다리게 된 게 미안해\n무엇을 이해했는지 보여주면 같은 말도 다르게 들림",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeyqEbcFcyS",
-      "views": 153,
+      "views": 154,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -801,7 +819,7 @@
       "format": "lotto_result",
       "text": "1243회 당첨번호 나왔다\n\n9 · 18 · 24 · 38 · 43 · 44 +  35\n\n1등 12명 · 1인당 25.9억원\n\n별별운세 추천번호는 최고 2개 적중 (핫넘버 중심)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdwbpEqkRKu",
-      "views": 783,
+      "views": 784,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -1258,8 +1276,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 25,
-      "link_clicks": 29,
-      "click_rate": 1.37
+      "link_clicks": 6,
+      "click_rate": 0.28
     },
     {
       "id": "18147941281558126",
@@ -1782,24 +1800,6 @@
       "score": 1,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18146631841543999",
-      "content_id": "aa3ec013",
-      "timestamp": "2026-08-30T09:58:44+0000",
-      "type": "daily",
-      "format": "useful_note",
-      "text": "청년 지원금 한눈에\n'온통청년(youthcenter.go.kr)'에서 내 나이·지역 맞는 지원사업 검색\n주거·취업·금융 지원 생각보다 많음\n\n해당 나이면 한 번 훑어볼 만함",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcqPp_km2DW",
-      "views": 215,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
@@ -1842,7 +1842,7 @@
     "th_20260912_lotto": 1,
     "th_20260911_fortune": 47,
     "th_20260910_deal": 2,
-    "th_20260909_fortune": 29,
+    "th_20260909_fortune": 6,
     "th_20260908_deal": 0,
     "th_20260907_fortune": 0,
     "th_20260906_deal": 0,
@@ -1888,7 +1888,7 @@
     "7fe41754": 1,
     "db4ef487": 47,
     "e6118391": 2,
-    "4b3f0a61": 29,
+    "4b3f0a61": 6,
     "50ae8ec1": 0,
     "8c72ddd1": 0,
     "85eaddec": 0,

@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-26T02:36:59+09:00",
+  "updated_at": "2026-10-27T04:51:58+09:00",
   "posts": [
+    {
+      "id": "17876766288582005",
+      "content_id": "41b229b4",
+      "timestamp": "2026-10-26T00:13:54+0000",
+      "type": "tips",
+      "format": "short_observation",
+      "text": "좋은 운은 기다리는 것보다\n오늘 할 일 하나 정하는 데 쓰는 게 낫더라",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/De7-CiMFAgl",
+      "views": 1,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17909493774576634",
       "content_id": "8b006e1e",
@@ -9,13 +27,13 @@
       "format": "short_observation",
       "text": "퇴근하고 집 오면 아무것도 하기 싫은데\n또 내일 되면 뭐라도 사고 있음\n인간은 반복하는 존재",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/De6-78KFKjC",
-      "views": 122,
-      "likes": 0,
+      "views": 127,
+      "likes": 1,
       "replies": 0,
       "reposts": 0,
       "quotes": 0,
       "shares": 0,
-      "score": 0,
+      "score": 1,
       "link_clicks": 0,
       "click_rate": 0.0
     },
@@ -27,7 +45,7 @@
       "format": "short_observation",
       "text": "택배 오는 날이 제일 설레는데\n막상 뜯으면 '아 맞다 이거 샀었지'\n기억을 못 함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/De6zmwaIL8T",
-      "views": 120,
+      "views": 130,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -567,7 +585,7 @@
       "format": "easy_question",
       "text": "서운한 얘기\n메시지로 정리해서 말하기 vs 얼굴 보고 바로 말하기\n나는 글이 편한데 상대 반응 기다리는 게 힘듦",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DeIr8kcGymH",
-      "views": 132,
+      "views": 133,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -1222,8 +1240,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 41,
-      "link_clicks": 47,
-      "click_rate": 0.85
+      "link_clicks": 23,
+      "click_rate": 0.42
     },
     {
       "id": "18110330491853924",
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "17883452178485609",
-      "content_id": "79345ff5",
-      "timestamp": "2026-08-31T15:14:36+0000",
-      "type": "tips",
-      "format": "useful_note",
-      "text": "통신비 미환급\n번호이동·해지 때 남은 요금 환급 안 받은 거\n통신사 고객센터에서 '미환급액' 조회하면 나옴\n\n번호이동 해본 적 있으면 한 번 확인해보길",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DctYmXuET8v",
-      "views": 240,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261026_fortune": 0,
     "th_20261025_relation": 0,
     "th_20261023_fortune": 0,
     "th_20261022_deal": 0,
@@ -1841,7 +1842,7 @@
     "th_20260914_fortune": 37,
     "th_20260913_relation": 0,
     "th_20260912_lotto": 1,
-    "th_20260911_fortune": 47,
+    "th_20260911_fortune": 23,
     "th_20260910_deal": 2,
     "th_20260909_fortune": 0,
     "th_20260908_deal": 0,
@@ -1850,6 +1851,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "41b229b4": 0,
     "6f35571d": 0,
     "f205ebbc": 0,
     "f6b509c5": 0,
@@ -1888,7 +1890,7 @@
     "faa151f5": 37,
     "ddbbcb69": 0,
     "7fe41754": 1,
-    "db4ef487": 47,
+    "db4ef487": 23,
     "e6118391": 2,
     "4b3f0a61": 0,
     "50ae8ec1": 0,

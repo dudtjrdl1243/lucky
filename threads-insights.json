@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-28T04:23:29+09:00",
+  "updated_at": "2026-10-29T04:28:55+09:00",
   "posts": [
+    {
+      "id": "18110697095623915",
+      "content_id": "98428b05",
+      "timestamp": "2026-10-28T01:14:58+0000",
+      "type": "tips",
+      "format": "short_observation",
+      "text": "순위가 낮다고 하루가 망하는 건 아니고\n한 번 더 확인하고 가라는 날 정도로 봄",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfBOngcFYdn",
+      "views": 26,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17888502063620849",
       "content_id": "38f20e42",
@@ -819,7 +837,7 @@
       "format": "useful_note",
       "text": "청소기 필터를 씻었다면 완전히 말린 뒤 끼우기\n겉만 말라 보여도 안쪽은 축축할 수 있음\n\n급하면 여분 필터 하나가 편함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dd3kkAoGy2M",
-      "views": 125,
+      "views": 126,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -1503,7 +1521,7 @@
       "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 뱀띠라는데\n여기 뱀띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
-      "views": 27618,
+      "views": 27620,
       "likes": 299,
       "replies": 94,
       "reposts": 1,
@@ -1782,27 +1800,10 @@
       "score": 2,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18245894362309074",
-      "content_id": "aa5e22a4",
-      "timestamp": "2026-09-01T15:32:30+0000",
-      "type": "tips",
-      "format": "short_observation",
-      "text": "밤에 물 마시러 나왔다가\n불 켜기 귀찮아서 더듬어서 갔다",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dcv_cUQm_D8",
-      "views": 160,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261028_fortune": 0,
     "th_20261027_relation": 0,
     "th_20261026_fortune": 0,
     "th_20261025_relation": 0,
@@ -1852,6 +1853,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "98428b05": 0,
     "661087a1": 0,
     "41b229b4": 0,
     "6f35571d": 0,

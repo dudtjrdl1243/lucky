@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-30T04:32:40+09:00",
+  "updated_at": "2026-10-31T04:12:50+09:00",
   "posts": [
+    {
+      "id": "18157097209519226",
+      "content_id": "b2bc0eb6",
+      "timestamp": "2026-10-30T01:53:49+0000",
+      "type": "fortune",
+      "format": "fortune_reflection",
+      "text": "생년월일 넣고 보는 운세에서\n나는 전체운보다 금전운부터 누름",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfGcpzAFFlL",
+      "views": 131,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18172180579466002",
       "content_id": "a1e4a243",
@@ -1168,8 +1186,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 45,
-      "link_clicks": 22,
-      "click_rate": 0.68
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18625199140055765",
@@ -1384,8 +1402,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 2,
-      "link_clicks": 2,
-      "click_rate": 5.41
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18406279501090079",
@@ -1557,7 +1575,7 @@
       "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 뱀띠라는데\n여기 뱀띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
-      "views": 27620,
+      "views": 27621,
       "likes": 299,
       "replies": 94,
       "reposts": 1,
@@ -1782,27 +1800,10 @@
       "score": 2,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18102287123338999",
-      "content_id": "b76e6799",
-      "timestamp": "2026-09-02T15:17:15+0000",
-      "type": "tips",
-      "format": "short_observation",
-      "text": "오늘 30도\n선풍기 앞에서 안 움직이는 중",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DcyifTGoHya",
-      "views": 188,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261030_fortune": 0,
     "th_20261029_deal": 0,
     "th_20261028_fortune": 0,
     "th_20261027_relation": 0,
@@ -1842,11 +1843,11 @@
     "th_20260917_deal": 0,
     "th_20260916_fortune": 0,
     "th_20260915_relation": 0,
-    "th_20260914_fortune": 22,
+    "th_20260914_fortune": 0,
     "th_20260913_relation": 0,
     "th_20260912_lotto": 0,
     "th_20260911_fortune": 0,
-    "th_20260910_deal": 2,
+    "th_20260910_deal": 0,
     "th_20260909_fortune": 0,
     "th_20260908_deal": 0,
     "th_20260907_fortune": 0,
@@ -1854,6 +1855,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "b2bc0eb6": 0,
     "64cb84c2": 0,
     "98428b05": 0,
     "661087a1": 0,
@@ -1893,11 +1895,11 @@
     "feda0138": 0,
     "a1e569ec": 0,
     "14a0c2dc": 0,
-    "faa151f5": 22,
+    "faa151f5": 0,
     "ddbbcb69": 0,
     "7fe41754": 0,
     "db4ef487": 0,
-    "e6118391": 2,
+    "e6118391": 0,
     "4b3f0a61": 0,
     "50ae8ec1": 0,
     "8c72ddd1": 0,

@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-02T03:53:07+09:00",
+  "updated_at": "2026-11-03T07:43:55+09:00",
   "posts": [
+    {
+      "id": "18289524277291095",
+      "content_id": "6c1bc3fe",
+      "timestamp": "2026-11-02T01:28:36+0000",
+      "type": "fortune",
+      "format": "fortune_reflection",
+      "text": "1위 쥐띠보다 더 궁금한 거\n내 띠가 상위권인지 하위권인지",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfOIJwAmi7V",
+      "views": 162,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17975847735174459",
       "content_id": "a5222f24",
@@ -27,7 +45,7 @@
       "format": "easy_question",
       "text": "사람들 앞에서도 애정 표현 자연스러운 편 vs 둘만 있을 때만 하는 편\n마음 크기랑은 상관없는데 은근 오해 생김",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfLgcgcEaaJ",
-      "views": 429,
+      "views": 430,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -45,7 +63,7 @@
       "format": "lotto_result",
       "text": "1248회 당첨번호 나왔다\n\n16 · 18 · 27 · 36 · 38 · 42 +  22\n\n1등 15명 · 1인당 19.3억원\n\n별별운세 추천번호는 최고 1개 적중 (핫넘버 중심)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfKp3lNlkFj",
-      "views": 1445,
+      "views": 1455,
       "likes": 4,
       "replies": 1,
       "reposts": 0,
@@ -207,7 +225,7 @@
       "format": "short_observation",
       "text": "택배 오는 날이 제일 설레는데\n막상 뜯으면 '아 맞다 이거 샀었지'\n기억을 못 함",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/De6zmwaIL8T",
-      "views": 130,
+      "views": 131,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -1132,8 +1150,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 17,
-      "link_clicks": 31,
-      "click_rate": 1.22
+      "link_clicks": 16,
+      "click_rate": 0.63
     },
     {
       "id": "18127719745806473",
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18122533096892794",
-      "content_id": "aa21a81b",
-      "timestamp": "2026-09-04T00:00:26+0000",
-      "type": "fortune",
-      "format": "rank_rollcall",
-      "text": "오늘 별자리 1위 황소자리\n황소자리 있으면 손 들어봐",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc2DKWulH9w",
-      "views": 178,
-      "likes": 0,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 2,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261102_fortune": 0,
     "th_20261101_relation": 2,
     "th_20261030_fortune": 0,
     "th_20261029_deal": 0,
@@ -1840,7 +1841,7 @@
     "th_20260926_lotto": 58,
     "th_20260925_fortune": 0,
     "th_20260919_lotto": 3,
-    "th_20260918_fortune": 31,
+    "th_20260918_fortune": 16,
     "th_20260917_deal": 0,
     "th_20260916_fortune": 0,
     "th_20260915_relation": 0,
@@ -1856,6 +1857,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "6c1bc3fe": 0,
     "a6791df0": 2,
     "b2bc0eb6": 0,
     "64cb84c2": 0,
@@ -1893,7 +1895,7 @@
     "4872ea8b": 58,
     "a908f789": 0,
     "bd304b00": 3,
-    "0b4a0b72": 31,
+    "0b4a0b72": 16,
     "feda0138": 0,
     "a1e569ec": 0,
     "14a0c2dc": 0,

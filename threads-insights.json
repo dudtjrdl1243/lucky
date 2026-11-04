@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-04T05:29:23+09:00",
+  "updated_at": "2026-11-05T05:46:00+09:00",
   "posts": [
+    {
+      "id": "18134224861780536",
+      "content_id": "351bf908",
+      "timestamp": "2026-11-04T02:13:03+0000",
+      "type": "fortune",
+      "format": "fortune_reflection",
+      "text": "오늘 쥐띠가 12위래\n꼴찌라고 겁줄 생각은 없고\n큰 결정 하나만 다시 보는 날로 쓰자",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfTW0-qjoCB",
+      "views": 81,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17929936557186044",
       "content_id": "8f4b84e9",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "비밀번호를 메모장에 적어두는 대신\n기기 기본 비밀번호 관리자를 쓰면 자동완성까지 됨\n\n사이트마다 다르게 만드는 게 핵심",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfSMh3uG5fM",
-      "views": 227,
+      "views": 229,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -45,7 +63,7 @@
       "format": "easy_question",
       "text": "데이트 비용\n정확히 나누는 게 편하다 vs 번갈아 자연스럽게 내는 게 편하다\n금액보다 방식이 맞는 게 중요하더라",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfQ6cJwkYEQ",
-      "views": 144,
+      "views": 145,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -117,7 +135,7 @@
       "format": "lotto_result",
       "text": "1248회 당첨번호 나왔다\n\n16 · 18 · 27 · 36 · 38 · 42 +  22\n\n1등 15명 · 1인당 19.3억원\n\n별별운세 추천번호는 최고 1개 적중 (핫넘버 중심)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfKp3lNlkFj",
-      "views": 1456,
+      "views": 1458,
       "likes": 4,
       "replies": 1,
       "reposts": 0,
@@ -1701,7 +1719,7 @@
       "format": "rank_rollcall",
       "text": "오늘 띠 순위 1위가 뱀띠라는데\n여기 뱀띠 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc9wONekxgk",
-      "views": 27621,
+      "views": 27622,
       "likes": 298,
       "replies": 94,
       "reposts": 1,
@@ -1782,27 +1800,10 @@
       "score": 2,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "17878920219534998",
-      "content_id": "6aa0b672",
-      "timestamp": "2026-09-05T08:23:45+0000",
-      "type": "daily",
-      "format": "useful_note",
-      "text": "침구 세트는 베갯잇 안에 같이 넣어두기\n시트랑 이불 커버가 흩어지지 않음\n\n호텔식 정리보다 이게 현실적으로 편함",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Dc5hjl3G3Tp",
-      "views": 237,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261104_fortune": 0,
     "th_20261103_relation": 0,
     "th_20261102_fortune": 0,
     "th_20261101_relation": 2,
@@ -1858,6 +1859,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "351bf908": 0,
     "e239cfaf": 0,
     "6c1bc3fe": 0,
     "a6791df0": 2,

@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-09T03:46:58+09:00",
+  "updated_at": "2026-11-10T08:23:37+09:00",
   "posts": [
+    {
+      "id": "17956566528296193",
+      "content_id": "c9ab44ff",
+      "timestamp": "2026-11-09T01:41:05+0000",
+      "type": "fortune",
+      "format": "fortune_reflection",
+      "text": "오늘 게자리가 1위래\n좋게 나온 운세는 믿는 게 이득이라는 쪽",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfgLJUvCfl1",
+      "views": 524,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18119967130960577",
       "content_id": "a7bca021",
@@ -9,7 +27,7 @@
       "format": "short_observation",
       "text": "전자레인지 안 냄새는\n레몬 반 개 넣고 2분 돌리면 사라짐\n이거 알고 나서 편해짐",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DffGDa-kbWC",
-      "views": 1488,
+      "views": 1559,
       "likes": 3,
       "replies": 1,
       "reposts": 0,
@@ -27,7 +45,7 @@
       "format": "easy_question",
       "text": "질투 나면 티 내는 편 vs 아무렇지 않은 척하는 편\n숨긴다고 사라지는 건 아닌데 말 꺼내기도 어렵더라",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfdkGH6iXmj",
-      "views": 580,
+      "views": 581,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -45,7 +63,7 @@
       "format": "lotto_result",
       "text": "1249회 당첨번호 나왔다\n\n2 · 11 · 16 · 25 · 34 · 35 +  14\n\n1등 14명 · 1인당 20.3억원\n\n별별운세 추천번호는 최고 3개 적중 (출현 평균대)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfcvQ-tkVnE",
-      "views": 1108,
+      "views": 1114,
       "likes": 3,
       "replies": 1,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 0,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "17951661879038944",
-      "content_id": "50ae8ec1",
-      "timestamp": "2026-09-08T00:17:20+0000",
-      "type": "deal",
-      "format": "deal_list",
-      "text": "오늘 골드박스 27개 중에\n장바구니 채우기 좋은 것만 추려봄\n\n· 솔리몬 스퀴즈드 레몬즙 11,550원\n· [로켓프레시] 목우촌 국내산 소고기 등심 구… 12,940원\n· 하늘보리 유기농 차 13,800원\n\n#광고",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdAYRRYDYlZ",
-      "views": 36,
-      "likes": 0,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 2,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261109_fortune": 0,
     "th_20261108_relation": 1,
     "th_20261107_lotto": 13,
     "th_20261106_fortune": 0,
@@ -1863,6 +1864,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "c9ab44ff": 0,
     "57c6756b": 1,
     "9eda1b7e": 13,
     "574923a9": 0,

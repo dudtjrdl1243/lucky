@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-13T06:25:33+09:00",
+  "updated_at": "2026-11-14T05:51:57+09:00",
   "posts": [
+    {
+      "id": "17899165872417756",
+      "content_id": "f36513b8",
+      "timestamp": "2026-11-13T02:34:32+0000",
+      "type": "fortune",
+      "format": "fortune_question",
+      "text": "오늘 상위권은 개·양·돼지띠\n이 셋 중 하나 있음?",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfqkccBjIa_",
+      "views": 955,
+      "likes": 2,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 4,
+      "link_clicks": 1,
+      "click_rate": 0.1
+    },
     {
       "id": "18160645465516123",
       "content_id": "7fc38aee",
@@ -9,7 +27,7 @@
       "format": "useful_note",
       "text": "비슷하게 생긴 충전선이 많으면\n작은 스티커에 기기 이름 써서 양쪽 끝에 붙이기\n\n서랍 뒤지는 시간이 생각보다 많이 줄어듦",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfpX8-iFdnv",
-      "views": 1721,
+      "views": 1724,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -27,7 +45,7 @@
       "format": "useful_note",
       "text": "앱 알림이 너무 많으면 전부 끄지 말고\n결제·배송·사람이 보낸 메시지만 남기기\n\n중요한 알림이 광고 사이에 묻히는 게 문제",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfpFohhFHFn",
-      "views": 472,
+      "views": 476,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -45,7 +63,7 @@
       "format": "easy_question",
       "text": "[광고] 쿠팡 파트너스 활동으로 수수료를 받을 수 있어요.\n\n오늘 골드박스 25개 중\n가격 낮은 상품 3개만 적어봄\n\n· [로켓프레시] 고래사어묵 가정용 하얀꼬치 어… 5,890원\n· 홈플래닛 알카라인 AAA건전지 8,590원\n· 크리넥스 안심 3겹 뽑아쓰는 천연펄프 키친타… 8,800원\n\n이 중에 원래 사려던 거 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfoB3hoHA8o",
-      "views": 107,
+      "views": 108,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -189,7 +207,7 @@
       "format": "lotto_result",
       "text": "1249회 당첨번호 나왔다\n\n2 · 11 · 16 · 25 · 34 · 35 +  14\n\n1등 14명 · 1인당 20.3억원\n\n별별운세 추천번호는 최고 3개 적중 (출현 평균대)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfcvQ-tkVnE",
-      "views": 1117,
+      "views": 1125,
       "likes": 3,
       "replies": 1,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 41,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18110330491853924",
-      "content_id": "ce891547",
-      "timestamp": "2026-09-10T15:09:11+0000",
-      "type": "tips",
-      "format": "easy_question",
-      "text": "방 정리하다가 안 쓰는 물건 나오면\n왜 산 건지 기억도 안 남\n\n나만 그런 거 아니지?",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdHH7W2HH8u",
-      "views": 88,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261113_fortune": 1,
     "th_20261112_deal": 0,
     "th_20261111_fortune": 0,
     "th_20261110_relation": 0,
@@ -1867,6 +1868,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "f36513b8": 1,
     "9cf96c6a": 0,
     "b0357e1d": 0,
     "df1f44af": 0,

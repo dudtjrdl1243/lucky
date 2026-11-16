@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-16T04:42:31+09:00",
+  "updated_at": "2026-11-17T08:20:10+09:00",
   "posts": [
+    {
+      "id": "18109984250635505",
+      "content_id": "3362d9cb",
+      "timestamp": "2026-11-16T01:56:15+0000",
+      "type": "fortune",
+      "format": "fortune_question",
+      "text": "오늘 상위권은 양·개·말띠\n이 셋 중 하나 있음?",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfyOcf8oHBM",
+      "views": 237,
+      "likes": 1,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 3,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17947427913359616",
       "content_id": "8c49b2bf",
@@ -9,7 +27,7 @@
       "format": "easy_question",
       "text": "다들 냉장고에 몇 년째 자리만 지키는 소스 있음?\n나는 굴소스\n샀는데 두 번 씀",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfxJhUPmqo8",
-      "views": 304,
+      "views": 306,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -45,7 +63,7 @@
       "format": "lotto_result",
       "text": "1250회 당첨번호 나왔다\n\n1 · 5 · 18 · 23 · 27 · 28 +  8\n\n1등 9명 · 1인당 31억원\n\n별별운세 추천번호는 최고 2개 적중 (핫·콜드 반반)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfuyIwdGp6g",
-      "views": 933,
+      "views": 937,
       "likes": 4,
       "replies": 2,
       "reposts": 0,
@@ -63,7 +81,7 @@
       "format": "lotto_teaser",
       "text": "지난 회차 우리 추천번호 최고 3개 맞았다\n3개면 5등은 됐다\n\n그래도 성적표는 지우지 않고 그대로 둠",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DftHWrTFAi7",
-      "views": 209,
+      "views": 210,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -71,7 +89,7 @@
       "shares": 0,
       "score": 2,
       "link_clicks": 2,
-      "click_rate": 0.96
+      "click_rate": 0.95
     },
     {
       "id": "17899165872417756",
@@ -567,7 +585,7 @@
       "format": "easy_question",
       "text": "[광고] 쿠팡 파트너스 활동으로 수수료를 받을 수 있어요.\n\n오늘 골드박스에서\n2만원 아래 생필품만 세 개 골라봄\n\n· 일리윤 MD 레드이치 케어크림 18,700원\n· 닥터에이지 더마 시카 리페어 토너패드 18,900원\n· [로켓프레시] 브로컬리 믹스 (냉동) 9,000원\n\n집에 마침 떨어진 거 있음?",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DfD28M1Dk2k",
-      "views": 7,
+      "views": 9,
       "likes": 0,
       "replies": 1,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 5,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "17921767707426055",
-      "content_id": "e705bbce",
-      "timestamp": "2026-09-12T08:40:33+0000",
-      "type": "daily",
-      "format": "short_observation",
-      "text": "온라인으로 생필품 살 때 총가격보다\n100g·1개당 가격을 같이 보기\n\n대용량이라고 항상 싼 건 아니더라",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdLlCvyG19L",
-      "views": 188,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261116_fortune": 0,
     "th_20261115_relation": 0,
     "th_20261114_lotto": 2,
     "th_20261113_fortune": 1,
@@ -1870,6 +1871,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "3362d9cb": 0,
     "9cc38e5e": 0,
     "d4db8850": 2,
     "f36513b8": 1,

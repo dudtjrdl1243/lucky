@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-18T07:12:09+09:00",
+  "updated_at": "2026-11-19T06:50:12+09:00",
   "posts": [
+    {
+      "id": "18111577235628080",
+      "content_id": "6f373dab",
+      "timestamp": "2026-11-18T03:40:02+0000",
+      "type": "fortune",
+      "format": "fortune_question",
+      "text": "오늘 상위권은 쥐·용·뱀띠\n이 셋 중 하나 있음?",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Df3j6VZlCLA",
+      "views": 150,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18397335877167774",
       "content_id": "53816960",
@@ -45,7 +63,7 @@
       "format": "easy_question",
       "text": "칭찬 들을 때 더 좋은 말\n예쁘다 멋지다 vs 오늘 한 행동 진짜 좋았다\n구체적인 칭찬은 오래 기억남",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Df1EZ86ESSZ",
-      "views": 68,
+      "views": 69,
       "likes": 1,
       "replies": 1,
       "reposts": 0,
@@ -1366,8 +1384,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 3,
-      "link_clicks": 1,
-      "click_rate": 0.11
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18232354543323476",
@@ -1618,8 +1636,8 @@
       "quotes": 0,
       "shares": 0,
       "score": 2,
-      "link_clicks": 1,
-      "click_rate": 0.03
+      "link_clicks": 0,
+      "click_rate": 0.0
     },
     {
       "id": "18069800330759579",
@@ -1782,27 +1800,10 @@
       "score": 45,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18625199140055765",
-      "content_id": "e48c7ebf",
-      "timestamp": "2026-09-13T15:01:46+0000",
-      "type": "tips",
-      "format": "short_observation",
-      "text": "라면 끓일 때 계란 넣는 타이밍으로\n싸울 수 있는 사이\n나는 마지막에 톡 파임",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdO1dsrG2I4",
-      "views": 324,
-      "likes": 0,
-      "replies": 0,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 0,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261118_fortune": 0,
     "th_20261117_relation": 0,
     "th_20261116_fortune": 0,
     "th_20261115_relation": 0,
@@ -1845,7 +1846,7 @@
     "th_20261007_fortune": 0,
     "th_20261006_relation": 0,
     "th_20261005_fortune": 2,
-    "th_20261004_relation": 1,
+    "th_20261004_relation": 0,
     "th_20261003_lotto": 1,
     "th_20261002_fortune": 0,
     "th_20261001_deal": 0,
@@ -1853,7 +1854,7 @@
     "th_20260929_relation": 0,
     "th_20260928_fortune": 0,
     "th_20260927_relation": 0,
-    "th_20260926_lotto": 1,
+    "th_20260926_lotto": 0,
     "th_20260925_fortune": 0,
     "th_20260919_lotto": 0,
     "th_20260918_fortune": 0,
@@ -1872,6 +1873,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "6f373dab": 0,
     "72537fc8": 0,
     "3362d9cb": 0,
     "9cc38e5e": 0,
@@ -1914,7 +1916,7 @@
     "21630e37": 0,
     "e041da7b": 0,
     "5ca7a3eb": 2,
-    "4cccad7b": 1,
+    "4cccad7b": 0,
     "668277d1": 1,
     "be0ce01c": 0,
     "4d7bb18e": 0,
@@ -1922,7 +1924,7 @@
     "8eba631c": 0,
     "d1e81436": 0,
     "c5d1edeb": 0,
-    "4872ea8b": 1,
+    "4872ea8b": 0,
     "a908f789": 0,
     "bd304b00": 0,
     "0b4a0b72": 0,

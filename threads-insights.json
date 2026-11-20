@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-20T07:06:23+09:00",
+  "updated_at": "2026-11-21T06:46:14+09:00",
   "posts": [
+    {
+      "id": "18141557608667858",
+      "content_id": "2d76ddc8",
+      "timestamp": "2026-11-20T03:03:44+0000",
+      "type": "fortune",
+      "format": "fortune_question",
+      "text": "오늘 토끼띠가 1위래\n1위면 뭐 어쩌냐고?\n미뤄둔 거 하나 시작할 핑계로 쓰면 됨",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/Df8pWNkEfE_",
+      "views": 12,
+      "likes": 1,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 3,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "17980515899932751",
       "content_id": "ddd31bb8",
@@ -27,7 +45,7 @@
       "format": "short_observation",
       "text": "버릴지 고민되는 물건은 바로 결정하지 말고\n상자 하나에 모아 날짜 적어두기\n한 달간 안 찾으면 보내기 쉬워짐",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/Df7KbOXEdvF",
-      "views": 132,
+      "views": 133,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 2,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18075705812414976",
-      "content_id": "a1e569ec",
-      "timestamp": "2026-09-16T00:13:19+0000",
-      "type": "fortune",
-      "format": "zodiac_rank",
-      "text": "달은 지금 초승달 단계\n오늘 별자리 1위는 황소자리로 나옴",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DdU-K-oI5L4",
-      "views": 174,
-      "likes": 0,
-      "replies": 1,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 2,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261120_fortune": 0,
     "th_20261119_deal": 0,
     "th_20261118_fortune": 0,
     "th_20261117_relation": 0,
@@ -1874,6 +1875,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "2d76ddc8": 0,
     "8d99a752": 0,
     "6f373dab": 0,
     "72537fc8": 0,

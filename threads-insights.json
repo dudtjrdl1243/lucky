@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-11-23T05:41:18+09:00",
+  "updated_at": "2026-11-24T10:36:57+09:00",
   "posts": [
+    {
+      "id": "18116853014271535",
+      "content_id": "895e1047",
+      "timestamp": "2026-11-23T02:37:17+0000",
+      "type": "fortune",
+      "format": "fortune_question",
+      "text": "오늘 별자리 상위권은\n양자리·사자자리·사수자리\n셋 중 하나 있음?",
+      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DgEUtJbmohm",
+      "views": 274,
+      "likes": 0,
+      "replies": 1,
+      "reposts": 0,
+      "quotes": 0,
+      "shares": 0,
+      "score": 2,
+      "link_clicks": 0,
+      "click_rate": 0.0
+    },
     {
       "id": "18100416221110896",
       "content_id": "cdd23a7c",
@@ -9,7 +27,7 @@
       "format": "short_observation",
       "text": "오래 기다리던 일보다\n뜻밖에 비어버린 한 시간이\n더 반가운 날이 있음",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DgDY3C3nQVK",
-      "views": 111,
+      "views": 115,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -27,7 +45,7 @@
       "format": "short_observation",
       "text": "낮엔 14도였는데 지금 2도\n일교차 뭐지",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DgDQes9Cc3d",
-      "views": 123,
+      "views": 127,
       "likes": 0,
       "replies": 0,
       "reposts": 0,
@@ -63,7 +81,7 @@
       "format": "lotto_result",
       "text": "1251회 당첨번호 나왔다\n\n14 · 18 · 19 · 29 · 40 · 45 +  1\n\n1등 14명 · 1인당 20.7억원\n\n별별운세 추천번호는 최고 2개 적중 (출현 평균대)",
       "permalink": "https://www.threads.com/@dudtjrdl1243/post/DgA7TwHFuY-",
-      "views": 966,
+      "views": 968,
       "likes": 3,
       "replies": 1,
       "reposts": 0,
@@ -1782,27 +1800,10 @@
       "score": 2,
       "link_clicks": 0,
       "click_rate": 0.0
-    },
-    {
-      "id": "18069800330759579",
-      "content_id": "ad2569a2",
-      "timestamp": "2026-09-26T00:34:51+0000",
-      "type": "lotto",
-      "format": "lotto_result",
-      "text": "1242회 당첨번호 나왔다\n\n2 · 4 · 10 · 16 · 31 · 41 +  9\n\n1등 9명 · 1인당 32.8억원\n\n별별운세 추천번호는 최고 2개 적중 (전 구간 균형)",
-      "permalink": "https://www.threads.com/@dudtjrdl1243/post/DduwlDfGYOP",
-      "views": 7337,
-      "likes": 8,
-      "replies": 2,
-      "reposts": 0,
-      "quotes": 0,
-      "shares": 0,
-      "score": 12,
-      "link_clicks": 0,
-      "click_rate": 0.0
     }
   ],
   "campaign_clicks": {
+    "th_20261123_fortune": 0,
     "th_20261122_relation": 0,
     "th_20261120_fortune": 0,
     "th_20261119_deal": 0,
@@ -1876,6 +1877,7 @@
     "th_20260905_lotto": 0
   },
   "content_clicks": {
+    "895e1047": 0,
     "af2d7318": 0,
     "2d76ddc8": 0,
     "8d99a752": 0,
